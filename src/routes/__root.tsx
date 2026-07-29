@@ -306,9 +306,15 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <div className="page-grain flex min-h-screen flex-col">
+      <div className="page-grain flex min-h-dvh flex-col">
+        <a
+          href="#content"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:rounded-sm focus:border-2 focus:border-foreground focus:bg-background focus:px-4 focus:py-2 focus:font-mono focus:text-xs focus:tracking-widest focus:uppercase"
+        >
+          Skip to content
+        </a>
         <SiteHeader />
-        <main className="flex-1">
+        <main id="content" className="flex-1">
           {/* Required: nested routes render here. */}
           <Outlet />
         </main>
@@ -317,6 +323,7 @@ function RootComponent() {
         <Analytics />
       </div>
     </QueryClientProvider>
+
   );
 }
 
