@@ -10,6 +10,19 @@ export type Certificate = {
   library_seal: string;
 };
 
+const COLS = "copy_no, owner, issue_date, cert_seal, library_seal";
+
+/** The generated Database types are regenerated asynchronously; keep this
+ *  module compiling against the shape we actually rely on. */
+type Db = {
+  from: (table: string) => any;
+};
+
+async function db(): Promise<Db> {
+  const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+  return supabaseAdmin as unknown as Db;
+}
+
 export function normalizeOwner(raw: string): string {
   return raw.replace(/\s+/g, " ").trim().slice(0, 60);
 }
@@ -31,12 +44,12 @@ export async function certSeal(owner: string, copy: number, date: string) {
 }
 
 export async function mintForOwner(owner: string): Promise<Certificate> {
-  const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+  const sb = await db();
 
-  // Idempotent: one certificate per registered holder name.
-  const existing = await supabaseAdmin
+  // Idempotent: one certificate per registered holder name, per edition.
+  const existing = await sb
     .from("certificates")
-    .select("copy_no, owner, issue_date, cert_seal, library_seal")
+    .select(COLS)
     .eq("owner", owner)
     .eq("library_seal", LIBRARY.librarySeal)
     .maybeSingle();
@@ -44,23 +57,17 @@ export async function mintForOwner(owner: string): Promise<Certificate> {
 
   const issueDate = new Date().toISOString().slice(0, 10);
 
-  for (let attempt = 0; attempt < 5; attempt++) {
-    const next = await supabaseAdmin.rpc("next_certificate_copy_no" as never);
-    let copyNo: number;
-    if (!next.error && typeof next.data === "number") {
-      copyNo = next.data;
-    } else {
-      const last = await supabaseAdmin
-        .from("certificates")
-        .select("copy_no")
-        .order("copy_no", { ascending: false })
-        .limit(1)
-        .maybeSingle();
-      copyNo = (last.data?.copy_no ?? 0) + 1;
-    }
+  for (let attempt = 0; attempt < 6; attempt++) {
+    const last = await sb
+      .from("certificates")
+      .select("copy_no")
+      .order("copy_no", { ascending: false })
+      .limit(1)
+      .maybeSingle();
+    const copyNo = (last.data?.copy_no ?? 0) + 1;
 
     const seal = await certSeal(owner, copyNo, issueDate);
-    const inserted = await supabaseAdmin
+    const inserted = await sb
       .from("certificates")
       .insert({
         copy_no: copyNo,
@@ -69,7 +76,7 @@ export async function mintForOwner(owner: string): Promise<Certificate> {
         cert_seal: seal,
         library_seal: LIBRARY.librarySeal,
       })
-      .select("copy_no, owner, issue_date, cert_seal, library_seal")
+      .select(COLS)
       .single();
 
     if (!inserted.error && inserted.data) return inserted.data as Certificate;
@@ -82,20 +89,16 @@ export async function mintForOwner(owner: string): Promise<Certificate> {
 }
 
 export async function findBySeal(seal: string): Promise<Certificate | null> {
-  const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-  const { data } = await supabaseAdmin
-    .from("certificates")
-    .select("copy_no, owner, issue_date, cert_seal, library_seal")
-    .eq("cert_seal", seal)
-    .maybeSingle();
+  const sb = await db();
+  const { data } = await sb.from("certificates").select(COLS).eq("cert_seal", seal).maybeSingle();
   return (data as Certificate) ?? null;
 }
 
 export async function recentRegister(limit = 25): Promise<Certificate[]> {
-  const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-  const { data } = await supabaseAdmin
+  const sb = await db();
+  const { data } = await sb
     .from("certificates")
-    .select("copy_no, owner, issue_date, cert_seal, library_seal")
+    .select(COLS)
     .order("copy_no", { ascending: false })
     .limit(limit);
   return (data as Certificate[]) ?? [];
