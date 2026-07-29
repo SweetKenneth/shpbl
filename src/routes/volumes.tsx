@@ -46,8 +46,8 @@ export const Route = createFileRoute("/volumes")({
 function Volumes() {
   return (
     <div className="mx-auto max-w-4xl px-6 pt-14">
-      <p className="eyebrow">Volume Index</p>
-      <h1 className="display-title mt-3 text-[clamp(2.5rem,8vw,4.5rem)]">The Six Volumes</h1>
+      <p className="eyebrow ink-rise">Volume Index</p>
+      <h1 className="display-title ink-rise mt-3 text-[clamp(2.5rem,8vw,4.5rem)]">The Six Volumes</h1>
       <p className="mt-4 max-w-2xl text-ink-dim">
         Each volume makes a single argument. Projects appear inside as exhibits — evidence,
         not chapters. Every volume is one self-contained HTML file; print it to PDF and you
@@ -56,9 +56,11 @@ function Volumes() {
 
       <div className="mt-12 space-y-8">
         {VOLUMES.map((v) => (
-          <article
+          <Reveal
+            as="article"
             key={v.n}
-            className="pl-6"
+            delay={v.n * 40}
+            className="vol-panel pl-6"
             style={{ borderLeft: `4px solid var(--vol-${v.n})` }}
           >
             <p className="eyebrow m-0" style={{ color: `var(--vol-${v.n})` }}>
@@ -78,17 +80,17 @@ function Volumes() {
             </p>
             <p className="m-0 mt-1 font-mono text-[11px] break-all text-ink-faint">
               <span className="tracking-widest">SEAL · </span>
-              {v.seal}
+              <span className="seal-glow">{v.seal}</span>
             </p>
             <a
               href={v.url}
               target="_blank"
               rel="noopener"
-              className="mt-4 inline-flex items-center rounded-sm border-2 border-foreground px-5 py-2 font-mono text-[11px] tracking-widest uppercase no-underline transition-colors hover:bg-foreground hover:text-background"
+              className="ghost-button mt-4 inline-flex items-center rounded-sm border-2 border-foreground px-5 py-2 font-mono text-[11px] tracking-widest uppercase no-underline"
             >
               Read Volume {v.numeral}
             </a>
-          </article>
+          </Reveal>
         ))}
       </div>
 
@@ -101,7 +103,7 @@ function Volumes() {
         <a
           href={ZIP_URL}
           download
-          className="inline-flex items-center rounded-sm border-2 border-foreground bg-foreground px-6 py-3 font-mono text-xs tracking-[0.18em] uppercase text-background no-underline"
+          className="ink-button inline-flex items-center rounded-sm border-2 border-foreground bg-foreground px-6 py-3 font-mono text-xs tracking-[0.18em] uppercase text-background no-underline"
         >
           Download the library — free
         </a>
