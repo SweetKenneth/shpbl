@@ -115,32 +115,60 @@ function RootShell({ children }: { children: ReactNode }) {
   );
 }
 
+const NAV = [
+  { to: "/volumes", label: "Volumes", hide: false },
+  { to: "/toolkit", label: "Toolkit", hide: true },
+  { to: "/certificate", label: "Certificate", hide: false },
+  { to: "/license", label: "License", hide: false },
+] as const;
+
 function SiteHeader() {
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 12);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   return (
-    <header className="sticky top-0 z-40 border-b-2 border-foreground bg-background/95 backdrop-blur">
-      <div className="mx-auto flex max-w-5xl items-center justify-between gap-4 px-6 py-3">
-        <Link to="/" className="display-title text-xl leading-none no-underline">
+    <header
+      className={`no-print sticky top-0 z-40 border-b-2 border-foreground bg-background/85 backdrop-blur-xl transition-shadow duration-300 ${
+        scrolled ? "shadow-[0_14px_30px_-28px_var(--foreground)]" : ""
+      }`}
+    >
+      <div
+        className={`mx-auto flex max-w-5xl items-center justify-between gap-4 px-6 transition-all duration-300 ${
+          scrolled ? "py-2" : "py-3"
+        }`}
+      >
+        <Link
+          to="/"
+          className={`display-title leading-none no-underline transition-all duration-300 ${
+            scrolled ? "text-lg" : "text-xl"
+          }`}
+        >
           The Strategic Master Library
         </Link>
         <nav className="flex items-center gap-5 font-mono text-[11px] tracking-widest uppercase">
-          <Link to="/volumes" className="no-underline hover:underline">
-            Volumes
-          </Link>
-          <Link to="/toolkit" className="hidden no-underline hover:underline sm:inline">
-            Toolkit
-          </Link>
-          <Link to="/certificate" className="no-underline hover:underline">
-            Certificate
-          </Link>
-          <Link to="/license" className="no-underline hover:underline">
-            License
-          </Link>
+          {NAV.map((item) => (
+            <Link
+              key={item.to}
+              to={item.to}
+              activeProps={{ "data-active": "true" }}
+              className={`rule-link no-underline ${item.hide ? "hidden sm:inline" : ""}`}
+            >
+              {item.label}
+            </Link>
+          ))}
         </nav>
-
       </div>
+      <ScrollProgress />
     </header>
   );
 }
+
 
 function SiteFooter() {
   return (
