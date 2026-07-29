@@ -147,9 +147,16 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
               name: "Kenneth E. Sweet Jr.",
               url: AUTHOR_URL,
               jobTitle: "Founder",
+              identifier: {
+                "@type": "PropertyValue",
+                propertyID: "ORCID",
+                value: ORCID_ID,
+                url: ORCID_URL,
+              },
               affiliation: { "@type": "Organization", name: COLLECTIVE, url: AUTHOR_URL },
-              sameAs: [AUTHOR_URL],
+              sameAs: [AUTHOR_URL, ORCID_URL],
             },
+
             {
               "@type": "WebSite",
               "@id": `${SITE_URL}/#website`,
