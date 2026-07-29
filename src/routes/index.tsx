@@ -8,6 +8,8 @@ import {
   TRUTH_LEGEND,
   SITE_URL,
   OG_IMAGE,
+  FAQ,
+  AUTHOR_URL,
 } from "@/lib/library";
 import { Reveal } from "@/components/Reveal";
 import { InstallSection } from "@/components/InstallSection";
@@ -58,6 +60,37 @@ export const Route = createFileRoute("/")({
           },
         }),
       },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: FAQ.map((f) => ({
+            "@type": "Question",
+            name: f.q,
+            acceptedAnswer: { "@type": "Answer", text: f.a },
+          })),
+        }),
+      },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "CollectionPage",
+          name: LIBRARY.title,
+          isAccessibleForFree: true,
+          license: `${SITE_URL}/license`,
+          hasPart: VOLUMES.map((v) => ({
+            "@type": "Book",
+            position: v.n,
+            name: `Volume ${v.numeral} — ${v.title}`,
+            abstract: v.message,
+            author: { "@type": "Person", name: LIBRARY.author, url: AUTHOR_URL },
+            isAccessibleForFree: true,
+            url: v.url,
+          })),
+        }),
+      },
     ],
   }),
   component: Home,
@@ -71,10 +104,10 @@ function DownloadButtons({ compact = false }: { compact?: boolean }) {
         href={ZIP_URL}
         download
         onClick={() => track("download_zip", { surface: compact ? "footer-cta" : "masthead" })}
-        className="ink-button group inline-flex items-center justify-center gap-2 rounded-sm border-2 border-foreground bg-foreground px-5 py-3.5 text-center font-mono text-[11px] tracking-[0.16em] uppercase text-background no-underline sm:justify-start sm:gap-3 sm:px-6 sm:text-xs sm:tracking-[0.18em]"
+        className="ink-button group inline-flex flex-col items-center justify-center gap-1 rounded-sm border-2 border-foreground bg-foreground px-5 py-3.5 text-center font-mono text-[11px] tracking-[0.16em] whitespace-nowrap uppercase text-background no-underline sm:flex-row sm:justify-start sm:gap-3 sm:px-6 sm:text-xs sm:tracking-[0.18em]"
       >
         Download the library
-        <span className="opacity-60 transition-opacity duration-300 group-hover:opacity-100">
+        <span className="text-[10px] opacity-60 transition-opacity duration-300 group-hover:opacity-100 sm:text-inherit">
           {(ZIP_BYTES / 1024).toFixed(0)} KB · ZIP
         </span>
       </a>
@@ -372,6 +405,34 @@ function Home() {
               <h3 className="display-title mt-2 mb-2 text-xl">{c.t}</h3>
               <p className="m-0 text-sm text-ink-dim">{c.d}</p>
             </Reveal>
+          ))}
+        </div>
+      </Reveal>
+
+      {/* FAQ */}
+      <Reveal as="section" className="mx-auto max-w-5xl px-5 pt-16 sm:px-6 sm:pt-20">
+        <h2 className="display-title border-b-2 border-foreground pb-2 text-[clamp(1.75rem,7vw,2rem)]">
+          Questions, answered
+        </h2>
+        <div className="mt-2">
+          {FAQ.map((f, i) => (
+            <details
+              key={f.q}
+              className="faq-row group border-b border-border py-4"
+              open={i === 0}
+            >
+              <summary className="flex cursor-pointer list-none items-start gap-3 font-semibold [&::-webkit-details-marker]:hidden">
+                <span
+                  className="mt-1 inline-block h-2 w-2 shrink-0 rounded-full transition-transform duration-300 group-open:scale-150"
+                  style={{ background: `var(--vol-${(i % 6) + 1})` }}
+                />
+                <span className="min-w-0 flex-1 text-[15px] leading-snug sm:text-base">{f.q}</span>
+                <span className="mt-0.5 shrink-0 font-mono text-ink-faint transition-transform duration-300 group-open:rotate-45">
+                  +
+                </span>
+              </summary>
+              <p className="mt-2 mb-0 pl-5 text-[15px] leading-relaxed text-ink-dim">{f.a}</p>
+            </details>
           ))}
         </div>
       </Reveal>

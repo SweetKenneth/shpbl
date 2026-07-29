@@ -14,6 +14,7 @@ import { reportLovableError } from "../lib/lovable-error-reporting";
 import { ScrollProgress } from "@/components/ScrollProgress";
 import { InstallPrompt } from "@/components/InstallPrompt";
 import { Analytics } from "@/components/Analytics";
+import { AUTHOR_URL, COLLECTIVE, SITE_URL } from "@/lib/library";
 
 
 function NotFoundComponent() {
@@ -79,7 +80,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "author", content: "Kenneth E. Sweet Jr." },
       { property: "og:type", content: "website" },
       { property: "og:site_name", content: "The Strategic Master Library" },
+      { property: "og:locale", content: "en_US" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "robots", content: "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" },
+      { name: "referrer", content: "strict-origin-when-cross-origin" },
+      { name: "color-scheme", content: "light" },
+      { name: "format-detection", content: "telephone=no" },
       { title: "The Strategic Master Library — Free Download | SHPBL" },
       { property: "og:title", content: "The Strategic Master Library — Free Download" },
       { name: "twitter:title", content: "The Strategic Master Library — Free Download" },
@@ -104,6 +110,58 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       {
         rel: "stylesheet",
         href: "https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap",
+      },
+      { rel: "author", href: AUTHOR_URL },
+      { rel: "me", href: AUTHOR_URL },
+      { rel: "sitemap", type: "application/xml", href: "/sitemap.xml" },
+    ],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "Organization",
+              "@id": `${SITE_URL}/#organization`,
+              name: "SHPBL",
+              alternateName: "The Strategic Master Library",
+              url: SITE_URL,
+              logo: `${SITE_URL}/icons/icon.svg`,
+              slogan: "Knowledge is Power · Legacy is Wealth · Built to Last",
+              parentOrganization: { "@type": "Organization", name: COLLECTIVE, url: AUTHOR_URL },
+              founder: { "@id": `${SITE_URL}/#author` },
+              sameAs: [AUTHOR_URL],
+              address: {
+                "@type": "PostalAddress",
+                addressLocality: "Abilene",
+                addressRegion: "TX",
+                addressCountry: "US",
+              },
+            },
+            {
+              "@type": "Person",
+              "@id": `${SITE_URL}/#author`,
+              name: "Kenneth E. Sweet Jr.",
+              url: AUTHOR_URL,
+              jobTitle: "Founder",
+              affiliation: { "@type": "Organization", name: COLLECTIVE, url: AUTHOR_URL },
+              sameAs: [AUTHOR_URL],
+            },
+            {
+              "@type": "WebSite",
+              "@id": `${SITE_URL}/#website`,
+              url: SITE_URL,
+              name: "The Strategic Master Library",
+              inLanguage: "en-US",
+              publisher: { "@id": `${SITE_URL}/#organization` },
+              copyrightHolder: { "@id": `${SITE_URL}/#author` },
+              copyrightYear: 2026,
+              license: `${SITE_URL}/license`,
+              isAccessibleForFree: true,
+            },
+          ],
+        }),
       },
     ],
   }),

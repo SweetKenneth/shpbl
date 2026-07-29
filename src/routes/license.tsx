@@ -17,6 +17,33 @@ export const Route = createFileRoute("/license")({
       { name: "twitter:image", content: OG_IMAGE },
     ],
     links: [{ rel: "canonical", href: `${SITE_URL}/license` }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
+            { "@type": "ListItem", position: 2, name: "License", item: `${SITE_URL}/license` },
+          ],
+        }),
+      },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "CreativeWork",
+          name: "Free Edition Grant v1.0",
+          about: LIBRARY.title,
+          url: `${SITE_URL}/license`,
+          license: `${SITE_URL}/license`,
+          isAccessibleForFree: true,
+          copyrightHolder: { "@type": "Person", name: LIBRARY.author },
+          copyrightYear: 2026,
+        }),
+      },
+    ],
   }),
   component: License,
 });
