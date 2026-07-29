@@ -434,7 +434,7 @@ function Home() {
       <Reveal as="section" className="mx-auto max-w-5xl px-5 pt-16 sm:px-6 sm:pt-20">
         <div className="paper-card ink-spot bg-paper-2 p-8">
           <p className="eyebrow m-0">Library seal · SHA-256</p>
-          <p className="seal-glow seal-scan mt-2 mb-6 font-mono text-[11px] break-all text-ink-dim sm:text-[13px]">
+          <p className="seal-scan mt-2 mb-6 font-mono text-[11px] break-all text-ink-dim sm:text-[13px]">
             {LIBRARY.librarySeal}
           </p>
           <h2 className="display-title text-[clamp(2rem,6vw,3.5rem)]">

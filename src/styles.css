@@ -589,22 +589,23 @@
   position: relative;
   isolation: isolate;
 
-  &::before {
+  &::after {
     content: "";
     position: absolute;
     inset: 0;
-    z-index: -1;
+    border-radius: inherit;
     opacity: 0;
     pointer-events: none;
+    mix-blend-mode: multiply;
     transition: opacity 0.45s ease;
     background: radial-gradient(
-      220px circle at var(--mx, 50%) var(--my, 50%),
-      color-mix(in oklab, var(--s, var(--vol-2)) 16%, transparent),
-      transparent 70%
+      240px circle at var(--mx, 50%) var(--my, 50%),
+      color-mix(in oklab, var(--s, var(--vol-2)) 13%, transparent),
+      transparent 68%
     );
   }
 
-  &:hover::before {
+  &:hover::after {
     opacity: 1;
   }
 }

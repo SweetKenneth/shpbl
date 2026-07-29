@@ -92,7 +92,7 @@ function Volumes() {
             </p>
             <p className="m-0 mt-1 font-mono text-[11px] break-all text-ink-faint">
               <span className="tracking-widest">SEAL · </span>
-              <span className="seal-glow seal-scan">{v.seal}</span>
+              <span className="seal-scan">{v.seal}</span>
             </p>
             <div className="mt-4 flex flex-wrap items-center gap-3">
               <a
