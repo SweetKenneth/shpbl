@@ -37,6 +37,13 @@ export function CertificateCard({ cert }: { cert: CertificateData }) {
         COPY No. {copy} · ISSUED {cert.issue_date}
       </p>
 
+      {cert.note && (
+        <p className="mx-auto -mt-4 mb-7 max-w-[520px] font-mono text-[11.5px] leading-relaxed tracking-[0.08em] text-ink-faint">
+          REGISTRAR'S NOTE · {cert.note}
+        </p>
+      )}
+
+
       <p className="mx-auto mb-6 max-w-[520px] text-[13.5px] leading-relaxed text-ink-dim">
         is the registered holder of this copy of the Volume Edition, issued free of charge
         under the Free Edition Grant v1.0 (LICENSE.txt). This certificate binds the copy to
