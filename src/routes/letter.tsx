@@ -130,7 +130,20 @@ function Letter() {
         <p className="mt-1 font-mono text-[11px] tracking-[0.18em] text-ink-faint uppercase">
           {LIBRARY.publisher} · {COLLECTIVE}
         </p>
+        <p className="mt-2 font-mono text-[11px] tracking-[0.14em] text-ink-faint">
+          <span className="uppercase">ORCID</span>{" "}
+          <a
+            href={ORCID_URL}
+            target="_blank"
+            rel="noopener noreferrer me"
+            onClick={() => track("outbound_click", { href: "orcid" })}
+            className="rule-link"
+          >
+            {ORCID_ID}
+          </a>
+        </p>
       </div>
+
 
       <section className="mt-16">
         <p className="eyebrow">Elsewhere</p>
