@@ -143,7 +143,7 @@ function SiteFooter() {
           The Strategic Master Library · Volume Edition · First Printing · 2026
         </p>
         <p>
-          © Kenneth E. Sweet Jr. · KESJR.com · Abilene, Texas · Built deterministically:
+          © Kenneth E. Sweet Jr. · SHPBL.com · Abilene, Texas · Built deterministically:
           same inputs, byte-identical outputs, forever.
         </p>
         <p className="mt-3 flex flex-wrap gap-4">
@@ -153,10 +153,14 @@ function SiteFooter() {
           <Link to="/toolkit" className="no-underline hover:underline">
             Toolkit
           </Link>
+          <Link to="/certificate" className="no-underline hover:underline">
+            Certificate
+          </Link>
           <Link to="/license" className="no-underline hover:underline">
             License
           </Link>
         </p>
+
       </div>
     </footer>
   );
