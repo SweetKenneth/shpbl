@@ -58,6 +58,37 @@ export const Route = createFileRoute("/")({
           },
         }),
       },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: FAQ.map((f) => ({
+            "@type": "Question",
+            name: f.q,
+            acceptedAnswer: { "@type": "Answer", text: f.a },
+          })),
+        }),
+      },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "CollectionPage",
+          name: LIBRARY.title,
+          isAccessibleForFree: true,
+          license: `${SITE_URL}/license`,
+          hasPart: VOLUMES.map((v) => ({
+            "@type": "Book",
+            position: v.n,
+            name: `Volume ${v.numeral} — ${v.title}`,
+            abstract: v.message,
+            author: { "@type": "Person", name: LIBRARY.author, url: AUTHOR_URL },
+            isAccessibleForFree: true,
+            url: v.url,
+          })),
+        }),
+      },
     ],
   }),
   component: Home,
