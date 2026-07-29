@@ -83,7 +83,7 @@ function readerHead(slug: string): string {
   return `
 <meta name="description" content="${escapeAttr(description)}">
 <meta name="author" content="${escapeAttr(LIBRARY.author)}">
-<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="robots" content="${v ? "index, follow, max-image-preview:large, max-snippet:-1" : "noindex, follow"}">
 <link rel="canonical" href="${canonical}">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="${escapeAttr(LIBRARY.title)}">
