@@ -14,6 +14,7 @@ import { reportLovableError } from "../lib/lovable-error-reporting";
 import { ScrollProgress } from "@/components/ScrollProgress";
 import { InstallPrompt } from "@/components/InstallPrompt";
 import { Analytics } from "@/components/Analytics";
+import { AUTHOR_URL, COLLECTIVE, SITE_URL } from "@/lib/library";
 
 
 function NotFoundComponent() {
