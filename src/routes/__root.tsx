@@ -175,30 +175,24 @@ function SiteHeader() {
 
 function SiteFooter() {
   return (
-    <footer className="mt-24 border-t-[3px] border-foreground">
+    <footer className="no-print mt-24 border-t-[3px] border-foreground">
+      <div className="spectrum-rule h-[3px] w-full opacity-40" />
       <div className="mx-auto max-w-5xl px-6 py-10 font-mono text-[12px] leading-loose text-ink-faint">
         <p className="text-ink-dim">
           The Strategic Master Library · Volume Edition · First Printing · 2026
         </p>
         <p>
           © Kenneth E. Sweet Jr. · SHPBL.com · Abilene, Texas · Built deterministically:
-          same inputs, byte-identical outputs, forever.
+          same inputs, byte-identical outputs, forever
+          <span className="caret-blink ml-1 inline-block">▌</span>
         </p>
-        <p className="mt-3 flex flex-wrap gap-4">
-          <Link to="/volumes" className="no-underline hover:underline">
-            Volumes
-          </Link>
-          <Link to="/toolkit" className="no-underline hover:underline">
-            Toolkit
-          </Link>
-          <Link to="/certificate" className="no-underline hover:underline">
-            Certificate
-          </Link>
-          <Link to="/license" className="no-underline hover:underline">
-            License
-          </Link>
+        <p className="mt-3 flex flex-wrap gap-5">
+          {NAV.map((item) => (
+            <Link key={item.to} to={item.to} className="rule-link no-underline">
+              {item.label}
+            </Link>
+          ))}
         </p>
-
       </div>
     </footer>
   );
@@ -209,7 +203,7 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <div className="flex min-h-screen flex-col">
+      <div className="page-grain flex min-h-screen flex-col">
         <SiteHeader />
         <main className="flex-1">
           {/* Required: nested routes render here. */}
@@ -220,3 +214,4 @@ function RootComponent() {
     </QueryClientProvider>
   );
 }
+
