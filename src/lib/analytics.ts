@@ -18,7 +18,13 @@ export type AnalyticsEvent =
   | "install_dismissed"
   | "app_launched_standalone"
   | "brand_kit_download"
-  | "outbound_click";
+  | "outbound_click"
+  | "closing_track_view"
+  | "closing_track_play"
+  | "closing_track_pause"
+  | "closing_track_complete"
+  | "closing_track_seek"
+  | "closing_track_lyrics_open";
 
 const SESSION_KEY = "shpbl:sid";
 const OPT_OUT_KEY = "shpbl:analytics-off";
