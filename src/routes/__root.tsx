@@ -16,7 +16,7 @@ import { InstallPrompt } from "@/components/InstallPrompt";
 import { Analytics } from "@/components/Analytics";
 import { PointerInk } from "@/components/PointerInk";
 
-import { AUTHOR_URL, COLLECTIVE, SITE_URL } from "@/lib/library";
+import { AUTHOR_URL, COLLECTIVE, ORCID_ID, ORCID_URL, SITE_URL } from "@/lib/library";
 
 
 function NotFoundComponent() {
