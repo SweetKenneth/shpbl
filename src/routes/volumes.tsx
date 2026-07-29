@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { OG_IMAGE, SITE_URL, VOLUMES, ZIP_URL } from "@/lib/library";
+import { Reveal } from "@/components/Reveal";
 
 const TITLE = "The Six Volumes — Strategic Master Library | SHPBL";
 const DESC =
