@@ -96,7 +96,7 @@ function DownloadButtons({ compact = false }: { compact?: boolean }) {
 function Shelf() {
   return (
     <div>
-      <div className="flex flex-wrap items-end gap-2 px-1 sm:gap-2.5 sm:px-1.5">
+      <div className="grid grid-cols-6 items-end gap-1.5 px-1 sm:flex sm:flex-wrap sm:gap-2.5 sm:px-1.5">
         {VOLUMES.map((v, i) => (
           <a
             key={v.n}
