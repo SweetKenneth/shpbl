@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as VolumesRouteImport } from './routes/volumes'
 import { Route as ToolkitRouteImport } from './routes/toolkit'
+import { Route as LicenseRouteImport } from './routes/license'
 import { Route as IndexRouteImport } from './routes/index'
 
 const VolumesRoute = VolumesRouteImport.update({
@@ -23,6 +24,11 @@ const ToolkitRoute = ToolkitRouteImport.update({
   path: '/toolkit',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LicenseRoute = LicenseRouteImport.update({
+  id: '/license',
+  path: '/license',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -31,30 +37,34 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/license': typeof LicenseRoute
   '/toolkit': typeof ToolkitRoute
   '/volumes': typeof VolumesRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/license': typeof LicenseRoute
   '/toolkit': typeof ToolkitRoute
   '/volumes': typeof VolumesRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/license': typeof LicenseRoute
   '/toolkit': typeof ToolkitRoute
   '/volumes': typeof VolumesRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/toolkit' | '/volumes'
+  fullPaths: '/' | '/license' | '/toolkit' | '/volumes'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/toolkit' | '/volumes'
-  id: '__root__' | '/' | '/toolkit' | '/volumes'
+  to: '/' | '/license' | '/toolkit' | '/volumes'
+  id: '__root__' | '/' | '/license' | '/toolkit' | '/volumes'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  LicenseRoute: typeof LicenseRoute
   ToolkitRoute: typeof ToolkitRoute
   VolumesRoute: typeof VolumesRoute
 }
@@ -75,6 +85,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ToolkitRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/license': {
+      id: '/license'
+      path: '/license'
+      fullPath: '/license'
+      preLoaderRoute: typeof LicenseRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -87,6 +104,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  LicenseRoute: LicenseRoute,
   ToolkitRoute: ToolkitRoute,
   VolumesRoute: VolumesRoute,
 }
