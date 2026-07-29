@@ -19,11 +19,11 @@ export const Route = createFileRoute("/")({
     meta: [
       { title: TITLE },
       { name: "description", content: DESC },
-      { property: "og:title", content: "The Strategic Master Library — Volume Edition" },
+      { property: "og:title", content: "Lovable App" },
       {
         property: "og:description",
         content:
-          "Six volumes. One discipline. Free download of the audited owner's-manual method, with the toolkit that ships it.",
+          "Master Library Hub provides free access to a strategic master library with licensing information.",
       },
       { property: "og:url", content: SITE_URL },
       { property: "og:image", content: OG_IMAGE },
