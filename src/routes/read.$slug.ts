@@ -188,6 +188,8 @@ export const Route = createFileRoute("/read/$slug")({
           },
         );
 
+        // Dress the head for crawlers and share cards; the body gets the chrome.
+        html = html.replace(/<\/head>/i, `${readerHead(params.slug)}</head>`);
         html = html.replace(/<body([^>]*)>/i, (m, attrs) => `<body${attrs}>${readerChrome(params.slug)}`);
 
         // Volume VI closes the library, so it carries the closing track —
@@ -207,9 +209,11 @@ export const Route = createFileRoute("/read/$slug")({
             "content-type": "text/html; charset=utf-8",
             "content-disposition": "inline",
             "cache-control": "public, max-age=3600, stale-while-revalidate=86400",
-            "x-robots-tag": "noindex",
+            // The volumes are the point of the site — let them be found.
+            "x-robots-tag": "index, follow, max-snippet:-1, max-image-preview:large",
           },
         });
+
       },
     },
   },
