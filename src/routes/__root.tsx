@@ -214,6 +214,19 @@ function SiteFooter() {
           same inputs, byte-identical outputs, forever
           <span className="caret-blink ml-1 inline-block">▌</span>
         </p>
+        <p className="mt-4 flex flex-wrap items-center gap-2 border-t border-border pt-4 text-[11px] tracking-[0.14em] uppercase">
+          <span className="spectrum-rule inline-block h-2 w-2 shrink-0 rounded-full" />
+          <span className="text-ink-dim">A KESJr Collective Project</span>
+          <span aria-hidden="true">·</span>
+          <a
+            href="https://KESJr.com"
+            target="_blank"
+            rel="noopener"
+            className="rule-link no-underline"
+          >
+            KESJr.com
+          </a>
+        </p>
         <p className="mt-3 flex flex-wrap gap-5">
           {NAV.map((item) => (
             <Link key={item.to} to={item.to} className="rule-link no-underline">
