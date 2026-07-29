@@ -1,6 +1,16 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 
-import { AUTHOR_URL, COLLECTIVE, LIBRARY, OG_IMAGE, SITE_URL, ZIP_URL } from "@/lib/library";
+import {
+  AUTHOR_URL,
+  COLLECTIVE,
+  LIBRARY,
+  OG_IMAGE,
+  ORCID_ID,
+  ORCID_URL,
+  SITE_URL,
+  ZIP_URL,
+} from "@/lib/library";
+
 import { track } from "@/lib/analytics";
 
 const TITLE = "Letter from the Author | SHPBL";
