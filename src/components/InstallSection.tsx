@@ -81,7 +81,7 @@ export function InstallSection() {
           </p>
 
           <div
-            className={`mt-5 inline-flex max-w-full items-center gap-2.5 rounded-sm border-2 px-3 py-1.5 font-mono text-[10px] tracking-[0.16em] uppercase sm:text-[11px] ${
+            className={`mt-5 inline-flex max-w-full items-center gap-2.5 text-left rounded-sm border-2 px-3 py-1.5 font-mono text-[10px] tracking-[0.16em] uppercase sm:text-[11px] ${
               installed ? "border-vol-5 text-vol-5" : "border-border-strong text-ink-faint"
             }`}
           >
@@ -89,7 +89,7 @@ export function InstallSection() {
               className={`h-2 w-2 shrink-0 rounded-full ${installed ? "bg-vol-5" : "bg-border-strong"}`}
               style={installed ? { boxShadow: "0 0 12px 2px var(--vol-5)" } : undefined}
             />
-            <span className="truncate">{status}</span>
+            <span className="leading-snug">{status}</span>
           </div>
 
           <div className="mt-6 flex flex-wrap items-center gap-2.5">
