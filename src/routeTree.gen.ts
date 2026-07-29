@@ -14,6 +14,7 @@ import { Route as ToolkitRouteImport } from './routes/toolkit'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as LicenseRouteImport } from './routes/license'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as CertificateIndexRouteImport } from './routes/certificate.index'
 
 const VolumesRoute = VolumesRouteImport.update({
   id: '/volumes',
@@ -40,6 +41,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CertificateIndexRoute = CertificateIndexRouteImport.update({
+  id: '/certificate/',
+  path: '/certificate/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -47,6 +53,7 @@ export interface FileRoutesByFullPath {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/toolkit': typeof ToolkitRoute
   '/volumes': typeof VolumesRoute
+  '/certificate/': typeof CertificateIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -54,6 +61,7 @@ export interface FileRoutesByTo {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/toolkit': typeof ToolkitRoute
   '/volumes': typeof VolumesRoute
+  '/certificate': typeof CertificateIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -62,13 +70,33 @@ export interface FileRoutesById {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/toolkit': typeof ToolkitRoute
   '/volumes': typeof VolumesRoute
+  '/certificate/': typeof CertificateIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/license' | '/sitemap.xml' | '/toolkit' | '/volumes'
+  fullPaths:
+    | '/'
+    | '/license'
+    | '/sitemap.xml'
+    | '/toolkit'
+    | '/volumes'
+    | '/certificate/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/license' | '/sitemap.xml' | '/toolkit' | '/volumes'
-  id: '__root__' | '/' | '/license' | '/sitemap.xml' | '/toolkit' | '/volumes'
+  to:
+    | '/'
+    | '/license'
+    | '/sitemap.xml'
+    | '/toolkit'
+    | '/volumes'
+    | '/certificate'
+  id:
+    | '__root__'
+    | '/'
+    | '/license'
+    | '/sitemap.xml'
+    | '/toolkit'
+    | '/volumes'
+    | '/certificate/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -77,6 +105,7 @@ export interface RootRouteChildren {
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   ToolkitRoute: typeof ToolkitRoute
   VolumesRoute: typeof VolumesRoute
+  CertificateIndexRoute: typeof CertificateIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -116,6 +145,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/certificate/': {
+      id: '/certificate/'
+      path: '/certificate'
+      fullPath: '/certificate/'
+      preLoaderRoute: typeof CertificateIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -125,6 +161,7 @@ const rootRouteChildren: RootRouteChildren = {
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   ToolkitRoute: ToolkitRoute,
   VolumesRoute: VolumesRoute,
+  CertificateIndexRoute: CertificateIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
