@@ -115,6 +115,17 @@ const VOLUME_SOURCE = [
   },
 ];
 
+export const VOLUMES: Volume[] = VOLUME_SOURCE.map((v) => {
+  const slug = v.url.split("/").pop()!.replace(/\.html$/, "");
+  return { ...v, slug, readUrl: `/read/${slug}` };
+});
+
+export const VOLUME_BY_SLUG: Record<string, Volume> = Object.fromEntries(
+  VOLUMES.map((v) => [v.slug, v]),
+);
+
+
+
 export const TRUTH_LEGEND = [
   { tag: "CONFIRMED", def: "Directly verifiable in the codebase, database, or shipped product." },
   { tag: "OBSERVED", def: "Present in committed docs, migrations, or memory files; load-bearing intent." },
