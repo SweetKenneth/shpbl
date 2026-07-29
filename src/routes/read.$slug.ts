@@ -28,6 +28,13 @@ const escapeAttr = (s: string) =>
  * canonical, social, and citation metadata — none of which alters the bytes a
  * reader downloads or the seal they can verify against.
  */
+function readerTitle(slug: string): string {
+  const v = VOLUME_BY_SLUG[slug];
+  return v
+    ? `Volume ${v.numeral} — ${v.title} | SHPBL`
+    : "The Shelf — The Strategic Master Library | SHPBL";
+}
+
 function readerHead(slug: string): string {
   const v = VOLUME_BY_SLUG[slug];
   // The printable shelf duplicates /volumes, so it points its canonical there
@@ -35,9 +42,7 @@ function readerHead(slug: string): string {
   const canonical = v ? `${SITE_URL}/read/${slug}` : `${SITE_URL}/volumes`;
 
 
-  const title = v
-    ? `Volume ${v.numeral} — ${v.title} | SHPBL`
-    : "The Shelf — The Strategic Master Library | SHPBL";
+  const title = readerTitle(slug);
   const description = v
     ? `${v.message} Volume ${v.numeral} of The Strategic Master Library, free to read, print, and keep.`
     : "All six volumes of The Strategic Master Library on one shelf. Free to read, print, and keep.";
@@ -190,6 +195,9 @@ export const Route = createFileRoute("/read/$slug")({
           },
         );
 
+        // The sealed file's <title> is a bare "Volume I — DEMOTE CLAIMS"; the
+        // reader URL is a search result, so give it the branded, cased form.
+        html = html.replace(/<title>[\s\S]*?<\/title>/i, `<title>${escapeAttr(readerTitle(params.slug))}</title>`);
         // Dress the head for crawlers and share cards; the body gets the chrome.
         html = html.replace(/<\/head>/i, `${readerHead(params.slug)}</head>`);
         html = html.replace(/<body([^>]*)>/i, (m, attrs) => `<body${attrs}>${readerChrome(params.slug)}`);
