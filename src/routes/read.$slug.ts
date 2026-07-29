@@ -30,8 +30,6 @@ function readerChrome(slug: string): string {
   background:var(--accent);transition:width .1s linear}
 @media (max-width:520px){.shpbl-bar .shpbl-where{display:none}}
 @media print{.shpbl-bar,.shpbl-progress{display:none!important}}
-.spine{overflow:hidden}
-.spine .s-title{font-size:16px;letter-spacing:.8px;white-space:normal;line-height:1.1;max-height:100%;padding:0 1px}
 </style>
 <div class="shpbl-bar">
   <nav>${link("/", "← SHPBL")}<span class="shpbl-where">${label}</span></nav>
