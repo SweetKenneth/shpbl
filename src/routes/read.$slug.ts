@@ -1,8 +1,108 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { SHELF_URL, VOLUME_BY_SLUG, VOLUMES } from "@/lib/library";
+import {
+  AUTHOR_URL,
+  COLLECTIVE,
+  LIBRARY,
+  OG_IMAGE,
+  ORCID_ID,
+  ORCID_URL,
+  SHELF_URL,
+  SITE_URL,
+  VOLUME_BY_SLUG,
+  VOLUMES,
+} from "@/lib/library";
 
 const SHELF_SLUG = "shelf";
+
+const escapeAttr = (s: string) =>
+  s
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+
+/**
+ * The sealed HTML carries a bare <title> and nothing else. These volumes are
+ * the substance of the site, so the reader route dresses the proxied head with
+ * canonical, social, and citation metadata — none of which alters the bytes a
+ * reader downloads or the seal they can verify against.
+ */
+function readerHead(slug: string): string {
+  const v = VOLUME_BY_SLUG[slug];
+  const canonical = `${SITE_URL}/read/${slug}`;
+
+  const title = v
+    ? `Volume ${v.numeral} — ${v.title} | SHPBL`
+    : "The Shelf — The Strategic Master Library | SHPBL";
+  const description = v
+    ? `${v.message} Volume ${v.numeral} of The Strategic Master Library, free to read, print, and keep.`
+    : "All six volumes of The Strategic Master Library on one shelf. Free to read, print, and keep.";
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": v ? "Chapter" : "CollectionPage",
+    name: v ? `Volume ${v.numeral} — ${v.title}` : "The Shelf",
+    headline: v ? `Volume ${v.numeral} — ${v.title}` : "The Shelf",
+    url: canonical,
+    inLanguage: "en",
+    isAccessibleForFree: true,
+    license: `${SITE_URL}/license`,
+    ...(v
+      ? {
+          position: v.n,
+          abstract: v.message,
+          isPartOf: {
+            "@type": "Book",
+            name: LIBRARY.title,
+            bookEdition: LIBRARY.subtitle,
+            url: SITE_URL,
+            numberOfPages: undefined,
+          },
+        }
+      : {}),
+    author: {
+      "@type": "Person",
+      "@id": `${SITE_URL}/#author`,
+      name: LIBRARY.author,
+      url: AUTHOR_URL,
+      identifier: {
+        "@type": "PropertyValue",
+        propertyID: "ORCID",
+        value: ORCID_ID,
+        url: ORCID_URL,
+      },
+      sameAs: [AUTHOR_URL, ORCID_URL],
+    },
+    publisher: { "@type": "Organization", name: COLLECTIVE, url: AUTHOR_URL },
+  };
+
+  return `
+<meta name="description" content="${escapeAttr(description)}">
+<meta name="author" content="${escapeAttr(LIBRARY.author)}">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<link rel="canonical" href="${canonical}">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="${escapeAttr(LIBRARY.title)}">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="${escapeAttr(title)}">
+<meta property="og:description" content="${escapeAttr(description)}">
+<meta property="og:url" content="${canonical}">
+<meta property="og:image" content="${OG_IMAGE}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="${escapeAttr(title)}">
+<meta name="twitter:description" content="${escapeAttr(description)}">
+<meta name="twitter:image" content="${OG_IMAGE}">
+<meta name="theme-color" content="#fafaf7">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" sizes="180x180">
+<link rel="manifest" href="/manifest.webmanifest">
+${v && v.n > 1 ? `<link rel="prev" href="${SITE_URL}/read/${VOLUMES[v.n - 2].slug}">` : ""}
+${v && v.n < VOLUMES.length ? `<link rel="next" href="${SITE_URL}/read/${VOLUMES[v.n].slug}">` : ""}
+<script type="application/ld+json">${JSON.stringify(jsonLd).replace(/</g, "\\u003c")}</script>
+`;
+}
+
 
 /** Slim, print-hidden chrome so a reader is never stranded inside a volume. */
 function readerChrome(slug: string): string {
