@@ -552,3 +552,110 @@
     animation: ink-rise 420ms cubic-bezier(0.16, 1, 0.3, 1) both;
   }
 }
+
+
+/* ── Signature layer ───────────────────────────────────────────────
+   Effects that are specific to this library: a deterministic seal that
+   looks like it is being re-derived, ink that lifts toward the cursor,
+   and page turns that behave like paper rather than like a router.      */
+
+/* Seals read as computed, not typed. A hairline of light travels the
+   hash on hover — the visual analogue of re-running the hash. */
+@utility seal-scan {
+  background-image: linear-gradient(
+    100deg,
+    currentColor 0%,
+    currentColor 40%,
+    var(--vol-2) 50%,
+    currentColor 60%,
+    currentColor 100%
+  );
+  background-size: 300% 100%;
+  background-position: 100% 0;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  transition: background-position 1.1s cubic-bezier(0.2, 0.9, 0.2, 1);
+
+  &:hover {
+    background-position: 0 0;
+  }
+}
+
+/* Pointer-reactive paper: a soft accent bloom follows the cursor across
+   a card, driven by --mx/--my written by the global pointer listener. */
+@utility ink-spot {
+  position: relative;
+  isolation: isolate;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.45s ease;
+    background: radial-gradient(
+      220px circle at var(--mx, 50%) var(--my, 50%),
+      color-mix(in oklab, var(--s, var(--vol-2)) 16%, transparent),
+      transparent 70%
+    );
+  }
+
+  &:hover::before {
+    opacity: 1;
+  }
+}
+
+/* Selection inside a volume block picks up that volume's accent. */
+.vol-panel ::selection,
+.spine ::selection {
+  background: var(--s, var(--foreground));
+  color: var(--background);
+}
+
+/* Presses register on touch, where there is no hover to rely on. */
+@media (hover: none) {
+  .ink-button:active,
+  .ghost-button:active,
+  .paper-card:active {
+    transform: scale(0.985);
+  }
+}
+
+/* Page turns: content crossfades and lifts a few pixels instead of
+   snapping. Chromium/Safari today, inert elsewhere. */
+@view-transition {
+  navigation: auto;
+}
+
+::view-transition-old(root) {
+  animation: vt-out 180ms cubic-bezier(0.4, 0, 1, 1) both;
+}
+
+::view-transition-new(root) {
+  animation: vt-in 340ms cubic-bezier(0.2, 0.9, 0.2, 1) both;
+}
+
+@keyframes vt-out {
+  to {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+
+@keyframes vt-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none;
+  }
+}
