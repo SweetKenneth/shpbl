@@ -21,8 +21,19 @@ export const Route = createFileRoute("/read/$slug")({
           return new Response("Volume temporarily unavailable.", { status: 502 });
         }
 
-        const html = await upstream.text();
+        const raw = await upstream.text();
+        // The sealed HTML links to sibling files (index.html, volume-NN-….html).
+        // Under /read/:slug those relative paths 404, so map them onto app routes.
+        const html = raw.replace(
+          /href="(?:\.\/)?([A-Za-z0-9._-]+)\.html"/g,
+          (match, name: string) => {
+            if (name === "index") return 'href="/volumes"';
+            if (VOLUME_BY_SLUG[name]) return `href="/read/${name}"`;
+            return match;
+          },
+        );
         return new Response(html, {
+
           status: 200,
           headers: {
             "content-type": "text/html; charset=utf-8",
