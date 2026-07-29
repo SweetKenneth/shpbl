@@ -1,6 +1,7 @@
-import { useState } from "react";
-import { createFileRoute } from "@tanstack/react-router";
+import { useState, useEffect } from "react";
+import { createFileRoute, useSearch } from "@tanstack/react-router";
 import { useMutation } from "@tanstack/react-query";
+
 
 import { getAnalyticsReport } from "@/lib/analytics.functions";
 import type { AnalyticsReport } from "@/lib/analytics.server";
@@ -55,14 +56,22 @@ function Bars({ title, rows }: { title: string; rows: { label: string; count: nu
 }
 
 function Pulse() {
+  const search = useSearch({ from: "/pulse" });
   const [key, setKey] = useState("");
   const [days, setDays] = useState(30);
   const [report, setReport] = useState<AnalyticsReport | null>(null);
+
+  useEffect(() => {
+    if (search.key && typeof search.key === "string") {
+      setKey(search.key);
+    }
+  }, [search.key]);
 
   const load = useMutation({
     mutationFn: (input: { key: string; days: number }) => getAnalyticsReport({ data: input }),
     onSuccess: (data) => setReport(data),
   });
+
 
   const pct = (n: number) => `${(n * 100).toFixed(1)}%`;
 
