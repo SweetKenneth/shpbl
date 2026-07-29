@@ -104,10 +104,10 @@ function DownloadButtons({ compact = false }: { compact?: boolean }) {
         href={ZIP_URL}
         download
         onClick={() => track("download_zip", { surface: compact ? "footer-cta" : "masthead" })}
-        className="ink-button group inline-flex items-center justify-center gap-2 rounded-sm border-2 border-foreground bg-foreground px-5 py-3.5 text-center font-mono text-[11px] tracking-[0.16em] uppercase text-background no-underline sm:justify-start sm:gap-3 sm:px-6 sm:text-xs sm:tracking-[0.18em]"
+        className="ink-button group inline-flex flex-col items-center justify-center gap-1 rounded-sm border-2 border-foreground bg-foreground px-5 py-3.5 text-center font-mono text-[11px] tracking-[0.16em] whitespace-nowrap uppercase text-background no-underline sm:flex-row sm:justify-start sm:gap-3 sm:px-6 sm:text-xs sm:tracking-[0.18em]"
       >
         Download the library
-        <span className="opacity-60 transition-opacity duration-300 group-hover:opacity-100">
+        <span className="text-[10px] opacity-60 transition-opacity duration-300 group-hover:opacity-100 sm:text-inherit">
           {(ZIP_BYTES / 1024).toFixed(0)} KB · ZIP
         </span>
       </a>
