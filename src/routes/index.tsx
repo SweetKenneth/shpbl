@@ -9,6 +9,7 @@ import {
   SITE_URL,
   OG_IMAGE,
 } from "@/lib/library";
+import { Reveal } from "@/components/Reveal";
 
 const TITLE = "The Strategic Master Library — Free Download | SHPBL";
 const DESC =
@@ -19,17 +20,14 @@ export const Route = createFileRoute("/")({
     meta: [
       { title: TITLE },
       { name: "description", content: DESC },
-      { property: "og:title", content: "Lovable App" },
-      {
-        property: "og:description",
-        content:
-          "Master Library Hub provides free access to a strategic master library with licensing information.",
-      },
+      { property: "og:title", content: TITLE },
+      { property: "og:description", content: DESC },
       { property: "og:url", content: SITE_URL },
       { property: "og:image", content: OG_IMAGE },
       { property: "og:image:width", content: "1200" },
       { property: "og:image:height", content: "630" },
       { name: "twitter:image", content: OG_IMAGE },
+
     ],
     links: [{ rel: "canonical", href: `${SITE_URL}/` }],
     scripts: [
@@ -69,17 +67,19 @@ function DownloadButtons({ compact = false }: { compact?: boolean }) {
       <a
         href={ZIP_URL}
         download
-        className="inline-flex items-center gap-3 rounded-sm border-2 border-foreground bg-foreground px-6 py-3 font-mono text-xs tracking-[0.18em] uppercase text-background no-underline transition-transform hover:-translate-y-0.5"
+        className="ink-button group inline-flex items-center gap-3 rounded-sm border-2 border-foreground bg-foreground px-6 py-3 font-mono text-xs tracking-[0.18em] uppercase text-background no-underline"
       >
         Download the library
-        <span className="opacity-60">{(ZIP_BYTES / 1024).toFixed(0)} KB · ZIP</span>
+        <span className="opacity-60 transition-opacity duration-300 group-hover:opacity-100">
+          {(ZIP_BYTES / 1024).toFixed(0)} KB · ZIP
+        </span>
       </a>
       {!compact && (
         <a
           href={SHELF_URL}
           target="_blank"
           rel="noopener"
-          className="inline-flex items-center rounded-sm border-2 border-foreground px-6 py-3 font-mono text-xs tracking-[0.18em] uppercase no-underline transition-colors hover:bg-foreground hover:text-background"
+          className="ghost-button inline-flex items-center rounded-sm border-2 border-foreground px-6 py-3 font-mono text-xs tracking-[0.18em] uppercase no-underline"
         >
           Read the shelf online
         </a>
@@ -92,14 +92,17 @@ function Shelf() {
   return (
     <div>
       <div className="flex flex-wrap items-end gap-2.5 px-1.5">
-        {VOLUMES.map((v) => (
+        {VOLUMES.map((v, i) => (
           <a
             key={v.n}
             href={v.url}
             target="_blank"
             rel="noopener"
-            style={{ ["--s" as string]: `var(--vol-${v.n})` }}
-            className="spine flex h-[300px] min-w-[74px] items-center justify-between py-4 no-underline"
+            style={{
+              ["--s" as string]: `var(--vol-${v.n})`,
+              animationDelay: `${120 + i * 90}ms`,
+            }}
+            className="spine ink-rise flex h-[300px] min-w-[74px] items-center justify-between py-4 no-underline"
             aria-label={`Volume ${v.numeral} — ${v.title}`}
           >
             <span
@@ -113,7 +116,7 @@ function Shelf() {
           </a>
         ))}
       </div>
-      <div className="mt-0 h-3.5 rounded-sm bg-foreground" />
+      <div className="mt-0 h-3.5 rounded-sm bg-foreground shadow-[0_10px_26px_-18px_var(--foreground)]" />
       <p className="eyebrow mt-2">Pull a spine to read it · Each volume is one self-contained file</p>
     </div>
   );
@@ -124,29 +127,43 @@ function Home() {
     <>
       {/* Masthead */}
       <section className="mx-auto max-w-5xl px-6 pt-16 pb-4">
-        <p className="eyebrow">{LIBRARY.edition} · Free Edition</p>
-        <h1 className="display-title mt-4 text-[clamp(3rem,10vw,6.5rem)]">
+        <p className="eyebrow ink-rise">{LIBRARY.edition} · Free Edition</p>
+        <h1
+          className="display-title ink-rise mt-4 text-[clamp(3rem,10vw,6.5rem)]"
+          style={{ animationDelay: "80ms" }}
+        >
           The Strategic
           <br />
           Master Library
         </h1>
         {/* The spectrum appears exactly once. */}
-        <div className="spectrum-rule mt-5 h-2 rounded-full" />
-        <p className="eyebrow mt-3 text-ink-dim">{LIBRARY.tagline}</p>
+        <div
+          className="spectrum-rule ink-rise mt-5 h-2 origin-left rounded-full shadow-[0_0_24px_-6px_var(--vol-2)]"
+          style={{ animationDelay: "180ms" }}
+        />
+        <p className="eyebrow ink-rise mt-3 text-ink-dim" style={{ animationDelay: "240ms" }}>
+          {LIBRARY.tagline}
+        </p>
 
-        <p className="mt-8 max-w-2xl text-[19px] leading-relaxed text-ink-dim">
+        <p
+          className="ink-rise mt-8 max-w-2xl text-[19px] leading-relaxed text-ink-dim"
+          style={{ animationDelay: "300ms" }}
+        >
           Six volumes distilled from a private compendium of twenty-nine audited project
           owner's manuals — reorganized by <em>message</em>, not by project — plus the
           two-stage toolkit that produced those manuals, so the method ships as an
           instrument, not just an argument.
         </p>
 
-        <div className="mt-8">
+        <div className="ink-rise mt-8" style={{ animationDelay: "380ms" }}>
           <DownloadButtons />
         </div>
-        <p className="mt-4 font-mono text-[12px] text-ink-faint">
+        <p
+          className="ink-rise mt-4 font-mono text-[12px] text-ink-faint"
+          style={{ animationDelay: "440ms" }}
+        >
           No email. No account. No tracking. Read the{" "}
-          <Link to="/license" className="underline">
+          <Link to="/license" className="rule-link">
             license
           </Link>{" "}
           before you redistribute.
@@ -159,7 +176,7 @@ function Home() {
       </section>
 
       {/* Message list */}
-      <section className="mx-auto max-w-5xl px-6 pt-16">
+      <Reveal as="section" className="mx-auto max-w-5xl px-6 pt-16">
         <h2 className="display-title border-b-2 border-foreground pb-2 text-3xl">
           The six messages
         </h2>
@@ -167,10 +184,10 @@ function Home() {
           {VOLUMES.map((v) => (
             <li
               key={v.n}
-              className="grid grid-cols-[52px_1fr] items-baseline gap-4 border-b border-border py-4"
+              className="list-row group grid grid-cols-[52px_1fr] items-baseline gap-4 border-b border-border py-4"
             >
               <span
-                className="font-display text-2xl"
+                className="font-display text-2xl transition-transform duration-300 group-hover:scale-110"
                 style={{ color: `var(--vol-${v.n})` }}
               >
                 {v.numeral}
@@ -180,7 +197,7 @@ function Home() {
                   href={v.url}
                   target="_blank"
                   rel="noopener"
-                  className="font-semibold no-underline hover:underline"
+                  className="rule-link font-semibold"
                 >
                   {v.title}
                 </a>
@@ -193,14 +210,19 @@ function Home() {
           ))}
         </ul>
         <p className="mt-6">
-          <Link to="/volumes" className="font-mono text-xs tracking-widest uppercase">
-            Full volume index →
+          <Link
+            to="/volumes"
+            className="rule-link group inline-flex items-center gap-2 font-mono text-xs tracking-widest uppercase"
+          >
+            Full volume index
+            <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
           </Link>
         </p>
-      </section>
+      </Reveal>
+
 
       {/* What this is */}
-      <section className="mx-auto grid max-w-5xl gap-10 px-6 pt-20 md:grid-cols-2">
+      <Reveal as="section" className="mx-auto grid max-w-5xl gap-10 px-6 pt-20 md:grid-cols-2">
         <div>
           <h2 className="display-title border-b-2 border-foreground pb-2 text-3xl">
             What this is
@@ -243,10 +265,10 @@ function Home() {
             part that transfers.
           </p>
         </div>
-      </section>
+      </Reveal>
 
       {/* Truth legend */}
-      <section className="mx-auto max-w-5xl px-6 pt-20">
+      <Reveal as="section" className="mx-auto max-w-5xl px-6 pt-20">
         <h2 className="display-title border-b-2 border-foreground pb-2 text-3xl">
           The truth legend
         </h2>
@@ -256,7 +278,7 @@ function Home() {
         </p>
         <div className="mt-6 grid gap-3 sm:grid-cols-2">
           {TRUTH_LEGEND.map((t) => (
-            <div key={t.tag} className="flex items-start gap-3 border-b border-border pb-3">
+            <div key={t.tag} className="list-row flex items-start gap-3 border-b border-border pb-3">
               <span
                 className={`mt-0.5 shrink-0 rounded-sm border-[1.5px] px-2 py-px font-mono text-[10px] font-semibold tracking-wider ${
                   t.tag === "CONFIRMED"
@@ -282,10 +304,10 @@ function Home() {
           The rule that governs them all: <strong>demote claims, do not promote them.</strong>{" "}
           When in doubt, a claim moves down the ladder, never up.
         </p>
-      </section>
+      </Reveal>
 
       {/* What's in the box */}
-      <section className="mx-auto max-w-5xl px-6 pt-20">
+      <Reveal as="section" className="mx-auto max-w-5xl px-6 pt-20">
         <h2 className="display-title border-b-2 border-foreground pb-2 text-3xl">
           What's in the download
         </h2>
@@ -321,21 +343,21 @@ function Home() {
               t: "The seal chain",
               d: "Every built file sealed by SHA-256, capped by a single library seal. Verify the copy you hold matches the edition that was published.",
             },
-          ].map((c) => (
-            <div key={c.k} className="paper-card p-5">
+          ].map((c, i) => (
+            <Reveal key={c.k} delay={i * 70} className="paper-card p-5">
               <p className="eyebrow m-0">{c.k}</p>
               <h3 className="display-title mt-2 mb-2 text-xl">{c.t}</h3>
               <p className="m-0 text-sm text-ink-dim">{c.d}</p>
-            </div>
+            </Reveal>
           ))}
         </div>
-      </section>
+      </Reveal>
 
       {/* Seal + final CTA */}
-      <section className="mx-auto max-w-5xl px-6 pt-20">
+      <Reveal as="section" className="mx-auto max-w-5xl px-6 pt-20">
         <div className="paper-card bg-paper-2 p-8">
           <p className="eyebrow m-0">Library seal · SHA-256</p>
-          <p className="mt-2 mb-6 font-mono text-[11px] break-all text-ink-dim sm:text-[13px]">
+          <p className="seal-glow mt-2 mb-6 font-mono text-[11px] break-all text-ink-dim sm:text-[13px]">
             {LIBRARY.librarySeal}
           </p>
           <h2 className="display-title text-[clamp(2rem,6vw,3.5rem)]">
@@ -347,7 +369,7 @@ function Home() {
           </p>
           <DownloadButtons compact />
         </div>
-      </section>
+      </Reveal>
     </>
   );
 }

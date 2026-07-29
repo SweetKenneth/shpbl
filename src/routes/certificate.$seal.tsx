@@ -40,20 +40,20 @@ function CertificatePermalink() {
 
   return (
     <section className="mx-auto max-w-5xl px-6 pt-14">
-      <p className="eyebrow no-print">Registered copy · Verified against the ledger</p>
-      <div className="mt-6">
+      <p className="eyebrow ink-rise no-print">Registered copy · Verified against the ledger</p>
+      <div className="ink-rise mt-6" style={{ animationDelay: "90ms" }}>
         <CertificateCard cert={cert} />
       </div>
       <div className="no-print mt-6 flex flex-wrap gap-3">
         <button
           onClick={() => window.print()}
-          className="inline-flex items-center rounded-sm border-2 border-foreground bg-foreground px-6 py-3 font-mono text-xs tracking-[0.18em] text-background uppercase"
+          className="ink-button inline-flex items-center rounded-sm border-2 border-foreground bg-foreground px-6 py-3 font-mono text-xs tracking-[0.18em] text-background uppercase"
         >
           Print / save as PDF
         </button>
         <Link
           to="/certificate"
-          className="inline-flex items-center rounded-sm border-2 border-foreground px-6 py-3 font-mono text-xs tracking-[0.18em] uppercase no-underline hover:bg-foreground hover:text-background"
+          className="ghost-button inline-flex items-center rounded-sm border-2 border-foreground px-6 py-3 font-mono text-xs tracking-[0.18em] uppercase no-underline"
         >
           The register
         </Link>

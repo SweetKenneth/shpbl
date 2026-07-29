@@ -69,7 +69,7 @@ const STAGES = [
 function Toolkit() {
   return (
     <div className="mx-auto max-w-3xl px-6 pt-14">
-      <p className="eyebrow">The Method, Shipped</p>
+      <p className="eyebrow ink-rise">The Method, Shipped</p>
       <h1 className="display-title mt-3 text-[clamp(2.5rem,8vw,4.5rem)]">The Toolkit</h1>
       <p className="mt-4 text-ink-dim">
         The volumes describe the method. The toolkit ships it — the same two-stage instrument
@@ -110,7 +110,7 @@ function Toolkit() {
         <a
           href={ZIP_URL}
           download
-          className="inline-flex items-center rounded-sm border-2 border-foreground bg-foreground px-6 py-3 font-mono text-xs tracking-[0.18em] uppercase text-background no-underline"
+          className="ink-button inline-flex items-center rounded-sm border-2 border-foreground bg-foreground px-6 py-3 font-mono text-xs tracking-[0.18em] uppercase text-background no-underline"
         >
           Download the library — free
         </a>

@@ -7,10 +7,12 @@ import {
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
-import { useEffect, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { ScrollProgress } from "@/components/ScrollProgress";
+
 
 function NotFoundComponent() {
   return (
@@ -76,12 +78,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:type", content: "website" },
       { property: "og:site_name", content: "The Strategic Master Library" },
       { name: "twitter:card", content: "summary_large_image" },
-      { title: "Lovable App" },
-      { property: "og:title", content: "Lovable App" },
-      { name: "twitter:title", content: "Lovable App" },
-      { name: "description", content: "Master Library Hub provides free access to a strategic master library with licensing information." },
-      { property: "og:description", content: "Master Library Hub provides free access to a strategic master library with licensing information." },
-      { name: "twitter:description", content: "Master Library Hub provides free access to a strategic master library with licensing information." },
+      { title: "The Strategic Master Library — Free Download | SHPBL" },
+      { property: "og:title", content: "The Strategic Master Library — Free Download" },
+      { name: "twitter:title", content: "The Strategic Master Library — Free Download" },
+      { name: "description", content: "Six volumes distilled from twenty-nine audited owner's manuals, plus the toolkit that produced them. Free, sealed, print-ready." },
+      { property: "og:description", content: "Six volumes distilled from twenty-nine audited owner's manuals, plus the toolkit that produced them. Free, sealed, print-ready." },
+      { name: "twitter:description", content: "Six volumes distilled from twenty-nine audited owner's manuals, plus the toolkit that produced them. Free, sealed, print-ready." },
+
       { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/SIf8bhOAKvNKfnkPGoGqFQGz3TD2/social-images/social-1785331370687-D5D752EE-CADF-487B-84BF-9EBA7B206170.webp" },
       { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/SIf8bhOAKvNKfnkPGoGqFQGz3TD2/social-images/social-1785331370687-D5D752EE-CADF-487B-84BF-9EBA7B206170.webp" },
     ],
@@ -115,59 +118,81 @@ function RootShell({ children }: { children: ReactNode }) {
   );
 }
 
+const NAV = [
+  { to: "/volumes", label: "Volumes", hide: false },
+  { to: "/toolkit", label: "Toolkit", hide: true },
+  { to: "/certificate", label: "Certificate", hide: false },
+  { to: "/license", label: "License", hide: false },
+] as const;
+
 function SiteHeader() {
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 12);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   return (
-    <header className="sticky top-0 z-40 border-b-2 border-foreground bg-background/95 backdrop-blur">
-      <div className="mx-auto flex max-w-5xl items-center justify-between gap-4 px-6 py-3">
-        <Link to="/" className="display-title text-xl leading-none no-underline">
+    <header
+      className={`no-print sticky top-0 z-40 border-b-2 border-foreground bg-background/85 backdrop-blur-xl transition-shadow duration-300 ${
+        scrolled ? "shadow-[0_14px_30px_-28px_var(--foreground)]" : ""
+      }`}
+    >
+      <div
+        className={`mx-auto flex max-w-5xl items-center justify-between gap-4 px-6 transition-all duration-300 ${
+          scrolled ? "py-2" : "py-3"
+        }`}
+      >
+        <Link
+          to="/"
+          className={`display-title leading-none no-underline transition-all duration-300 ${
+            scrolled ? "text-lg" : "text-xl"
+          }`}
+        >
           The Strategic Master Library
         </Link>
         <nav className="flex items-center gap-5 font-mono text-[11px] tracking-widest uppercase">
-          <Link to="/volumes" className="no-underline hover:underline">
-            Volumes
-          </Link>
-          <Link to="/toolkit" className="hidden no-underline hover:underline sm:inline">
-            Toolkit
-          </Link>
-          <Link to="/certificate" className="no-underline hover:underline">
-            Certificate
-          </Link>
-          <Link to="/license" className="no-underline hover:underline">
-            License
-          </Link>
+          {NAV.map((item) => (
+            <Link
+              key={item.to}
+              to={item.to}
+              activeProps={{ "data-active": "true" }}
+              className={`rule-link no-underline ${item.hide ? "hidden sm:inline" : ""}`}
+            >
+              {item.label}
+            </Link>
+          ))}
         </nav>
-
       </div>
+      <ScrollProgress />
     </header>
   );
 }
 
+
 function SiteFooter() {
   return (
-    <footer className="mt-24 border-t-[3px] border-foreground">
+    <footer className="no-print mt-24 border-t-[3px] border-foreground">
+      <div className="spectrum-rule h-[3px] w-full opacity-40" />
       <div className="mx-auto max-w-5xl px-6 py-10 font-mono text-[12px] leading-loose text-ink-faint">
         <p className="text-ink-dim">
           The Strategic Master Library · Volume Edition · First Printing · 2026
         </p>
         <p>
           © Kenneth E. Sweet Jr. · SHPBL.com · Abilene, Texas · Built deterministically:
-          same inputs, byte-identical outputs, forever.
+          same inputs, byte-identical outputs, forever
+          <span className="caret-blink ml-1 inline-block">▌</span>
         </p>
-        <p className="mt-3 flex flex-wrap gap-4">
-          <Link to="/volumes" className="no-underline hover:underline">
-            Volumes
-          </Link>
-          <Link to="/toolkit" className="no-underline hover:underline">
-            Toolkit
-          </Link>
-          <Link to="/certificate" className="no-underline hover:underline">
-            Certificate
-          </Link>
-          <Link to="/license" className="no-underline hover:underline">
-            License
-          </Link>
+        <p className="mt-3 flex flex-wrap gap-5">
+          {NAV.map((item) => (
+            <Link key={item.to} to={item.to} className="rule-link no-underline">
+              {item.label}
+            </Link>
+          ))}
         </p>
-
       </div>
     </footer>
   );
@@ -178,7 +203,7 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <div className="flex min-h-screen flex-col">
+      <div className="page-grain flex min-h-screen flex-col">
         <SiteHeader />
         <main className="flex-1">
           {/* Required: nested routes render here. */}
@@ -189,3 +214,4 @@ function RootComponent() {
     </QueryClientProvider>
   );
 }
+
