@@ -19,7 +19,7 @@ import { AUTHOR_URL, COLLECTIVE, SITE_URL } from "@/lib/library";
 
 function NotFoundComponent() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-6">
+    <div className="flex min-h-dvh items-center justify-center bg-background px-6">
       <div className="max-w-md">
         <p className="eyebrow">Error · 404</p>
         <h1 className="display-title mt-3 text-6xl">Not on the shelf</h1>
@@ -45,7 +45,7 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   }, [error]);
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-6">
+    <div className="flex min-h-dvh items-center justify-center bg-background px-6">
       <div className="max-w-md">
         <p className="eyebrow">Error</p>
         <h1 className="display-title mt-3 text-5xl">This page didn't load</h1>
@@ -205,7 +205,7 @@ function SiteHeader() {
 
   return (
     <header
-      className={`no-print sticky top-0 z-40 border-b-2 border-foreground bg-background/85 backdrop-blur-xl transition-shadow duration-300 ${
+      className={`no-print sticky top-0 z-40 border-b-2 border-foreground bg-background/92 backdrop-blur-xl supports-[not(backdrop-filter:blur(0))]:bg-background transition-shadow duration-300 ${
         scrolled ? "shadow-[0_14px_30px_-28px_var(--foreground)]" : ""
       }`}
     >
@@ -306,9 +306,15 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <div className="page-grain flex min-h-screen flex-col">
+      <div className="page-grain flex min-h-dvh flex-col">
+        <a
+          href="#content"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:rounded-sm focus:border-2 focus:border-foreground focus:bg-background focus:px-4 focus:py-2 focus:font-mono focus:text-xs focus:tracking-widest focus:uppercase"
+        >
+          Skip to content
+        </a>
         <SiteHeader />
-        <main className="flex-1">
+        <main id="content" className="flex-1">
           {/* Required: nested routes render here. */}
           <Outlet />
         </main>
@@ -317,6 +323,7 @@ function RootComponent() {
         <Analytics />
       </div>
     </QueryClientProvider>
+
   );
 }
 

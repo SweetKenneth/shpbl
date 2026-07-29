@@ -4,7 +4,6 @@ import {
   VOLUMES,
   ZIP_URL,
   ZIP_BYTES,
-  SHELF_URL,
   TRUTH_LEGEND,
   SITE_URL,
   OG_IMAGE,
@@ -113,9 +112,7 @@ function DownloadButtons({ compact = false }: { compact?: boolean }) {
       </a>
       {!compact && (
         <a
-          href={SHELF_URL}
-          target="_blank"
-          rel="noopener"
+          href="/read/shelf"
           onClick={() => track("read_shelf")}
           className="ghost-button inline-flex items-center justify-center rounded-sm border-2 border-foreground px-5 py-3.5 font-mono text-[11px] tracking-[0.16em] uppercase no-underline sm:px-6 sm:text-xs sm:tracking-[0.18em]"
         >
@@ -134,8 +131,6 @@ function Shelf() {
           <a
             key={v.n}
             href={v.readUrl}
-            target="_blank"
-            rel="noopener"
             onClick={() => track("open_volume", { volume: v.numeral, surface: "shelf" })}
             style={{
               ["--s" as string]: `var(--vol-${v.n})`,
@@ -249,8 +244,6 @@ function Home() {
               <div className="min-w-0">
                 <a
                   href={v.readUrl}
-                  target="_blank"
-                  rel="noopener"
                   onClick={() => track("open_volume", { volume: v.numeral, surface: "messages" })}
                   className="rule-link font-semibold"
                 >
