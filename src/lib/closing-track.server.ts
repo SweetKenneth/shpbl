@@ -254,8 +254,14 @@ export function closingTrackHtml(audioUrl: string): string {
   }
   seek.addEventListener('change',commitSeek);
   if(vol){
-    vol.addEventListener('input',function(){audio.volume=Number(vol.value);});
-    audio.volume=Number(vol.value);
+    // iOS Safari exposes audio.volume read-only; hide the slider when unsupported.
+    try{ audio.volume=0.5; }catch(e){}
+    if(Math.abs(audio.volume-0.5)>0.01){
+      var vw=root.querySelector('.bt-volwrap'); if(vw) vw.style.display='none';
+    } else {
+      audio.volume=1;
+      vol.addEventListener('input',function(){audio.volume=Number(vol.value);});
+    }
   }
   if(lyrics){
     lyrics.addEventListener('toggle',function(){
@@ -322,6 +328,17 @@ export function closingTrackHtml(audioUrl: string): string {
   <p class="bt-close">The library ends where it began: nobody checks me, so I check myself.</p>
   <p class="bt-note">Never autoplays · first-party audio · lyrics double as the transcript</p>
 </div>
+  <script type="application/ld+json">${JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "MusicRecording",
+    name: "Built to Last",
+    byArtist: { "@type": "MusicGroup", name: "yapFM", member: { "@type": "Person", name: "Kenneth E. Sweet Jr." } },
+    inAlbum: { "@type": "MusicAlbum", name: "The Strategic Master Library \u2014 Volume Edition" },
+    datePublished: "2026",
+    genre: "Alternative Hip-Hop / Founder Anthem",
+    audio: { "@type": "AudioObject", contentUrl: audioUrl, encodingFormat: "audio/mpeg" },
+    isFamilyFriendly: true,
+  })}</script>
 </section>
 <script>${script}</script>
 `;
