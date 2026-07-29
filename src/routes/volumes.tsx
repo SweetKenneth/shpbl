@@ -104,7 +104,7 @@ function Volumes() {
         <a
           href={ZIP_URL}
           download
-          className="ink-button inline-flex items-center rounded-sm border-2 border-foreground bg-foreground px-6 py-3 font-mono text-xs tracking-[0.18em] uppercase text-background no-underline"
+          className="ink-button inline-flex items-center rounded-sm border-2 border-foreground bg-foreground px-5 py-3.5 font-mono text-[11px] sm:px-6 sm:py-3 sm:text-xs tracking-[0.18em] uppercase text-background no-underline"
         >
           Download the library — free
         </a>

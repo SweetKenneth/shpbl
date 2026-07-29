@@ -49,7 +49,7 @@ function CertificatePage() {
 
   return (
     <>
-      <section className="no-print mx-auto max-w-5xl px-6 pt-16">
+      <section className="no-print mx-auto max-w-5xl px-5 pt-12 sm:px-6 sm:pt-16">
         <p className="eyebrow ink-rise">Provenance · Free · No account</p>
         <h1
           className="display-title ink-rise mt-4 text-[clamp(2.5rem,8vw,5rem)]"
@@ -86,7 +86,7 @@ function CertificatePage() {
           <button
             type="submit"
             disabled={mint.isPending}
-            className="ink-button inline-flex items-center rounded-sm border-2 border-foreground bg-foreground px-6 py-3 font-mono text-xs tracking-[0.18em] text-background uppercase disabled:opacity-60"
+            className="ink-button inline-flex items-center rounded-sm border-2 border-foreground bg-foreground px-5 py-3.5 font-mono text-[11px] sm:px-6 sm:py-3 sm:text-xs tracking-[0.18em] text-background uppercase disabled:opacity-60"
           >
             {mint.isPending ? (
               <>
@@ -109,19 +109,19 @@ function CertificatePage() {
       </section>
 
       {cert && (
-        <section className="ink-rise mx-auto max-w-5xl px-6 pt-12">
+        <section className="ink-rise mx-auto max-w-5xl px-5 pt-10 sm:px-6 sm:pt-12">
           <CertificateCard cert={cert} />
           <div className="no-print mt-6 flex flex-wrap gap-3">
             <button
               onClick={() => window.print()}
-              className="ink-button inline-flex items-center rounded-sm border-2 border-foreground bg-foreground px-6 py-3 font-mono text-xs tracking-[0.18em] text-background uppercase"
+              className="ink-button inline-flex items-center rounded-sm border-2 border-foreground bg-foreground px-5 py-3.5 font-mono text-[11px] sm:px-6 sm:py-3 sm:text-xs tracking-[0.18em] text-background uppercase"
             >
               Print / save as PDF
             </button>
             <Link
               to="/certificate/$seal"
               params={{ seal: cert.cert_seal }}
-              className="ghost-button inline-flex items-center rounded-sm border-2 border-foreground px-6 py-3 font-mono text-xs tracking-[0.18em] uppercase no-underline"
+              className="ghost-button inline-flex items-center rounded-sm border-2 border-foreground px-5 py-3.5 font-mono text-[11px] sm:px-6 sm:py-3 sm:text-xs tracking-[0.18em] uppercase no-underline"
             >
               Permanent link
             </Link>
@@ -129,8 +129,8 @@ function CertificatePage() {
         </section>
       )}
 
-      <Reveal as="section" className="no-print mx-auto max-w-5xl px-6 pt-20">
-        <h2 className="display-title border-b-2 border-foreground pb-2 text-3xl">
+      <Reveal as="section" className="no-print mx-auto max-w-5xl px-5 pt-16 sm:px-6 sm:pt-20">
+        <h2 className="display-title border-b-2 border-foreground pb-2 text-[clamp(1.75rem,7vw,2rem)]">
           The register
         </h2>
         <p className="mt-4 max-w-2xl text-ink-dim">

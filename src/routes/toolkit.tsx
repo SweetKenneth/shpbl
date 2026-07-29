@@ -68,7 +68,7 @@ const STAGES = [
 
 function Toolkit() {
   return (
-    <div className="mx-auto max-w-3xl px-6 pt-14">
+    <div className="mx-auto max-w-3xl px-5 pt-12 sm:px-6 sm:pt-14">
       <p className="eyebrow ink-rise">The Method, Shipped</p>
       <h1 className="display-title mt-3 text-[clamp(2.5rem,8vw,4.5rem)]">The Toolkit</h1>
       <p className="mt-4 text-ink-dim">
@@ -82,14 +82,14 @@ function Toolkit() {
             <p className="eyebrow m-0" style={{ color: s.accent }}>
               {s.n}
             </p>
-            <h2 className="display-title mt-1 text-3xl">{s.title}</h2>
+            <h2 className="display-title mt-1 text-[clamp(1.75rem,7vw,2rem)]">{s.title}</h2>
             <p className="mt-3 mb-4 text-ink-dim">{s.body}</p>
             <p className="m-0 font-mono text-[12px] text-ink-faint">{s.file}</p>
           </div>
         ))}
       </div>
 
-      <h2 className="display-title mt-16 border-b-2 border-foreground pb-2 text-3xl">
+      <h2 className="display-title mt-16 border-b-2 border-foreground pb-2 text-[clamp(1.75rem,7vw,2rem)]">
         How to run it
       </h2>
       <ol className="mt-4 space-y-2 pl-5 text-ink-dim">
@@ -110,7 +110,7 @@ function Toolkit() {
         <a
           href={ZIP_URL}
           download
-          className="ink-button inline-flex items-center rounded-sm border-2 border-foreground bg-foreground px-6 py-3 font-mono text-xs tracking-[0.18em] uppercase text-background no-underline"
+          className="ink-button inline-flex items-center rounded-sm border-2 border-foreground bg-foreground px-5 py-3.5 font-mono text-[11px] sm:px-6 sm:py-3 sm:text-xs tracking-[0.18em] uppercase text-background no-underline"
         >
           Download the library — free
         </a>
