@@ -9,6 +9,7 @@ import {
   SITE_URL,
   OG_IMAGE,
 } from "@/lib/library";
+import { Reveal } from "@/components/Reveal";
 
 const TITLE = "The Strategic Master Library — Free Download | SHPBL";
 const DESC =
@@ -19,17 +20,14 @@ export const Route = createFileRoute("/")({
     meta: [
       { title: TITLE },
       { name: "description", content: DESC },
-      { property: "og:title", content: "Lovable App" },
-      {
-        property: "og:description",
-        content:
-          "Master Library Hub provides free access to a strategic master library with licensing information.",
-      },
+      { property: "og:title", content: TITLE },
+      { property: "og:description", content: DESC },
       { property: "og:url", content: SITE_URL },
       { property: "og:image", content: OG_IMAGE },
       { property: "og:image:width", content: "1200" },
       { property: "og:image:height", content: "630" },
       { name: "twitter:image", content: OG_IMAGE },
+
     ],
     links: [{ rel: "canonical", href: `${SITE_URL}/` }],
     scripts: [
