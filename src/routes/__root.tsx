@@ -195,8 +195,6 @@ function SiteHeader() {
           ))}
         </nav>
       </div>
-
-      </div>
       <ScrollProgress />
     </header>
   );
