@@ -20,7 +20,7 @@ export const LIBRARY = {
   author: "Kenneth E. Sweet Jr.",
   publisher: "SHPBL.com · Abilene, Texas",
   domain: "SHPBL.com",
-  librarySeal: "c645b86426ea6e3ef365d2bbd8db382161356013bc6883bed4fbe28845fdfb1d",
+  librarySeal: "029909fbe9bd13468ec11dc7ae22f77d39b35d12249c79213b1476c71cde104d",
 } as const;
 
 export const ZIP_URL = libraryZip.url;
@@ -55,7 +55,7 @@ const VOLUME_SOURCE = [
     epigraph: "Demote claims. Do not promote them.",
     drawnFrom:
       "BLDBL · promptfluid/CMPSBL · CMPSBL Bestowal · RSLVBL · BulletSites · AetherionShield · RCRDBL",
-    seal: "ce44cdc8e8ed32eae67655290d972a84ccdc94a74571840110687df3de912b10",
+    seal: "5612ff08890230f475d8222acf707ef95651e078cd8a018526967cea28491c11",
     url: vol1.url,
   },
   {
@@ -66,7 +66,7 @@ const VOLUME_SOURCE = [
     epigraph:
       "Every project is described by what sits below it and what could be built on top.",
     drawnFrom: "CMPSBL · XCTBL³ Space · Space Analytics · AIGVRN · BLDBL · RCKBL · SPLCBL",
-    seal: "31b139c0f4846b4dc92e772c2ffeba5b42c8bdbfda00228488f38157eb5b71ae",
+    seal: "dc874895f3159859fcb398d52702eb8db213a522b3ef0fc3d9d10cb1c00ae546",
     url: vol2.url,
   },
   {
@@ -77,7 +77,7 @@ const VOLUME_SOURCE = [
     epigraph: "The substrate stays home; what gets shipped is what gets sold.",
     drawnFrom:
       "CMPSBL Bestowal · Bestowable.com · Restorable · npm & Zenodo distribution · CSAL-1.0",
-    seal: "8936545e4e74b473329a0c68a96e67d3455cca36eb3361e07173cad64679b0fa",
+    seal: "b30970b1e34ae7404421b05a35fe337017b54fb19602979caeeeedb8636ebe53",
     url: vol3.url,
   },
   {
@@ -87,7 +87,7 @@ const VOLUME_SOURCE = [
     message: "Taste, naming, and disclosed fiction compound into a moat.",
     epigraph: "Products can carry myth.",
     drawnFrom: "The -BL lexicon · yapFM · RCKBL · SPLCBL · OGs.monster · RSLVBL",
-    seal: "d343a98c70744227e04cb6a5d222200d84fd7065698bf59b7b08bb2040bc4466",
+    seal: "dc3036a48bcbf6847db581b85964b89e383fe4de17225d9349788879b05a486f",
     url: vol4.url,
   },
   {
@@ -98,7 +98,7 @@ const VOLUME_SOURCE = [
     epigraph: "Knowledge is Power · Legacy is Wealth · Built to Last.",
     drawnFrom:
       "The owner's-manual format · SimNap OS · Assets & Continuity · CRCKBL · The Canonical & Collapse Registry",
-    seal: "bb03fcbb9211461c2b03f87f11b102273f3397d6d3b23a26f13dba3168bbd56a",
+    seal: "ccff21adb34fa3c52a44ebb57d98fefb93bcd40a2079bfe250ef6e8b9558ff02",
     url: vol5.url,
   },
   {
@@ -110,7 +110,7 @@ const VOLUME_SOURCE = [
       "This document is a tool for clarity — not a forcing function for monetization.",
     drawnFrom:
       "The founder's standing request · Monetization Roadmap · BulletSites · PTCHBL · RSLVBL · the library itself",
-    seal: "5600adb3a45fc55ac4a7c0d6f4229a3f0459aeef2186f88c2e9ce5184b9914c3",
+    seal: "ef0c68dc27dab32cc7b6ce0e3eed34f8797dd6187ab1950a000976854a5a5852",
     url: vol6.url,
   },
 ];
