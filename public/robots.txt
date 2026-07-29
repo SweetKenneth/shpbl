@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /pulse
 
 Sitemap: https://shpbl.com/sitemap.xml
