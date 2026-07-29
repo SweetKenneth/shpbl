@@ -321,6 +321,8 @@ function RootComponent() {
         <SiteFooter />
         <InstallPrompt />
         <Analytics />
+        <PointerInk />
+
       </div>
     </QueryClientProvider>
 
