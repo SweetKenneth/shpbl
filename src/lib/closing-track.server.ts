@@ -270,15 +270,29 @@ export function closingTrackHtml(audioUrl: string): string {
   }
 
   // Cache the mp3 on demand — never in the install precache.
+  //
+  // Safari streams media with Range requests, and a 206 is not cacheable, so the
+  // service worker can never populate this cache from playback alone. One plain
+  // GET stores the full 200; the SW's rangeRequests strategy slices it from then
+  // on. Only worth the extra ~5 MB when a worker is actually there to serve it.
   var cached=false;
   function cacheAudio(){
     if(cached||!('caches' in window)) return;
+    if(!navigator.serviceWorker||!navigator.serviceWorker.controller) return;
+    var conn=navigator.connection||navigator.mozConnection||navigator.webkitConnection;
+    if(conn&&(conn.saveData||/(^|-)2g$/.test(conn.effectiveType||''))) return;
     cached=true;
     setTimeout(function(){
       caches.open('shpbl-audio').then(function(c){
-        return c.match(${JSON.stringify(audioUrl)}).then(function(hit){
-          if(hit) return; return c.add(${JSON.stringify(audioUrl)});
+        return c.match(${JSON.stringify(audioUrl)},{ignoreVary:true}).then(function(hit){
+          if(hit) return;
+          return fetch(${JSON.stringify(audioUrl)},{credentials:'same-origin'}).then(function(r){
+            if(r&&r.status===200) return c.put(${JSON.stringify(audioUrl)},r);
+          });
         });
+      }).then(function(){
+        var note=root.querySelector('.bt-note');
+        if(note) note.textContent='Saved for offline listening on this device · lyrics double as the transcript';
       }).catch(function(){});
     },4000);
   }
