@@ -37,10 +37,16 @@ export type Volume = {
   epigraph: string;
   drawnFrom: string;
   seal: string;
+  /** Raw CDN asset URL (served as a download). */
   url: string;
+  /** Stable slug used by the in-browser reader route. */
+  slug: string;
+  /** In-app reader URL — renders the printable HTML inline. */
+  readUrl: string;
 };
 
-export const VOLUMES: Volume[] = [
+const VOLUME_SOURCE = [
+
   {
     numeral: "I",
     n: 1,
@@ -108,6 +114,17 @@ export const VOLUMES: Volume[] = [
     url: vol6.url,
   },
 ];
+
+export const VOLUMES: Volume[] = VOLUME_SOURCE.map((v) => {
+  const slug = v.url.split("/").pop()!.replace(/\.html$/, "");
+  return { ...v, slug, readUrl: `/read/${slug}` };
+});
+
+export const VOLUME_BY_SLUG: Record<string, Volume> = Object.fromEntries(
+  VOLUMES.map((v) => [v.slug, v]),
+);
+
+
 
 export const TRUTH_LEGEND = [
   { tag: "CONFIRMED", def: "Directly verifiable in the codebase, database, or shipped product." },
