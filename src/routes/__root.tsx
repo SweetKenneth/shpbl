@@ -155,12 +155,24 @@ function SiteHeader() {
       >
         <Link
           to="/"
-          className={`display-title leading-none no-underline transition-all duration-300 ${
-            scrolled ? "text-lg" : "text-xl"
-          }`}
+          className="flex items-center gap-3 no-underline"
+          aria-label="SHPBL — The Strategic Master Library"
         >
-          The Strategic Master Library
+          <img
+            src="/icons/icon.svg"
+            alt=""
+            aria-hidden="true"
+            className={`transition-all duration-300 ${scrolled ? "h-7 w-7" : "h-9 w-9"}`}
+          />
+          <span
+            className={`display-title leading-none transition-all duration-300 ${
+              scrolled ? "text-lg" : "text-xl"
+            }`}
+          >
+            The Strategic Master Library
+          </span>
         </Link>
+
         <nav className="flex items-center gap-5 font-mono text-[11px] tracking-widest uppercase">
           {NAV.map((item) => (
             <Link
