@@ -2,20 +2,12 @@
 @source "../src";
 @import "tw-animate-css";
 
-@custom-variant dark (&:is(.dark *));
-
 /*
- * Design system definition.
- *
- * The @theme inline block maps CSS custom properties to Tailwind utility
- * classes (e.g. --color-primary -> bg-primary, text-primary).
- *
- * The :root and .dark blocks define the actual color values using oklch.
- * All colors MUST use oklch format.
- *
- * To add a new semantic color:
- * 1. Add the variable to :root (light value) and .dark (dark value)
- * 2. Register it in @theme inline as --color-<name>: var(--<name>)
+ * The Strategic Master Library — Volume Edition
+ * Design system inherited verbatim from docs/DESIGN.md:
+ * Bebas Neue display, Space Grotesk body, JetBrains Mono for provenance,
+ * near-black ink on warm paper, six volume accents.
+ * The full spectrum gradient appears exactly once. Restraint is the binding.
  */
 
 @theme inline {
@@ -23,11 +15,16 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
-  --radius-2xl: calc(var(--radius) + 8px);
-  --radius-3xl: calc(var(--radius) + 12px);
-  --radius-4xl: calc(var(--radius) + 16px);
+
+  --font-display: "Bebas Neue", "Arial Narrow", Impact, sans-serif;
+  --font-body: "Space Grotesk", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-paper-2: var(--paper-2);
+  --color-ink-dim: var(--ink-dim);
+  --color-ink-faint: var(--ink-faint);
   --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
   --color-popover: var(--popover);
@@ -43,93 +40,64 @@
   --color-destructive: var(--destructive);
   --color-destructive-foreground: var(--destructive-foreground);
   --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
   --color-input: var(--input);
   --color-ring: var(--ring);
-  --color-ring-offset-background: var(--background);
-  --color-chart-1: var(--chart-1);
-  --color-chart-2: var(--chart-2);
-  --color-chart-3: var(--chart-3);
-  --color-chart-4: var(--chart-4);
-  --color-chart-5: var(--chart-5);
-  --color-sidebar: var(--sidebar);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-ring: var(--sidebar-ring);
+
+  --color-vol-1: var(--vol-1);
+  --color-vol-2: var(--vol-2);
+  --color-vol-3: var(--vol-3);
+  --color-vol-4: var(--vol-4);
+  --color-vol-5: var(--vol-5);
+  --color-vol-6: var(--vol-6);
 }
 
 :root {
-  --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.129 0.042 264.695);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.129 0.042 264.695);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.129 0.042 264.695);
-  --primary: oklch(0.208 0.042 265.755);
-  --primary-foreground: oklch(0.984 0.003 247.858);
-  --secondary: oklch(0.968 0.007 247.896);
-  --secondary-foreground: oklch(0.208 0.042 265.755);
-  --muted: oklch(0.968 0.007 247.896);
-  --muted-foreground: oklch(0.554 0.046 257.417);
-  --accent: oklch(0.968 0.007 247.896);
-  --accent-foreground: oklch(0.208 0.042 265.755);
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.984 0.003 247.858);
-  --border: oklch(0.929 0.013 255.508);
-  --input: oklch(0.929 0.013 255.508);
-  --ring: oklch(0.704 0.04 256.788);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.984 0.003 247.858);
-  --sidebar-foreground: oklch(0.129 0.042 264.695);
-  --sidebar-primary: oklch(0.208 0.042 265.755);
-  --sidebar-primary-foreground: oklch(0.984 0.003 247.858);
-  --sidebar-accent: oklch(0.968 0.007 247.896);
-  --sidebar-accent-foreground: oklch(0.208 0.042 265.755);
-  --sidebar-border: oklch(0.929 0.013 255.508);
-  --sidebar-ring: oklch(0.704 0.04 256.788);
-}
+  --radius: 0.3rem;
 
-.dark {
-  --background: oklch(0.129 0.042 264.695);
-  --foreground: oklch(0.984 0.003 247.858);
-  --card: oklch(0.208 0.042 265.755);
-  --card-foreground: oklch(0.984 0.003 247.858);
-  --popover: oklch(0.208 0.042 265.755);
-  --popover-foreground: oklch(0.984 0.003 247.858);
-  --primary: oklch(0.929 0.013 255.508);
-  --primary-foreground: oklch(0.208 0.042 265.755);
-  --secondary: oklch(0.279 0.041 260.031);
-  --secondary-foreground: oklch(0.984 0.003 247.858);
-  --muted: oklch(0.279 0.041 260.031);
-  --muted-foreground: oklch(0.704 0.04 256.788);
-  --accent: oklch(0.279 0.041 260.031);
-  --accent-foreground: oklch(0.984 0.003 247.858);
-  --destructive: oklch(0.704 0.191 22.216);
-  --destructive-foreground: oklch(0.984 0.003 247.858);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.551 0.027 264.364);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.208 0.042 265.755);
-  --sidebar-foreground: oklch(0.984 0.003 247.858);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.984 0.003 247.858);
-  --sidebar-accent: oklch(0.279 0.041 260.031);
-  --sidebar-accent-foreground: oklch(0.984 0.003 247.858);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.551 0.027 264.364);
+  --background: oklch(0.9843 0.004 106.47);
+  --paper-2: oklch(0.9538 0.0066 106.52);
+  --foreground: oklch(0.1626 0.0147 284.65);
+  --ink-dim: oklch(0.3027 0.0233 284.92);
+  --ink-faint: oklch(0.4535 0.0178 285.67);
+
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.1626 0.0147 284.65);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.1626 0.0147 284.65);
+
+  --primary: oklch(0.1626 0.0147 284.65);
+  --primary-foreground: oklch(0.9843 0.004 106.47);
+  --secondary: oklch(0.9538 0.0066 106.52);
+  --secondary-foreground: oklch(0.1626 0.0147 284.65);
+  --muted: oklch(0.9538 0.0066 106.52);
+  --muted-foreground: oklch(0.4535 0.0178 285.67);
+  --accent: oklch(0.9538 0.0066 106.52);
+  --accent-foreground: oklch(0.1626 0.0147 284.65);
+  --destructive: oklch(0.6062 0.2298 9.63);
+  --destructive-foreground: oklch(0.9843 0.004 106.47);
+
+  --border: oklch(0.88 0.0108 106.62);
+  --border-strong: oklch(0.7549 0.0112 106.67);
+  --input: oklch(0.7549 0.0112 106.67);
+  --ring: oklch(0.1626 0.0147 284.65);
+
+  --vol-1: oklch(0.5879 0.2543 340.97);
+  --vol-2: oklch(0.5816 0.1015 212.45);
+  --vol-3: oklch(0.7049 0.1989 45.77);
+  --vol-4: oklch(0.6062 0.2298 9.63);
+  --vol-5: oklch(0.5872 0.1596 130.65);
+  --vol-6: oklch(0.8498 0.1739 86.55);
+
+  --spectrum: linear-gradient(
+    90deg,
+    var(--vol-1),
+    var(--vol-2),
+    var(--vol-3),
+    var(--vol-4),
+    var(--vol-5),
+    var(--vol-6)
+  );
 }
 
 @layer base {
@@ -137,8 +105,63 @@
     border-color: var(--color-border);
   }
 
+  html {
+    -webkit-font-smoothing: antialiased;
+  }
+
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
+    font-family: var(--font-body);
+    font-size: 17px;
+    line-height: 1.65;
   }
+
+  ::selection {
+    background: var(--foreground);
+    color: var(--background);
+  }
+}
+
+/* The spectrum band — used exactly once per page, on the masthead rule. */
+@utility spectrum-rule {
+  background: var(--spectrum);
+}
+
+@utility eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+@utility display-title {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  line-height: 0.92;
+}
+
+/* Book spine — the shelf's signature element. */
+@utility spine {
+  writing-mode: vertical-rl;
+  border: 2.5px solid var(--foreground);
+  border-radius: 5px 5px 0 0;
+  background: var(--card);
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease;
+
+  &:hover {
+    transform: translateY(-14px);
+    box-shadow: 0 14px 24px -14px var(--foreground);
+  }
+}
+
+@utility paper-card {
+  background: var(--card);
+  border: 2px solid var(--foreground);
+  border-radius: 6px;
 }
