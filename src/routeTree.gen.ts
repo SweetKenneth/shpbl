@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as VolumesRouteImport } from './routes/volumes'
 import { Route as ToolkitRouteImport } from './routes/toolkit'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as LicenseRouteImport } from './routes/license'
 import { Route as IndexRouteImport } from './routes/index'
 
@@ -22,6 +23,11 @@ const VolumesRoute = VolumesRouteImport.update({
 const ToolkitRoute = ToolkitRouteImport.update({
   id: '/toolkit',
   path: '/toolkit',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LicenseRoute = LicenseRouteImport.update({
@@ -38,12 +44,14 @@ const IndexRoute = IndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/license': typeof LicenseRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/toolkit': typeof ToolkitRoute
   '/volumes': typeof VolumesRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/license': typeof LicenseRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/toolkit': typeof ToolkitRoute
   '/volumes': typeof VolumesRoute
 }
@@ -51,20 +59,22 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/license': typeof LicenseRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/toolkit': typeof ToolkitRoute
   '/volumes': typeof VolumesRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/license' | '/toolkit' | '/volumes'
+  fullPaths: '/' | '/license' | '/sitemap.xml' | '/toolkit' | '/volumes'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/license' | '/toolkit' | '/volumes'
-  id: '__root__' | '/' | '/license' | '/toolkit' | '/volumes'
+  to: '/' | '/license' | '/sitemap.xml' | '/toolkit' | '/volumes'
+  id: '__root__' | '/' | '/license' | '/sitemap.xml' | '/toolkit' | '/volumes'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   LicenseRoute: typeof LicenseRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   ToolkitRoute: typeof ToolkitRoute
   VolumesRoute: typeof VolumesRoute
 }
@@ -83,6 +93,13 @@ declare module '@tanstack/react-router' {
       path: '/toolkit'
       fullPath: '/toolkit'
       preLoaderRoute: typeof ToolkitRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/license': {
@@ -105,9 +122,20 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   LicenseRoute: LicenseRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   ToolkitRoute: ToolkitRoute,
   VolumesRoute: VolumesRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
