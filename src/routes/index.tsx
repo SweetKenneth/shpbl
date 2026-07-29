@@ -409,6 +409,34 @@ function Home() {
         </div>
       </Reveal>
 
+      {/* FAQ */}
+      <Reveal as="section" className="mx-auto max-w-5xl px-5 pt-16 sm:px-6 sm:pt-20">
+        <h2 className="display-title border-b-2 border-foreground pb-2 text-[clamp(1.75rem,7vw,2rem)]">
+          Questions, answered
+        </h2>
+        <div className="mt-2">
+          {FAQ.map((f, i) => (
+            <details
+              key={f.q}
+              className="faq-row group border-b border-border py-4"
+              open={i === 0}
+            >
+              <summary className="flex cursor-pointer list-none items-start gap-3 font-semibold [&::-webkit-details-marker]:hidden">
+                <span
+                  className="mt-1 inline-block h-2 w-2 shrink-0 rounded-full transition-transform duration-300 group-open:scale-150"
+                  style={{ background: `var(--vol-${(i % 6) + 1})` }}
+                />
+                <span className="min-w-0 flex-1 text-[15px] leading-snug sm:text-base">{f.q}</span>
+                <span className="mt-0.5 shrink-0 font-mono text-ink-faint transition-transform duration-300 group-open:rotate-45">
+                  +
+                </span>
+              </summary>
+              <p className="mt-2 mb-0 pl-5 text-[15px] leading-relaxed text-ink-dim">{f.a}</p>
+            </details>
+          ))}
+        </div>
+      </Reveal>
+
       {/* Seal + final CTA */}
       <Reveal as="section" className="mx-auto max-w-5xl px-5 pt-16 sm:px-6 sm:pt-20">
         <div className="paper-card bg-paper-2 p-8">
