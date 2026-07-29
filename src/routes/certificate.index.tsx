@@ -4,6 +4,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 
 import { CertificateCard, type CertificateData } from "@/components/CertificateCard";
+import { Reveal } from "@/components/Reveal";
 import { listRegister, mintCertificate } from "@/lib/certificates.functions";
 import { CERT_SPECIMEN_URL, LIBRARY, OG_IMAGE, SITE_URL } from "@/lib/library";
 
@@ -49,11 +50,11 @@ function CertificatePage() {
   return (
     <>
       <section className="no-print mx-auto max-w-5xl px-6 pt-16">
-        <p className="eyebrow">Provenance · Free · No account</p>
-        <h1 className="display-title mt-4 text-[clamp(2.5rem,8vw,5rem)]">
+        <p className="eyebrow ink-rise">Provenance · Free · No account</p>
+        <h1 className="display-title ink-rise mt-4" style={{ animationDelay: "80ms" }}>
           Certificate of Ownership
         </h1>
-        <div className="spectrum-rule mt-5 h-2 rounded-full" />
+        <div className="spectrum-rule ink-rise mt-5 h-2 rounded-full shadow-[0_0_24px_-6px_var(--vol-2)]" style={{ animationDelay: "160ms" }} />
         <p className="mt-6 max-w-2xl text-[19px] leading-relaxed text-ink-dim">
           Every copy of the library can be registered to a name and a number. The
           certificate seal is <code className="font-mono text-[15px]">sha256(library seal | owner | copy | date)</code>{" "}
@@ -77,14 +78,20 @@ function CertificatePage() {
             minLength={2}
             aria-label="Name to register this copy to"
             placeholder="Name to register this copy to"
-            className="min-w-[240px] flex-1 rounded-sm border-2 border-foreground bg-background px-4 py-3 font-mono text-sm outline-none focus:bg-paper-2"
+            className="min-w-[240px] flex-1 rounded-sm border-2 border-foreground bg-background px-4 py-3 font-mono text-sm outline-none transition-shadow duration-300 focus:bg-paper-2 focus:shadow-[0_0_0_4px_color-mix(in_oklab,var(--vol-2)_28%,transparent)]"
           />
           <button
             type="submit"
             disabled={mint.isPending}
-            className="inline-flex items-center rounded-sm border-2 border-foreground bg-foreground px-6 py-3 font-mono text-xs tracking-[0.18em] text-background uppercase disabled:opacity-60"
+            className="ink-button inline-flex items-center rounded-sm border-2 border-foreground bg-foreground px-6 py-3 font-mono text-xs tracking-[0.18em] text-background uppercase disabled:opacity-60"
           >
-            {mint.isPending ? "Sealing…" : "Mint certificate"}
+            {mint.isPending ? (
+              <>
+                Sealing<span className="caret-blink ml-1">…</span>
+              </>
+            ) : (
+              "Mint certificate"
+            )}
           </button>
         </form>
         <p className="mt-3 font-mono text-[12px] text-ink-faint">
@@ -99,19 +106,19 @@ function CertificatePage() {
       </section>
 
       {cert && (
-        <section className="mx-auto max-w-5xl px-6 pt-12">
+        <section className="ink-rise mx-auto max-w-5xl px-6 pt-12">
           <CertificateCard cert={cert} />
           <div className="no-print mt-6 flex flex-wrap gap-3">
             <button
               onClick={() => window.print()}
-              className="inline-flex items-center rounded-sm border-2 border-foreground bg-foreground px-6 py-3 font-mono text-xs tracking-[0.18em] text-background uppercase"
+              className="ink-button inline-flex items-center rounded-sm border-2 border-foreground bg-foreground px-6 py-3 font-mono text-xs tracking-[0.18em] text-background uppercase"
             >
               Print / save as PDF
             </button>
             <Link
               to="/certificate/$seal"
               params={{ seal: cert.cert_seal }}
-              className="inline-flex items-center rounded-sm border-2 border-foreground px-6 py-3 font-mono text-xs tracking-[0.18em] uppercase no-underline hover:bg-foreground hover:text-background"
+              className="ghost-button inline-flex items-center rounded-sm border-2 border-foreground px-6 py-3 font-mono text-xs tracking-[0.18em] uppercase no-underline"
             >
               Permanent link
             </Link>
@@ -119,13 +126,13 @@ function CertificatePage() {
         </section>
       )}
 
-      <section className="no-print mx-auto max-w-5xl px-6 pt-20">
+      <Reveal as="section" className="no-print mx-auto max-w-5xl px-6 pt-20">
         <h2 className="display-title border-b-2 border-foreground pb-2 text-3xl">
           The register
         </h2>
         <p className="mt-4 max-w-2xl text-ink-dim">
           The public ledger of issued copies, sealed against library{" "}
-          <span className="font-mono text-[12px]">{LIBRARY.librarySeal.slice(0, 16)}…</span>
+          <span className="seal-glow font-mono text-[12px]">{LIBRARY.librarySeal.slice(0, 16)}…</span>
         </p>
         {register.isLoading && (
           <p className="mt-4 font-mono text-[12px] text-ink-faint">Reading the ledger…</p>
@@ -134,7 +141,7 @@ function CertificatePage() {
           {(register.data ?? []).map((r) => (
             <li
               key={r.cert_seal}
-              className="grid grid-cols-[56px_1fr] items-baseline gap-3 border-b border-border py-2 sm:grid-cols-[56px_1fr_auto]"
+              className="list-row grid grid-cols-[56px_1fr] items-baseline gap-3 border-b border-border py-2 sm:grid-cols-[56px_1fr_auto]"
             >
               <span className="text-ink-dim">
                 {String(r.copy_no).padStart(3, "0")}
@@ -142,7 +149,7 @@ function CertificatePage() {
               <Link
                 to="/certificate/$seal"
                 params={{ seal: r.cert_seal }}
-                className="truncate no-underline hover:underline"
+                className="rule-link truncate"
               >
                 {r.owner}
               </Link>
@@ -162,12 +169,12 @@ function CertificatePage() {
             python3 certify.py --owner "Ada Lovelace" --copy 7 --date 2026-07-29
           </code>{" "}
           writes the same certificate locally, no network involved.{" "}
-          <a href={CERT_SPECIMEN_URL} target="_blank" rel="noopener" className="underline">
+          <a href={CERT_SPECIMEN_URL} target="_blank" rel="noopener" className="rule-link">
             View the specimen copy
           </a>
           .
         </p>
-      </section>
+      </Reveal>
     </>
   );
 }
