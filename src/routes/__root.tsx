@@ -84,12 +84,19 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "description", content: "Six volumes distilled from twenty-nine audited owner's manuals, plus the toolkit that produced them. Free, sealed, print-ready." },
       { property: "og:description", content: "Six volumes distilled from twenty-nine audited owner's manuals, plus the toolkit that produced them. Free, sealed, print-ready." },
       { name: "twitter:description", content: "Six volumes distilled from twenty-nine audited owner's manuals, plus the toolkit that produced them. Free, sealed, print-ready." },
-
-      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/SIf8bhOAKvNKfnkPGoGqFQGz3TD2/social-images/social-1785331370687-D5D752EE-CADF-487B-84BF-9EBA7B206170.webp" },
-      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/SIf8bhOAKvNKfnkPGoGqFQGz3TD2/social-images/social-1785331370687-D5D752EE-CADF-487B-84BF-9EBA7B206170.webp" },
+      { name: "theme-color", content: "#fafaf7" },
+      { name: "application-name", content: "SHPBL" },
+      { name: "apple-mobile-web-app-title", content: "SHPBL" },
+      { name: "msapplication-TileColor", content: "#fafaf7" },
+      { name: "msapplication-config", content: "/browserconfig.xml" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
+      { rel: "icon", href: "/favicon.ico", sizes: "32x32" },
+      { rel: "icon", href: "/favicon.svg", type: "image/svg+xml" },
+      { rel: "apple-touch-icon", href: "/icons/apple-touch-icon.png", sizes: "180x180" },
+      { rel: "mask-icon", href: "/icons/safari-pinned-tab.svg", color: "#0d0d14" },
+      { rel: "manifest", href: "/manifest.webmanifest" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
