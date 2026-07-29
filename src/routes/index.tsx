@@ -207,26 +207,27 @@ function Home() {
               className="list-row group grid grid-cols-[38px_minmax(0,1fr)] items-baseline gap-3 border-b border-border py-4 sm:grid-cols-[52px_1fr] sm:gap-4"
             >
               <span
-
-                className="font-display text-2xl transition-transform duration-300 group-hover:scale-110"
+                className="font-display text-xl transition-transform duration-300 group-hover:scale-110 sm:text-2xl"
                 style={{ color: `var(--vol-${v.n})` }}
               >
                 {v.numeral}
               </span>
-              <div>
+              <div className="min-w-0">
                 <a
                   href={v.url}
                   target="_blank"
                   rel="noopener"
+                  onClick={() => track("open_volume", { volume: v.numeral, surface: "messages" })}
                   className="rule-link font-semibold"
                 >
                   {v.title}
                 </a>
-                <p className="m-0 text-ink-dim">{v.message}</p>
-                <p className="m-0 mt-1 font-mono text-[11px] leading-relaxed text-ink-faint">
+                <p className="m-0 text-[15px] text-ink-dim sm:text-base">{v.message}</p>
+                <p className="m-0 mt-1 font-mono text-[10px] leading-relaxed text-ink-faint sm:text-[11px]">
                   {v.drawnFrom}
                 </p>
               </div>
+
             </li>
           ))}
         </ul>
