@@ -12,6 +12,7 @@ import { useEffect, useState, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { ScrollProgress } from "@/components/ScrollProgress";
+import { InstallPrompt } from "@/components/InstallPrompt";
 
 
 function NotFoundComponent() {
@@ -229,6 +230,7 @@ function RootComponent() {
           <Outlet />
         </main>
         <SiteFooter />
+        <InstallPrompt />
       </div>
     </QueryClientProvider>
   );
