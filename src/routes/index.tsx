@@ -222,7 +222,7 @@ function Home() {
 
 
       {/* What this is */}
-      <section className="mx-auto grid max-w-5xl gap-10 px-6 pt-20 md:grid-cols-2">
+      <Reveal as="section" className="mx-auto grid max-w-5xl gap-10 px-6 pt-20 md:grid-cols-2">
         <div>
           <h2 className="display-title border-b-2 border-foreground pb-2 text-3xl">
             What this is
@@ -265,10 +265,10 @@ function Home() {
             part that transfers.
           </p>
         </div>
-      </section>
+      </Reveal>
 
       {/* Truth legend */}
-      <section className="mx-auto max-w-5xl px-6 pt-20">
+      <Reveal as="section" className="mx-auto max-w-5xl px-6 pt-20">
         <h2 className="display-title border-b-2 border-foreground pb-2 text-3xl">
           The truth legend
         </h2>
@@ -278,7 +278,7 @@ function Home() {
         </p>
         <div className="mt-6 grid gap-3 sm:grid-cols-2">
           {TRUTH_LEGEND.map((t) => (
-            <div key={t.tag} className="flex items-start gap-3 border-b border-border pb-3">
+            <div key={t.tag} className="list-row flex items-start gap-3 border-b border-border pb-3">
               <span
                 className={`mt-0.5 shrink-0 rounded-sm border-[1.5px] px-2 py-px font-mono text-[10px] font-semibold tracking-wider ${
                   t.tag === "CONFIRMED"
@@ -304,10 +304,10 @@ function Home() {
           The rule that governs them all: <strong>demote claims, do not promote them.</strong>{" "}
           When in doubt, a claim moves down the ladder, never up.
         </p>
-      </section>
+      </Reveal>
 
       {/* What's in the box */}
-      <section className="mx-auto max-w-5xl px-6 pt-20">
+      <Reveal as="section" className="mx-auto max-w-5xl px-6 pt-20">
         <h2 className="display-title border-b-2 border-foreground pb-2 text-3xl">
           What's in the download
         </h2>
@@ -343,21 +343,21 @@ function Home() {
               t: "The seal chain",
               d: "Every built file sealed by SHA-256, capped by a single library seal. Verify the copy you hold matches the edition that was published.",
             },
-          ].map((c) => (
-            <div key={c.k} className="paper-card p-5">
+          ].map((c, i) => (
+            <Reveal key={c.k} delay={i * 70} className="paper-card p-5">
               <p className="eyebrow m-0">{c.k}</p>
               <h3 className="display-title mt-2 mb-2 text-xl">{c.t}</h3>
               <p className="m-0 text-sm text-ink-dim">{c.d}</p>
-            </div>
+            </Reveal>
           ))}
         </div>
-      </section>
+      </Reveal>
 
       {/* Seal + final CTA */}
-      <section className="mx-auto max-w-5xl px-6 pt-20">
+      <Reveal as="section" className="mx-auto max-w-5xl px-6 pt-20">
         <div className="paper-card bg-paper-2 p-8">
           <p className="eyebrow m-0">Library seal · SHA-256</p>
-          <p className="mt-2 mb-6 font-mono text-[11px] break-all text-ink-dim sm:text-[13px]">
+          <p className="seal-glow mt-2 mb-6 font-mono text-[11px] break-all text-ink-dim sm:text-[13px]">
             {LIBRARY.librarySeal}
           </p>
           <h2 className="display-title text-[clamp(2rem,6vw,3.5rem)]">
@@ -369,7 +369,7 @@ function Home() {
           </p>
           <DownloadButtons compact />
         </div>
-      </section>
+      </Reveal>
     </>
   );
 }
