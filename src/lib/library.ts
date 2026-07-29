@@ -9,7 +9,7 @@ import shelf from "@/assets/shelf.asset.json";
 import certSpecimen from "@/assets/certificate-specimen.asset.json";
 
 export const SITE_URL = "https://shpbl.com";
-export const OG_IMAGE = `${SITE_URL}/og-cover.jpg`;
+export const OG_IMAGE = `${SITE_URL}/og-image.png`;
 
 
 export const LIBRARY = {
