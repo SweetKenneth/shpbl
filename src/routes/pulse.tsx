@@ -7,6 +7,7 @@ import { getAnalyticsReport } from "@/lib/analytics.functions";
 import type { AnalyticsReport } from "@/lib/analytics.server";
 
 export const Route = createFileRoute("/pulse")({
+  validateSearch: searchSchema,
   head: () => ({
     meta: [
       { title: "Pulse — Private Analytics | SHPBL" },
@@ -18,6 +19,7 @@ export const Route = createFileRoute("/pulse")({
   }),
   component: Pulse,
 });
+
 
 function Stat({ label, value, sub }: { label: string; value: string; sub?: string }) {
   return (
