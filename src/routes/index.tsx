@@ -137,10 +137,10 @@ function Home() {
   return (
     <>
       {/* Masthead */}
-      <section className="mx-auto max-w-5xl px-6 pt-16 pb-4">
+      <section className="mx-auto max-w-5xl px-5 pt-12 pb-4 sm:px-6 sm:pt-16">
         <p className="eyebrow ink-rise">{LIBRARY.edition} · Free Edition</p>
         <h1
-          className="display-title ink-rise mt-4 text-[clamp(3rem,10vw,6.5rem)]"
+          className="display-title ink-rise mt-3 text-[clamp(2.75rem,13vw,6.5rem)] leading-[0.92] sm:mt-4"
           style={{ animationDelay: "80ms" }}
         >
           The Strategic
@@ -149,15 +149,18 @@ function Home() {
         </h1>
         {/* The spectrum appears exactly once. */}
         <div
-          className="spectrum-rule ink-rise mt-5 h-2 origin-left rounded-full shadow-[0_0_24px_-6px_var(--vol-2)]"
+          className="spectrum-rule ink-rise mt-4 h-1.5 origin-left rounded-full shadow-[0_0_24px_-6px_var(--vol-2)] sm:mt-5 sm:h-2"
           style={{ animationDelay: "180ms" }}
         />
-        <p className="eyebrow ink-rise mt-3 text-ink-dim" style={{ animationDelay: "240ms" }}>
+        <p
+          className="eyebrow ink-rise mt-3 text-[10px] text-ink-dim sm:text-[11px]"
+          style={{ animationDelay: "240ms" }}
+        >
           {LIBRARY.tagline}
         </p>
 
         <p
-          className="ink-rise mt-8 max-w-2xl text-[19px] leading-relaxed text-ink-dim"
+          className="ink-rise mt-7 max-w-2xl text-[17px] leading-relaxed text-ink-dim sm:mt-8 sm:text-[19px]"
           style={{ animationDelay: "300ms" }}
         >
           Six volumes distilled from a private compendium of twenty-nine audited project
@@ -166,14 +169,15 @@ function Home() {
           instrument, not just an argument.
         </p>
 
-        <div className="ink-rise mt-8" style={{ animationDelay: "380ms" }}>
+        <div className="ink-rise mt-7 sm:mt-8" style={{ animationDelay: "380ms" }}>
           <DownloadButtons />
         </div>
         <p
-          className="ink-rise mt-4 font-mono text-[12px] text-ink-faint"
+          className="ink-rise mt-4 font-mono text-[11px] leading-relaxed text-ink-faint sm:text-[12px]"
           style={{ animationDelay: "440ms" }}
         >
-          No email. No account. No tracking. Read the{" "}
+          No email. No account. No third-party trackers, ads, or cookies — only anonymous
+          first-party counts. Read the{" "}
           <Link to="/license" className="rule-link">
             license
           </Link>{" "}
@@ -182,22 +186,28 @@ function Home() {
       </section>
 
       {/* Shelf */}
-      <section className="mx-auto max-w-5xl px-6 pt-14">
+      <section className="mx-auto max-w-5xl px-5 pt-12 sm:px-6 sm:pt-14">
         <Shelf />
       </section>
 
+      {/* Install / offline */}
+      <Reveal as="section" className="mx-auto max-w-5xl px-5 pt-14 sm:px-6 sm:pt-16">
+        <InstallSection />
+      </Reveal>
+
       {/* Message list */}
-      <Reveal as="section" className="mx-auto max-w-5xl px-6 pt-16">
-        <h2 className="display-title border-b-2 border-foreground pb-2 text-3xl">
+      <Reveal as="section" className="mx-auto max-w-5xl px-5 pt-14 sm:px-6 sm:pt-16">
+        <h2 className="display-title border-b-2 border-foreground pb-2 text-[clamp(1.75rem,7vw,2rem)]">
           The six messages
         </h2>
         <ul className="mt-2 list-none p-0">
           {VOLUMES.map((v) => (
             <li
               key={v.n}
-              className="list-row group grid grid-cols-[52px_1fr] items-baseline gap-4 border-b border-border py-4"
+              className="list-row group grid grid-cols-[38px_minmax(0,1fr)] items-baseline gap-3 border-b border-border py-4 sm:grid-cols-[52px_1fr] sm:gap-4"
             >
               <span
+
                 className="font-display text-2xl transition-transform duration-300 group-hover:scale-110"
                 style={{ color: `var(--vol-${v.n})` }}
               >
