@@ -1,94 +1,63 @@
 # The Strategic Master Library — SHPBL.com
 # Free to read, free to index, free to cite.
 # Structured summary for language models: https://shpbl.com/llms.txt
+#
+# /pulse and /certificate/<seal> are deliberately kept out of the index, but
+# they are NOT disallowed here: a blocked URL can still be indexed from an
+# external link, and a crawler that never fetches the page never sees its
+# noindex. Both routes serve `robots: noindex` in the response instead, which
+# is the directive that actually removes them.
 
 User-agent: *
 Allow: /
-Disallow: /pulse
-Disallow: /certificate/
 
 # Answer engines are welcome — the whole point is transfer.
-# Note: robots.txt groups do not inherit, so each named agent repeats
-# the private paths explicitly.
-
 User-agent: GPTBot
 Allow: /
-Disallow: /pulse
-Disallow: /certificate/
 
 User-agent: OAI-SearchBot
 Allow: /
-Disallow: /pulse
-Disallow: /certificate/
 
 User-agent: ChatGPT-User
 Allow: /
-Disallow: /pulse
-Disallow: /certificate/
 
 User-agent: ClaudeBot
 Allow: /
-Disallow: /pulse
-Disallow: /certificate/
 
 User-agent: Claude-SearchBot
 Allow: /
-Disallow: /pulse
-Disallow: /certificate/
 
 User-agent: anthropic-ai
 Allow: /
-Disallow: /pulse
-Disallow: /certificate/
 
 User-agent: PerplexityBot
 Allow: /
-Disallow: /pulse
-Disallow: /certificate/
 
 User-agent: Perplexity-User
 Allow: /
-Disallow: /pulse
-Disallow: /certificate/
 
 User-agent: Google-Extended
 Allow: /
-Disallow: /pulse
-Disallow: /certificate/
 
 User-agent: Applebot
 Allow: /
-Disallow: /pulse
-Disallow: /certificate/
 
 User-agent: Applebot-Extended
 Allow: /
-Disallow: /pulse
-Disallow: /certificate/
 
 User-agent: Bingbot
 Allow: /
-Disallow: /pulse
-Disallow: /certificate/
 
 User-agent: CCBot
 Allow: /
-Disallow: /pulse
-Disallow: /certificate/
 
 User-agent: cohere-ai
 Allow: /
-Disallow: /pulse
-Disallow: /certificate/
 
 User-agent: Meta-ExternalAgent
 Allow: /
-Disallow: /pulse
-Disallow: /certificate/
 
 User-agent: Amazonbot
 Allow: /
-Disallow: /pulse
-Disallow: /certificate/
 
 Sitemap: https://shpbl.com/sitemap.xml
