@@ -8,6 +8,8 @@ import {
   TRUTH_LEGEND,
   SITE_URL,
   OG_IMAGE,
+  FAQ,
+  AUTHOR_URL,
 } from "@/lib/library";
 import { Reveal } from "@/components/Reveal";
 import { InstallSection } from "@/components/InstallSection";
