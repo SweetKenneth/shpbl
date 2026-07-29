@@ -6,7 +6,9 @@ export type CertificateData = {
   issue_date: string;
   cert_seal: string;
   library_seal: string;
+  note?: string | null;
 };
+
 
 /**
  * The web rendering of the certificate certify.py mints. Same fields, same
