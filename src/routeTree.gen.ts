@@ -17,6 +17,7 @@ import { Route as LicenseRouteImport } from './routes/license'
 import { Route as LetterRouteImport } from './routes/letter'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as CertificateIndexRouteImport } from './routes/certificate.index'
+import { Route as ReadSlugRouteImport } from './routes/read.$slug'
 import { Route as CertificateSealRouteImport } from './routes/certificate.$seal'
 
 const VolumesRoute = VolumesRouteImport.update({
@@ -59,6 +60,11 @@ const CertificateIndexRoute = CertificateIndexRouteImport.update({
   path: '/certificate/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ReadSlugRoute = ReadSlugRouteImport.update({
+  id: '/read/$slug',
+  path: '/read/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CertificateSealRoute = CertificateSealRouteImport.update({
   id: '/certificate/$seal',
   path: '/certificate/$seal',
@@ -74,6 +80,7 @@ export interface FileRoutesByFullPath {
   '/toolkit': typeof ToolkitRoute
   '/volumes': typeof VolumesRoute
   '/certificate/$seal': typeof CertificateSealRoute
+  '/read/$slug': typeof ReadSlugRoute
   '/certificate/': typeof CertificateIndexRoute
 }
 export interface FileRoutesByTo {
@@ -85,6 +92,7 @@ export interface FileRoutesByTo {
   '/toolkit': typeof ToolkitRoute
   '/volumes': typeof VolumesRoute
   '/certificate/$seal': typeof CertificateSealRoute
+  '/read/$slug': typeof ReadSlugRoute
   '/certificate': typeof CertificateIndexRoute
 }
 export interface FileRoutesById {
@@ -97,6 +105,7 @@ export interface FileRoutesById {
   '/toolkit': typeof ToolkitRoute
   '/volumes': typeof VolumesRoute
   '/certificate/$seal': typeof CertificateSealRoute
+  '/read/$slug': typeof ReadSlugRoute
   '/certificate/': typeof CertificateIndexRoute
 }
 export interface FileRouteTypes {
@@ -110,6 +119,7 @@ export interface FileRouteTypes {
     | '/toolkit'
     | '/volumes'
     | '/certificate/$seal'
+    | '/read/$slug'
     | '/certificate/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -121,6 +131,7 @@ export interface FileRouteTypes {
     | '/toolkit'
     | '/volumes'
     | '/certificate/$seal'
+    | '/read/$slug'
     | '/certificate'
   id:
     | '__root__'
@@ -132,6 +143,7 @@ export interface FileRouteTypes {
     | '/toolkit'
     | '/volumes'
     | '/certificate/$seal'
+    | '/read/$slug'
     | '/certificate/'
   fileRoutesById: FileRoutesById
 }
@@ -144,6 +156,7 @@ export interface RootRouteChildren {
   ToolkitRoute: typeof ToolkitRoute
   VolumesRoute: typeof VolumesRoute
   CertificateSealRoute: typeof CertificateSealRoute
+  ReadSlugRoute: typeof ReadSlugRoute
   CertificateIndexRoute: typeof CertificateIndexRoute
 }
 
@@ -205,6 +218,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CertificateIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/read/$slug': {
+      id: '/read/$slug'
+      path: '/read/$slug'
+      fullPath: '/read/$slug'
+      preLoaderRoute: typeof ReadSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/certificate/$seal': {
       id: '/certificate/$seal'
       path: '/certificate/$seal'
@@ -224,6 +244,7 @@ const rootRouteChildren: RootRouteChildren = {
   ToolkitRoute: ToolkitRoute,
   VolumesRoute: VolumesRoute,
   CertificateSealRoute: CertificateSealRoute,
+  ReadSlugRoute: ReadSlugRoute,
   CertificateIndexRoute: CertificateIndexRoute,
 }
 export const routeTree = rootRouteImport

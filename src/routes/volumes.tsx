@@ -95,7 +95,7 @@ function Volumes() {
               <span className="seal-glow">{v.seal}</span>
             </p>
             <a
-              href={v.url}
+              href={v.readUrl}
               target="_blank"
               rel="noopener"
               className="ghost-button mt-4 inline-flex items-center rounded-sm border-2 border-foreground px-5 py-2 font-mono text-[11px] tracking-widest uppercase no-underline"

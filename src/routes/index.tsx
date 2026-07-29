@@ -133,7 +133,7 @@ function Shelf() {
         {VOLUMES.map((v, i) => (
           <a
             key={v.n}
-            href={v.url}
+            href={v.readUrl}
             target="_blank"
             rel="noopener"
             onClick={() => track("open_volume", { volume: v.numeral, surface: "shelf" })}
@@ -248,7 +248,7 @@ function Home() {
               </span>
               <div className="min-w-0">
                 <a
-                  href={v.url}
+                  href={v.readUrl}
                   target="_blank"
                   rel="noopener"
                   onClick={() => track("open_volume", { volume: v.numeral, surface: "messages" })}
