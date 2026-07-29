@@ -197,7 +197,7 @@ function SiteFooter() {
   return (
     <footer className="no-print mt-24 border-t-[3px] border-foreground">
       <div className="spectrum-rule h-[3px] w-full opacity-40" />
-      <div className="mx-auto max-w-5xl px-6 py-10 font-mono text-[12px] leading-loose text-ink-faint">
+      <div className="mx-auto max-w-5xl px-5 py-9 sm:px-6 sm:py-10 font-mono text-[12px] leading-loose text-ink-faint">
         <p className="text-ink-dim">
           The Strategic Master Library · Volume Edition · First Printing · 2026
         </p>

@@ -244,9 +244,9 @@ function Home() {
 
 
       {/* What this is */}
-      <Reveal as="section" className="mx-auto grid max-w-5xl gap-10 px-6 pt-20 md:grid-cols-2">
+      <Reveal as="section" className="mx-auto grid max-w-5xl gap-10 px-5 pt-16 sm:px-6 sm:pt-20 md:grid-cols-2">
         <div>
-          <h2 className="display-title border-b-2 border-foreground pb-2 text-3xl">
+          <h2 className="display-title border-b-2 border-foreground pb-2 text-[clamp(1.75rem,7vw,2rem)]">
             What this is
           </h2>
           <p className="mt-4">
@@ -267,7 +267,7 @@ function Home() {
           </p>
         </div>
         <div>
-          <h2 className="display-title border-b-2 border-foreground pb-2 text-3xl">
+          <h2 className="display-title border-b-2 border-foreground pb-2 text-[clamp(1.75rem,7vw,2rem)]">
             Who it is for
           </h2>
           <p className="mt-4">
@@ -276,7 +276,7 @@ function Home() {
             practice section is written to be applied to <em>your</em> work, not to admire
             someone else's.
           </p>
-          <h2 className="display-title mt-10 border-b-2 border-foreground pb-2 text-3xl">
+          <h2 className="display-title mt-10 border-b-2 border-foreground pb-2 text-[clamp(1.75rem,7vw,2rem)]">
             What was left out
           </h2>
           <p className="mt-4">
@@ -290,8 +290,8 @@ function Home() {
       </Reveal>
 
       {/* Truth legend */}
-      <Reveal as="section" className="mx-auto max-w-5xl px-6 pt-20">
-        <h2 className="display-title border-b-2 border-foreground pb-2 text-3xl">
+      <Reveal as="section" className="mx-auto max-w-5xl px-5 pt-16 sm:px-6 sm:pt-20">
+        <h2 className="display-title border-b-2 border-foreground pb-2 text-[clamp(1.75rem,7vw,2rem)]">
           The truth legend
         </h2>
         <p className="mt-4 max-w-2xl">
@@ -329,8 +329,8 @@ function Home() {
       </Reveal>
 
       {/* What's in the box */}
-      <Reveal as="section" className="mx-auto max-w-5xl px-6 pt-20">
-        <h2 className="display-title border-b-2 border-foreground pb-2 text-3xl">
+      <Reveal as="section" className="mx-auto max-w-5xl px-5 pt-16 sm:px-6 sm:pt-20">
+        <h2 className="display-title border-b-2 border-foreground pb-2 text-[clamp(1.75rem,7vw,2rem)]">
           What's in the download
         </h2>
         <div className="mt-6 grid gap-4 md:grid-cols-3">
@@ -376,7 +376,7 @@ function Home() {
       </Reveal>
 
       {/* Seal + final CTA */}
-      <Reveal as="section" className="mx-auto max-w-5xl px-6 pt-20">
+      <Reveal as="section" className="mx-auto max-w-5xl px-5 pt-16 sm:px-6 sm:pt-20">
         <div className="paper-card bg-paper-2 p-8">
           <p className="eyebrow m-0">Library seal · SHA-256</p>
           <p className="seal-glow mt-2 mb-6 font-mono text-[11px] break-all text-ink-dim sm:text-[13px]">

@@ -46,7 +46,7 @@ export const Route = createFileRoute("/volumes")({
 
 function Volumes() {
   return (
-    <div className="mx-auto max-w-4xl px-6 pt-14">
+    <div className="mx-auto max-w-4xl px-5 pt-12 sm:px-6 sm:pt-14">
       <p className="eyebrow ink-rise">Volume Index</p>
       <h1 className="display-title ink-rise mt-3 text-[clamp(2.5rem,8vw,4.5rem)]">The Six Volumes</h1>
       <p className="mt-4 max-w-2xl text-ink-dim">
