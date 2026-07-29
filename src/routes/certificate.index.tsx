@@ -167,16 +167,24 @@ function CertificatePage() {
               <span className="text-ink-dim">
                 {String(r.copy_no).padStart(3, "0")}
               </span>
-              <Link
-                to="/certificate/$seal"
-                params={{ seal: r.cert_seal }}
-                className="rule-link truncate"
-              >
-                {r.owner}
-              </Link>
+              <span className="min-w-0">
+                <Link
+                  to="/certificate/$seal"
+                  params={{ seal: r.cert_seal }}
+                  className="rule-link block truncate"
+                >
+                  {r.owner}
+                </Link>
+                {r.note && (
+                  <span className="mt-0.5 block text-[11px] leading-snug text-ink-faint">
+                    {r.note}
+                  </span>
+                )}
+              </span>
               <span className="text-ink-faint">{r.issue_date}</span>
             </li>
           ))}
+
         </ul>
         {register.data?.length === 0 && (
           <p className="mt-4 font-mono text-[12px] text-ink-faint">
