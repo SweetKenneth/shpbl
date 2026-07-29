@@ -122,10 +122,14 @@ function SiteHeader() {
           <Link to="/toolkit" className="hidden no-underline hover:underline sm:inline">
             Toolkit
           </Link>
+          <Link to="/certificate" className="no-underline hover:underline">
+            Certificate
+          </Link>
           <Link to="/license" className="no-underline hover:underline">
             License
           </Link>
         </nav>
+
       </div>
     </header>
   );
