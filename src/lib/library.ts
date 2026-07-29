@@ -11,8 +11,6 @@ import certSpecimen from "@/assets/certificate-specimen.asset.json";
 export const SITE_URL = "https://shpbl.com";
 export const OG_IMAGE = `${SITE_URL}/og-cover.jpg`;
 
-export const SITE_URL = "https://shpbl.com";
-export const OG_IMAGE = `${SITE_URL}/og-cover.jpg`;
 
 export const LIBRARY = {
   title: "The Strategic Master Library",
