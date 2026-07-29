@@ -74,6 +74,11 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   );
 }
 
+/** Sitewide fallback description. Kept under 155 chars so no SERP truncation. */
+const ROOT_DESC =
+  "Six volumes distilled from 29 audited owner's manuals, plus the toolkit that made them. Free, sealed, print-ready. No email, no account.";
+
+
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
   head: () => ({
     meta: [
