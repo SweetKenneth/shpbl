@@ -15,11 +15,14 @@ export const Route = createFileRoute("/pulse")({
     meta: [
       { title: "Pulse — Private Analytics | SHPBL" },
       { name: "description", content: "Private, key-gated readership dashboard for SHPBL.com." },
-      { name: "robots", content: "noindex, nofollow" },
+      // robots.txt deliberately allows this URL so the directive below is read.
+      { name: "robots", content: "noindex, nofollow, noarchive, nosnippet, noimageindex" },
+      { name: "googlebot", content: "noindex, nofollow, noarchive, nosnippet" },
       { property: "og:title", content: "Pulse — Private Analytics" },
       { property: "og:description", content: "Key-gated readership dashboard for SHPBL.com." },
     ],
   }),
+
   component: Pulse,
 });
 
