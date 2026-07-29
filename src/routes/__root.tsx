@@ -256,7 +256,7 @@ function SiteHeader() {
           </span>
         </Link>
 
-        <nav className="flex shrink-0 items-center gap-3.5 font-mono text-[10px] tracking-[0.14em] uppercase sm:gap-5 sm:text-[11px] sm:tracking-widest">
+        <nav className="flex shrink-0 items-center gap-3.5 font-mono text-[11px] tracking-[0.12em] uppercase sm:gap-5 sm:tracking-widest">
           {NAV.map((item) => (
             <Link
               key={item.to}
