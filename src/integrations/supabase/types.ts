@@ -61,6 +61,7 @@ export type Database = {
           id: string
           issue_date: string
           library_seal: string
+          note: string | null
           owner: string
         }
         Insert: {
@@ -70,6 +71,7 @@ export type Database = {
           id?: string
           issue_date: string
           library_seal: string
+          note?: string | null
           owner: string
         }
         Update: {
@@ -79,6 +81,7 @@ export type Database = {
           id?: string
           issue_date?: string
           library_seal?: string
+          note?: string | null
           owner?: string
         }
         Relationships: []
