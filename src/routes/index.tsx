@@ -63,11 +63,12 @@ export const Route = createFileRoute("/")({
 
 function DownloadButtons({ compact = false }: { compact?: boolean }) {
   return (
-    <div className="flex flex-wrap items-center gap-3">
+    <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
       <a
         href={ZIP_URL}
         download
-        className="ink-button group inline-flex items-center gap-3 rounded-sm border-2 border-foreground bg-foreground px-6 py-3 font-mono text-xs tracking-[0.18em] uppercase text-background no-underline"
+        onClick={() => track("download_zip", { surface: compact ? "footer-cta" : "masthead" })}
+        className="ink-button group inline-flex items-center justify-center gap-2 rounded-sm border-2 border-foreground bg-foreground px-5 py-3.5 text-center font-mono text-[11px] tracking-[0.16em] uppercase text-background no-underline sm:justify-start sm:gap-3 sm:px-6 sm:text-xs sm:tracking-[0.18em]"
       >
         Download the library
         <span className="opacity-60 transition-opacity duration-300 group-hover:opacity-100">
@@ -79,7 +80,8 @@ function DownloadButtons({ compact = false }: { compact?: boolean }) {
           href={SHELF_URL}
           target="_blank"
           rel="noopener"
-          className="ghost-button inline-flex items-center rounded-sm border-2 border-foreground px-6 py-3 font-mono text-xs tracking-[0.18em] uppercase no-underline"
+          onClick={() => track("read_shelf")}
+          className="ghost-button inline-flex items-center justify-center rounded-sm border-2 border-foreground px-5 py-3.5 font-mono text-[11px] tracking-[0.16em] uppercase no-underline sm:px-6 sm:text-xs sm:tracking-[0.18em]"
         >
           Read the shelf online
         </a>
@@ -91,36 +93,42 @@ function DownloadButtons({ compact = false }: { compact?: boolean }) {
 function Shelf() {
   return (
     <div>
-      <div className="flex flex-wrap items-end gap-2.5 px-1.5">
+      <div className="flex flex-wrap items-end gap-2 px-1 sm:gap-2.5 sm:px-1.5">
         {VOLUMES.map((v, i) => (
           <a
             key={v.n}
             href={v.url}
             target="_blank"
             rel="noopener"
+            onClick={() => track("open_volume", { volume: v.numeral, surface: "shelf" })}
             style={{
               ["--s" as string]: `var(--vol-${v.n})`,
               animationDelay: `${120 + i * 90}ms`,
             }}
-            className="spine ink-rise flex h-[300px] min-w-[74px] items-center justify-between py-4 no-underline"
+            className="spine ink-rise flex h-[218px] min-w-[52px] flex-1 items-center justify-between py-3 no-underline sm:h-[300px] sm:min-w-[74px] sm:flex-none sm:py-4"
             aria-label={`Volume ${v.numeral} — ${v.title}`}
           >
             <span
-              className="font-display text-3xl tracking-widest"
+              className="font-display text-2xl tracking-widest sm:text-3xl"
               style={{ color: "var(--s)" }}
             >
               {v.numeral}
             </span>
-            <span className="display-title px-1 text-[21px] tracking-wider">{v.title}</span>
-            <span className="h-2.5 w-full flex-none" style={{ background: "var(--s)" }} />
+            <span className="display-title px-1 text-[16px] tracking-wide sm:text-[21px] sm:tracking-wider">
+              {v.title}
+            </span>
+            <span className="h-2 w-full flex-none sm:h-2.5" style={{ background: "var(--s)" }} />
           </a>
         ))}
       </div>
-      <div className="mt-0 h-3.5 rounded-sm bg-foreground shadow-[0_10px_26px_-18px_var(--foreground)]" />
-      <p className="eyebrow mt-2">Pull a spine to read it · Each volume is one self-contained file</p>
+      <div className="mt-0 h-3 rounded-sm bg-foreground shadow-[0_10px_26px_-18px_var(--foreground)] sm:h-3.5" />
+      <p className="eyebrow mt-2 text-[10px] sm:text-[11px]">
+        Pull a spine to read it · Each volume is one self-contained file
+      </p>
     </div>
   );
 }
+
 
 function Home() {
   return (
