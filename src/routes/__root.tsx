@@ -14,6 +14,8 @@ import { reportLovableError } from "../lib/lovable-error-reporting";
 import { ScrollProgress } from "@/components/ScrollProgress";
 import { InstallPrompt } from "@/components/InstallPrompt";
 import { Analytics } from "@/components/Analytics";
+import { PointerInk } from "@/components/PointerInk";
+
 import { AUTHOR_URL, COLLECTIVE, SITE_URL } from "@/lib/library";
 
 
@@ -321,6 +323,8 @@ function RootComponent() {
         <SiteFooter />
         <InstallPrompt />
         <Analytics />
+        <PointerInk />
+
       </div>
     </QueryClientProvider>
 

@@ -109,7 +109,7 @@ function License() {
       </p>
 
       <div
-        className="paper-card mt-10 bg-paper-2 p-6"
+        className="paper-card ink-spot mt-10 bg-paper-2 p-6"
         style={{ borderLeftWidth: 8, borderLeftColor: "var(--vol-5)" }}
       >
         <p className="eyebrow m-0" style={{ color: "var(--vol-5)" }}>
@@ -202,7 +202,7 @@ function License() {
         {LICENSE_TXT}
       </pre>
 
-      <div className="paper-card mt-14 p-7">
+      <div className="paper-card ink-spot mt-14 p-7">
         <h2 className="display-title text-2xl">Terms understood?</h2>
         <p className="mt-2 mb-5 text-ink-dim">Take it. The license travels inside the zip.</p>
         <a

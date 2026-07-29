@@ -6,7 +6,9 @@ export type CertificateData = {
   issue_date: string;
   cert_seal: string;
   library_seal: string;
+  note?: string | null;
 };
+
 
 /**
  * The web rendering of the certificate certify.py mints. Same fields, same
@@ -34,6 +36,13 @@ export function CertificateCard({ cert }: { cert: CertificateData }) {
       <p className="mt-4 mb-7 font-mono text-[13px] tracking-[0.18em] text-ink-dim">
         COPY No. {copy} · ISSUED {cert.issue_date}
       </p>
+
+      {cert.note && (
+        <p className="mx-auto -mt-4 mb-7 max-w-[520px] font-mono text-[11.5px] leading-relaxed tracking-[0.08em] text-ink-faint">
+          REGISTRAR'S NOTE · {cert.note}
+        </p>
+      )}
+
 
       <p className="mx-auto mb-6 max-w-[520px] text-[13.5px] leading-relaxed text-ink-dim">
         is the registered holder of this copy of the Volume Edition, issued free of charge

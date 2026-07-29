@@ -393,7 +393,7 @@ function Home() {
               d: "Every built file sealed by SHA-256, capped by a single library seal. Verify the copy you hold matches the edition that was published.",
             },
           ].map((c, i) => (
-            <Reveal key={c.k} delay={i * 70} className="paper-card p-5">
+            <Reveal key={c.k} delay={i * 70} className="paper-card ink-spot p-5">
               <p className="eyebrow m-0">{c.k}</p>
               <h3 className="display-title mt-2 mb-2 text-xl">{c.t}</h3>
               <p className="m-0 text-sm text-ink-dim">{c.d}</p>
@@ -432,9 +432,9 @@ function Home() {
 
       {/* Seal + final CTA */}
       <Reveal as="section" className="mx-auto max-w-5xl px-5 pt-16 sm:px-6 sm:pt-20">
-        <div className="paper-card bg-paper-2 p-8">
+        <div className="paper-card ink-spot bg-paper-2 p-8">
           <p className="eyebrow m-0">Library seal · SHA-256</p>
-          <p className="seal-glow mt-2 mb-6 font-mono text-[11px] break-all text-ink-dim sm:text-[13px]">
+          <p className="seal-scan mt-2 mb-6 font-mono text-[11px] break-all text-ink-dim sm:text-[13px]">
             {LIBRARY.librarySeal}
           </p>
           <h2 className="display-title text-[clamp(2rem,6vw,3.5rem)]">

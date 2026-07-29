@@ -72,7 +72,7 @@ function Volumes() {
             as="article"
             key={v.n}
             delay={v.n * 40}
-            className="vol-panel pl-6"
+            className="vol-panel ink-spot pl-6"
             style={{ borderLeft: `4px solid var(--vol-${v.n})` }}
           >
             <p className="eyebrow m-0" style={{ color: `var(--vol-${v.n})` }}>
@@ -92,7 +92,7 @@ function Volumes() {
             </p>
             <p className="m-0 mt-1 font-mono text-[11px] break-all text-ink-faint">
               <span className="tracking-widest">SEAL · </span>
-              <span className="seal-glow">{v.seal}</span>
+              <span className="seal-scan">{v.seal}</span>
             </p>
             <div className="mt-4 flex flex-wrap items-center gap-3">
               <a
@@ -114,7 +114,7 @@ function Volumes() {
         ))}
       </div>
 
-      <div className="paper-card mt-16 bg-paper-2 p-7">
+      <div className="paper-card ink-spot mt-16 bg-paper-2 p-7">
         <h2 className="display-title text-2xl">Want all six offline?</h2>
         <p className="mt-2 mb-5 text-ink-dim">
           The full package includes the volumes, the toolkit, the markdown source, the

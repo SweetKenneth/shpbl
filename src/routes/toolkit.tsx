@@ -89,7 +89,7 @@ function Toolkit() {
 
       <div className="mt-12 space-y-6">
         {STAGES.map((s) => (
-          <div key={s.n} className="paper-card p-7" style={{ borderLeftWidth: 8, borderLeftColor: s.accent }}>
+          <div key={s.n} className="paper-card ink-spot p-7" style={{ borderLeftWidth: 8, borderLeftColor: s.accent }}>
             <p className="eyebrow m-0" style={{ color: s.accent }}>
               {s.n}
             </p>
@@ -113,7 +113,7 @@ function Toolkit() {
         The method carries its credit line. The output is your asset.
       </p>
 
-      <div className="paper-card mt-14 bg-paper-2 p-7">
+      <div className="paper-card ink-spot mt-14 bg-paper-2 p-7">
         <h2 className="display-title text-2xl">Get the toolkit</h2>
         <p className="mt-2 mb-5 text-ink-dim">
           It ships inside the library package, alongside all six volumes.

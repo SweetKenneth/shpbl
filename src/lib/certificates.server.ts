@@ -8,9 +8,12 @@ export type Certificate = {
   issue_date: string;
   cert_seal: string;
   library_seal: string;
+  /** Optional registrar's annotation, e.g. why an issuance was not a normal reader. */
+  note: string | null;
 };
 
-const COLS = "copy_no, owner, issue_date, cert_seal, library_seal";
+const COLS = "copy_no, owner, issue_date, cert_seal, library_seal, note";
+
 
 /** The generated Database types are regenerated asynchronously; keep this
  *  module compiling against the shape we actually rely on. */

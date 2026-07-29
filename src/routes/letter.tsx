@@ -186,7 +186,7 @@ function Letter() {
         </p>
       </section>
 
-      <div className="paper-card mt-14 mb-6 p-7">
+      <div className="paper-card ink-spot mt-14 mb-6 p-7">
         <h2 className="display-title text-2xl">Start with the shelf</h2>
         <p className="mt-2 mb-5 text-ink-dim">
           Six volumes, the toolkit, and the source — one zip, no cost, no email.

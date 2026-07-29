@@ -10,7 +10,11 @@ export const getRouter = () => {
     context: { queryClient },
     scrollRestoration: true,
     defaultPreloadStaleTime: 0,
+    // Cross-page crossfade via the View Transitions API where supported;
+    // a no-op everywhere else, and neutralised by prefers-reduced-motion.
+    defaultViewTransition: true,
   });
+
 
   return router;
 };
