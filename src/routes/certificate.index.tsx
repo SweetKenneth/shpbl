@@ -43,6 +43,7 @@ function CertificatePage() {
     mutationFn: (name: string) => mintFn({ data: { owner: name } }),
     onSuccess: (data) => {
       setCert(data as CertificateData);
+      track("cert_minted", { copyNo: (data as CertificateData).copy_no });
       register.refetch();
     },
   });
@@ -70,7 +71,10 @@ function CertificatePage() {
           className="mt-8 flex max-w-xl flex-wrap gap-3"
           onSubmit={(e) => {
             e.preventDefault();
-            if (owner.trim().length >= 2) mint.mutate(owner);
+            if (owner.trim().length >= 2) {
+              track("cert_mint_started");
+              mint.mutate(owner);
+            }
           }}
         >
           <input

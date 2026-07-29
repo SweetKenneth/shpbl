@@ -13,6 +13,7 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { ScrollProgress } from "@/components/ScrollProgress";
 import { InstallPrompt } from "@/components/InstallPrompt";
+import { Analytics } from "@/components/Analytics";
 
 
 function NotFoundComponent() {
@@ -231,6 +232,7 @@ function RootComponent() {
         </main>
         <SiteFooter />
         <InstallPrompt />
+        <Analytics />
       </div>
     </QueryClientProvider>
   );
