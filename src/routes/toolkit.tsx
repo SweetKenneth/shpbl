@@ -43,6 +43,17 @@ export const Route = createFileRoute("/toolkit")({
           ],
         }),
       },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
+            { "@type": "ListItem", position: 2, name: "Toolkit", item: `${SITE_URL}/toolkit` },
+          ],
+        }),
+      },
     ],
   }),
   component: Toolkit,
