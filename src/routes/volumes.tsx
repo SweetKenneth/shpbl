@@ -4,7 +4,7 @@ import { Reveal } from "@/components/Reveal";
 
 const TITLE = "The Six Volumes — Strategic Master Library | SHPBL";
 const DESC =
-  "Volume index: Demote Claims, Substrates Not Features, Ship the Crystal, Software with a Soul, Built to Be Inherited, The Drift Watch. Read online or download free.";
+  "Demote Claims · Substrates Not Features · Ship the Crystal · Software with a Soul · Built to Be Inherited · The Drift Watch. Read free online.";
 
 export const Route = createFileRoute("/volumes")({
   head: () => ({

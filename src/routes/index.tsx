@@ -17,7 +17,7 @@ import { track } from "@/lib/analytics";
 
 const TITLE = "The Strategic Master Library — Free Download | SHPBL";
 const DESC =
-  "Six volumes distilled from twenty-nine audited owner's manuals, plus the two-stage toolkit that produced them. Free, sealed, print-ready. No email, no account.";
+  "Six volumes distilled from 29 audited owner's manuals, plus the two-stage toolkit that made them. Free, sealed, print-ready. No email, no account.";
 
 export const Route = createFileRoute("/")({
   head: () => ({

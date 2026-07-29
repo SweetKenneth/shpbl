@@ -3,7 +3,7 @@ import { LIBRARY, OG_IMAGE, SITE_URL, ZIP_URL } from "@/lib/library";
 
 const TITLE = "License — Free Edition Grant v1.0 | SHPBL";
 const DESC =
-  "The Strategic Master Library ships under the Free Edition Grant v1.0: read, print, and pass it on whole at no cost. Loose terms for the tooling, protected prose, no resale.";
+  "Free Edition Grant v1.0: read, print, and pass the library on whole at no cost. Loose terms for the tooling, protected prose, no resale.";
 
 export const Route = createFileRoute("/license")({
   head: () => ({

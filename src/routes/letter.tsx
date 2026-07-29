@@ -5,7 +5,7 @@ import { track } from "@/lib/analytics";
 
 const TITLE = "Letter from the Author | SHPBL";
 const DESC =
-  "Why Kenneth E. Sweet Jr. wrote The Strategic Master Library, who it is for, and what he hopes you take from it — plus the projects the volumes were drawn from.";
+  "Why Kenneth E. Sweet Jr. wrote The Strategic Master Library, who it is for, and the projects the six volumes were drawn from.";
 
 /** Alphabetical, case-insensitive. */
 const PROJECTS = [
