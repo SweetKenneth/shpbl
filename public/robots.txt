@@ -1,5 +1,6 @@
 # The Strategic Master Library — SHPBL.com
 # Free to read, free to index, free to cite.
+# Structured summary for language models: https://shpbl.com/llms.txt
 
 User-agent: *
 Allow: /
@@ -7,31 +8,87 @@ Disallow: /pulse
 Disallow: /certificate/
 
 # Answer engines are welcome — the whole point is transfer.
+# Note: robots.txt groups do not inherit, so each named agent repeats
+# the private paths explicitly.
+
 User-agent: GPTBot
 Allow: /
+Disallow: /pulse
+Disallow: /certificate/
 
 User-agent: OAI-SearchBot
 Allow: /
+Disallow: /pulse
+Disallow: /certificate/
 
 User-agent: ChatGPT-User
 Allow: /
+Disallow: /pulse
+Disallow: /certificate/
 
 User-agent: ClaudeBot
 Allow: /
+Disallow: /pulse
+Disallow: /certificate/
 
 User-agent: Claude-SearchBot
 Allow: /
+Disallow: /pulse
+Disallow: /certificate/
+
+User-agent: anthropic-ai
+Allow: /
+Disallow: /pulse
+Disallow: /certificate/
 
 User-agent: PerplexityBot
 Allow: /
+Disallow: /pulse
+Disallow: /certificate/
+
+User-agent: Perplexity-User
+Allow: /
+Disallow: /pulse
+Disallow: /certificate/
 
 User-agent: Google-Extended
 Allow: /
+Disallow: /pulse
+Disallow: /certificate/
+
+User-agent: Applebot
+Allow: /
+Disallow: /pulse
+Disallow: /certificate/
 
 User-agent: Applebot-Extended
 Allow: /
+Disallow: /pulse
+Disallow: /certificate/
+
+User-agent: Bingbot
+Allow: /
+Disallow: /pulse
+Disallow: /certificate/
 
 User-agent: CCBot
 Allow: /
+Disallow: /pulse
+Disallow: /certificate/
+
+User-agent: cohere-ai
+Allow: /
+Disallow: /pulse
+Disallow: /certificate/
+
+User-agent: Meta-ExternalAgent
+Allow: /
+Disallow: /pulse
+Disallow: /certificate/
+
+User-agent: Amazonbot
+Allow: /
+Disallow: /pulse
+Disallow: /certificate/
 
 Sitemap: https://shpbl.com/sitemap.xml
