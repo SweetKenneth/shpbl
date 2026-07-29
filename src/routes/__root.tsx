@@ -292,6 +292,9 @@ function SiteFooter() {
               {item.label}
             </Link>
           ))}
+          <a href="/read/volume-06-the-drift-watch#built-to-last" className="rule-link no-underline">
+            Closing Track
+          </a>
         </p>
       </div>
     </footer>

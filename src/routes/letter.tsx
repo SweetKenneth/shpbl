@@ -178,6 +178,12 @@ function Letter() {
           </a>
           .
         </p>
+
+        <p className="mt-4 text-sm">
+          <a href="/read/volume-06-the-drift-watch#built-to-last" className="rule-link">
+            Listen to “Built to Last” →
+          </a>
+        </p>
       </section>
 
       <div className="paper-card mt-14 mb-6 p-7">

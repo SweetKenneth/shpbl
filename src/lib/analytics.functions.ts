@@ -16,6 +16,12 @@ const EVENTS = [
   "app_launched_standalone",
   "brand_kit_download",
   "outbound_click",
+  "closing_track_view",
+  "closing_track_play",
+  "closing_track_pause",
+  "closing_track_complete",
+  "closing_track_seek",
+  "closing_track_lyrics_open",
 ] as const;
 
 const clip = (n: number) => z.string().trim().max(n);
