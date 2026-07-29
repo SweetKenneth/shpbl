@@ -60,7 +60,6 @@ function readerHead(slug: string): string {
             name: LIBRARY.title,
             bookEdition: LIBRARY.subtitle,
             url: SITE_URL,
-            numberOfPages: undefined,
           },
         }
       : {}),
@@ -85,7 +84,7 @@ function readerHead(slug: string): string {
 <meta name="author" content="${escapeAttr(LIBRARY.author)}">
 <meta name="robots" content="${v ? "index, follow, max-image-preview:large, max-snippet:-1" : "noindex, follow"}">
 <link rel="canonical" href="${canonical}">
-<meta property="og:type" content="article">
+<meta property="og:type" content="${v ? "article" : "website"}">
 <meta property="og:site_name" content="${escapeAttr(LIBRARY.title)}">
 <meta property="og:locale" content="en_US">
 <meta property="og:title" content="${escapeAttr(title)}">
@@ -212,8 +211,11 @@ export const Route = createFileRoute("/read/$slug")({
             "content-type": "text/html; charset=utf-8",
             "content-disposition": "inline",
             "cache-control": "public, max-age=3600, stale-while-revalidate=86400",
-            // The volumes are the point of the site — let them be found.
-            "x-robots-tag": "index, follow, max-snippet:-1, max-image-preview:large",
+            // The volumes are the point of the site — let them be found. The
+            // printable shelf stays out of the index; /volumes is its canonical.
+            "x-robots-tag": isShelf
+              ? "noindex, follow"
+              : "index, follow, max-snippet:-1, max-image-preview:large",
           },
         });
 
