@@ -14,6 +14,7 @@ import { Route as ToolkitRouteImport } from './routes/toolkit'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as PulseRouteImport } from './routes/pulse'
 import { Route as LicenseRouteImport } from './routes/license'
+import { Route as LetterRouteImport } from './routes/letter'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as CertificateIndexRouteImport } from './routes/certificate.index'
 import { Route as CertificateSealRouteImport } from './routes/certificate.$seal'
@@ -43,6 +44,11 @@ const LicenseRoute = LicenseRouteImport.update({
   path: '/license',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LetterRoute = LetterRouteImport.update({
+  id: '/letter',
+  path: '/letter',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -61,6 +67,7 @@ const CertificateSealRoute = CertificateSealRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/letter': typeof LetterRoute
   '/license': typeof LicenseRoute
   '/pulse': typeof PulseRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -71,6 +78,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/letter': typeof LetterRoute
   '/license': typeof LicenseRoute
   '/pulse': typeof PulseRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -82,6 +90,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/letter': typeof LetterRoute
   '/license': typeof LicenseRoute
   '/pulse': typeof PulseRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -94,6 +103,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/letter'
     | '/license'
     | '/pulse'
     | '/sitemap.xml'
@@ -104,6 +114,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/letter'
     | '/license'
     | '/pulse'
     | '/sitemap.xml'
@@ -114,6 +125,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/letter'
     | '/license'
     | '/pulse'
     | '/sitemap.xml'
@@ -125,6 +137,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  LetterRoute: typeof LetterRoute
   LicenseRoute: typeof LicenseRoute
   PulseRoute: typeof PulseRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
@@ -171,6 +184,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LicenseRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/letter': {
+      id: '/letter'
+      path: '/letter'
+      fullPath: '/letter'
+      preLoaderRoute: typeof LetterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -197,6 +217,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  LetterRoute: LetterRoute,
   LicenseRoute: LicenseRoute,
   PulseRoute: PulseRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
@@ -208,13 +229,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
