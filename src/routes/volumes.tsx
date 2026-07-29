@@ -1,25 +1,47 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { VOLUMES, ZIP_URL } from "@/lib/library";
+import { OG_IMAGE, SITE_URL, VOLUMES, ZIP_URL } from "@/lib/library";
+
+const TITLE = "The Six Volumes — Strategic Master Library | SHPBL";
+const DESC =
+  "Volume index: Demote Claims, Substrates Not Features, Ship the Crystal, Software with a Soul, Built to Be Inherited, The Drift Watch. Read online or download free.";
 
 export const Route = createFileRoute("/volumes")({
   head: () => ({
     meta: [
-      { title: "The Six Volumes — Strategic Master Library" },
-      {
-        name: "description",
-        content:
-          "Volume index: Demote Claims, Substrates Not Features, Ship the Crystal, Software with a Soul, Built to Be Inherited, The Drift Watch. Read online or download free.",
-      },
-      { property: "og:title", content: "The Six Volumes — Strategic Master Library" },
+      { title: TITLE },
+      { name: "description", content: DESC },
+      { property: "og:title", content: TITLE },
       {
         property: "og:description",
         content:
           "One argument per volume, with exhibits drawn from twenty-nine audited owner's manuals. Read online or download free.",
       },
+      { property: "og:url", content: `${SITE_URL}/volumes` },
+      { property: "og:image", content: OG_IMAGE },
+      { name: "twitter:image", content: OG_IMAGE },
+    ],
+    links: [{ rel: "canonical", href: `${SITE_URL}/volumes` }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          name: "The Strategic Master Library — Volume Edition",
+          itemListElement: VOLUMES.map((v) => ({
+            "@type": "ListItem",
+            position: v.n,
+            name: `Volume ${v.numeral} — ${v.title}`,
+            description: v.message,
+            url: `${SITE_URL}/volumes`,
+          })),
+        }),
+      },
     ],
   }),
   component: Volumes,
 });
+
 
 function Volumes() {
   return (

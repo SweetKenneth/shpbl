@@ -1,25 +1,53 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ZIP_URL } from "@/lib/library";
+import { OG_IMAGE, SITE_URL, ZIP_URL } from "@/lib/library";
+
+const TITLE = "The Two-Stage Toolkit — Owner's Manual & Truth Audit | SHPBL";
+const DESC =
+  "Stage One generates an eighteen-section, truth-labeled Owner's Manual for your project. Stage Two is the forensic pass that demotes claims and publishes the correction log.";
 
 export const Route = createFileRoute("/toolkit")({
   head: () => ({
     meta: [
-      { title: "The Two-Stage Toolkit — Owner's Manual Patch & Truth Audit" },
-      {
-        name: "description",
-        content:
-          "Stage One generates an eighteen-section, truth-labeled Owner's Manual for your project. Stage Two is the forensic pass that demotes claims and publishes the correction log.",
-      },
-      { property: "og:title", content: "The Two-Stage Toolkit — Strategic Master Library" },
+      { title: TITLE },
+      { name: "description", content: DESC },
+      { property: "og:title", content: TITLE },
       {
         property: "og:description",
         content:
           "The same instrument that produced twenty-nine audited owner's manuals, generalized for your projects. Free.",
       },
+      { property: "og:url", content: `${SITE_URL}/toolkit` },
+      { property: "og:image", content: OG_IMAGE },
+      { name: "twitter:image", content: OG_IMAGE },
+    ],
+    links: [{ rel: "canonical", href: `${SITE_URL}/toolkit` }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "HowTo",
+          name: "Write an audited Owner's Manual for your project",
+          description: DESC,
+          step: [
+            {
+              "@type": "HowToStep",
+              name: "Stage One — the Owner's Manual Patch",
+              text: "Generate the eighteen-section, truth-labeled manual for your project.",
+            },
+            {
+              "@type": "HowToStep",
+              name: "Stage Two — the Truth Audit Patch",
+              text: "Run the forensic pass: demote claims, publish the diff, score the result.",
+            },
+          ],
+        }),
+      },
     ],
   }),
   component: Toolkit,
 });
+
 
 const STAGES = [
   {

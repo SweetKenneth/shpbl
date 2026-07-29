@@ -165,3 +165,19 @@
   border: 2px solid var(--foreground);
   border-radius: 6px;
 }
+
+/* Certificates print as the artifact, not as a web page. */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+
+  body {
+    background: #fff;
+  }
+
+  .cert-sheet {
+    max-width: none;
+    margin: 0;
+  }
+}

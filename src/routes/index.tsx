@@ -1,25 +1,67 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
-import { LIBRARY, VOLUMES, ZIP_URL, ZIP_BYTES, SHELF_URL, TRUTH_LEGEND } from "@/lib/library";
+import {
+  LIBRARY,
+  VOLUMES,
+  ZIP_URL,
+  ZIP_BYTES,
+  SHELF_URL,
+  TRUTH_LEGEND,
+  SITE_URL,
+  OG_IMAGE,
+} from "@/lib/library";
+
+const TITLE = "The Strategic Master Library — Free Download | SHPBL";
+const DESC =
+  "Six volumes distilled from twenty-nine audited owner's manuals, plus the two-stage toolkit that produced them. Free, sealed, print-ready. No email, no account.";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "The Strategic Master Library — Free Volume Edition Download" },
-      {
-        name: "description",
-        content:
-          "Six volumes distilled from twenty-nine audited owner's manuals, plus the two-stage toolkit that produced them. Free download. Sealed, print-ready, self-contained.",
-      },
+      { title: TITLE },
+      { name: "description", content: DESC },
       { property: "og:title", content: "The Strategic Master Library — Volume Edition" },
       {
         property: "og:description",
         content:
           "Six volumes. One discipline. Free download of the audited owner's-manual method, with the toolkit that ships it.",
       },
+      { property: "og:url", content: SITE_URL },
+      { property: "og:image", content: OG_IMAGE },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
+      { name: "twitter:image", content: OG_IMAGE },
+    ],
+    links: [{ rel: "canonical", href: `${SITE_URL}/` }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Book",
+          name: LIBRARY.title,
+          bookEdition: LIBRARY.subtitle,
+          numberOfPages: undefined,
+          author: { "@type": "Person", name: LIBRARY.author, url: SITE_URL },
+          publisher: { "@type": "Organization", name: "SHPBL", url: SITE_URL },
+          inLanguage: "en",
+          url: SITE_URL,
+          image: OG_IMAGE,
+          description: DESC,
+          license: `${SITE_URL}/license`,
+          offers: {
+            "@type": "Offer",
+            price: "0",
+            priceCurrency: "USD",
+            availability: "https://schema.org/InStock",
+            url: SITE_URL,
+          },
+        }),
+      },
     ],
   }),
   component: Home,
 });
+
 
 function DownloadButtons({ compact = false }: { compact?: boolean }) {
   return (
