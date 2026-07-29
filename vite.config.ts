@@ -25,6 +25,9 @@ export default defineConfig({
         manifest: false,
         workbox: {
           globPatterns: ["**/*.{js,css,svg,png,ico,woff2}"],
+          // SSR app: no index.html shell to fall back to; navigations are served
+          // by the NetworkFirst runtime route below.
+          navigateFallback: undefined,
           cleanupOutdatedCaches: true,
           clientsClaim: true,
           skipWaiting: true,
