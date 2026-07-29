@@ -151,31 +151,38 @@ function SiteHeader() {
       }`}
     >
       <div
-        className={`mx-auto flex max-w-5xl items-center justify-between gap-4 px-6 transition-all duration-300 ${
+        className={`mx-auto flex max-w-5xl items-center justify-between gap-3 px-5 transition-all duration-300 sm:gap-4 sm:px-6 ${
           scrolled ? "py-2" : "py-3"
         }`}
       >
         <Link
           to="/"
-          className="flex items-center gap-3 no-underline"
+          className="flex min-w-0 items-center gap-2.5 no-underline sm:gap-3"
           aria-label="SHPBL — The Strategic Master Library"
         >
           <img
             src="/icons/icon.svg"
             alt=""
             aria-hidden="true"
-            className={`transition-all duration-300 ${scrolled ? "h-7 w-7" : "h-9 w-9"}`}
+            className={`shrink-0 transition-all duration-300 ${scrolled ? "h-7 w-7" : "h-8 w-8 sm:h-9 sm:w-9"}`}
           />
           <span
-            className={`display-title leading-none transition-all duration-300 ${
+            className={`display-title hidden leading-none transition-all duration-300 md:inline ${
               scrolled ? "text-lg" : "text-xl"
             }`}
           >
             The Strategic Master Library
           </span>
+          <span
+            className={`display-title leading-none tracking-[0.08em] transition-all duration-300 md:hidden ${
+              scrolled ? "text-lg" : "text-xl"
+            }`}
+          >
+            SHPBL
+          </span>
         </Link>
 
-        <nav className="flex items-center gap-5 font-mono text-[11px] tracking-widest uppercase">
+        <nav className="flex shrink-0 items-center gap-3.5 font-mono text-[10px] tracking-[0.14em] uppercase sm:gap-5 sm:text-[11px] sm:tracking-widest">
           {NAV.map((item) => (
             <Link
               key={item.to}
@@ -187,6 +194,8 @@ function SiteHeader() {
             </Link>
           ))}
         </nav>
+      </div>
+
       </div>
       <ScrollProgress />
     </header>
