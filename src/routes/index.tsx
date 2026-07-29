@@ -106,7 +106,7 @@ function DownloadButtons({ compact = false }: { compact?: boolean }) {
         className="ink-button group inline-flex flex-col items-center justify-center gap-1 rounded-sm border-2 border-foreground bg-foreground px-5 py-3.5 text-center font-mono text-[11px] tracking-[0.16em] whitespace-nowrap uppercase text-background no-underline sm:flex-row sm:justify-start sm:gap-3 sm:px-6 sm:text-xs sm:tracking-[0.18em]"
       >
         Download the library
-        <span className="text-[10px] opacity-60 transition-opacity duration-300 group-hover:opacity-100 sm:text-inherit">
+        <span className="text-[11px] opacity-60 transition-opacity duration-300 group-hover:opacity-100 sm:text-inherit">
           {(ZIP_BYTES / 1024).toFixed(0)} KB · ZIP
         </span>
       </a>
@@ -154,7 +154,7 @@ function Shelf() {
         ))}
       </div>
       <div className="mt-0 h-3 rounded-sm bg-foreground shadow-[0_10px_26px_-18px_var(--foreground)] sm:h-3.5" />
-      <p className="eyebrow mt-2 text-[10px] sm:text-[11px]">
+      <p className="eyebrow mt-2 text-[11px]">
         Pull a spine to read it · Each volume is one self-contained file
       </p>
     </div>
@@ -182,7 +182,7 @@ function Home() {
           style={{ animationDelay: "180ms" }}
         />
         <p
-          className="eyebrow ink-rise mt-3 text-[10px] text-ink-dim sm:text-[11px]"
+          className="eyebrow ink-rise mt-3 text-[11px] text-ink-dim"
           style={{ animationDelay: "240ms" }}
         >
           {LIBRARY.tagline}
@@ -250,7 +250,7 @@ function Home() {
                   {v.title}
                 </a>
                 <p className="m-0 text-[15px] text-ink-dim sm:text-base">{v.message}</p>
-                <p className="m-0 mt-1 font-mono text-[10px] leading-relaxed text-ink-faint sm:text-[11px]">
+                <p className="m-0 mt-1 font-mono text-[11px] leading-relaxed text-ink-faint">
                   {v.drawnFrom}
                 </p>
               </div>
@@ -329,7 +329,7 @@ function Home() {
           {TRUTH_LEGEND.map((t) => (
             <div key={t.tag} className="list-row flex items-start gap-3 border-b border-border pb-3">
               <span
-                className={`mt-0.5 shrink-0 rounded-sm border-[1.5px] px-2 py-px font-mono text-[10px] font-semibold tracking-wider ${
+                className={`mt-0.5 shrink-0 rounded-sm border-[1.5px] px-2 py-px font-mono text-[11px] font-semibold tracking-wider ${
                   t.tag === "CONFIRMED"
                     ? "text-vol-5"
                     : t.tag === "OBSERVED"

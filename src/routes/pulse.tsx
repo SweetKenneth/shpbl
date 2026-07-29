@@ -32,7 +32,7 @@ function Stat({ label, value, sub }: { label: string; value: string; sub?: strin
     <div className="paper-card p-4 sm:p-5">
       <p className="eyebrow m-0">{label}</p>
       <p className="display-title m-0 mt-1 text-[clamp(2rem,7vw,3rem)] leading-none">{value}</p>
-      {sub && <p className="m-0 mt-1 font-mono text-[10px] tracking-widest text-ink-faint uppercase">{sub}</p>}
+      {sub && <p className="m-0 mt-1 font-mono text-[11px] tracking-widest text-ink-faint uppercase">{sub}</p>}
     </div>
   );
 }

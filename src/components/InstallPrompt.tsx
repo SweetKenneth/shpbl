@@ -41,7 +41,7 @@ export function InstallPrompt() {
               and license stay readable{" "}
               <span className="whitespace-nowrap">with no connection</span>.
             </p>
-            <p className="mt-2 mb-0 font-mono text-[10px] tracking-widest text-ink-faint uppercase">
+            <p className="mt-2 mb-0 font-mono text-[11px] tracking-widest text-ink-faint uppercase">
               {OFFLINE_ROUTES.length} pages cached · no ad tech
             </p>
           </div>
