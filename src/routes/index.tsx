@@ -1,24 +1,311 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { Link, createFileRoute } from "@tanstack/react-router";
+import { LIBRARY, VOLUMES, ZIP_URL, ZIP_BYTES, SHELF_URL, TRUTH_LEGEND } from "@/lib/library";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
 export const Route = createFileRoute("/")({
-  component: Index,
+  head: () => ({
+    meta: [
+      { title: "The Strategic Master Library — Free Volume Edition Download" },
+      {
+        name: "description",
+        content:
+          "Six volumes distilled from twenty-nine audited owner's manuals, plus the two-stage toolkit that produced them. Free download. Sealed, print-ready, self-contained.",
+      },
+      { property: "og:title", content: "The Strategic Master Library — Volume Edition" },
+      {
+        property: "og:description",
+        content:
+          "Six volumes. One discipline. Free download of the audited owner's-manual method, with the toolkit that ships it.",
+      },
+    ],
+  }),
+  component: Home,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
-function Index() {
+function DownloadButtons({ compact = false }: { compact?: boolean }) {
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
+    <div className="flex flex-wrap items-center gap-3">
+      <a
+        href={ZIP_URL}
+        download
+        className="inline-flex items-center gap-3 rounded-sm border-2 border-foreground bg-foreground px-6 py-3 font-mono text-xs tracking-[0.18em] uppercase text-background no-underline transition-transform hover:-translate-y-0.5"
+      >
+        Download the library
+        <span className="opacity-60">{(ZIP_BYTES / 1024).toFixed(0)} KB · ZIP</span>
+      </a>
+      {!compact && (
+        <a
+          href={SHELF_URL}
+          target="_blank"
+          rel="noopener"
+          className="inline-flex items-center rounded-sm border-2 border-foreground px-6 py-3 font-mono text-xs tracking-[0.18em] uppercase no-underline transition-colors hover:bg-foreground hover:text-background"
+        >
+          Read the shelf online
+        </a>
+      )}
     </div>
+  );
+}
+
+function Shelf() {
+  return (
+    <div>
+      <div className="flex flex-wrap items-end gap-2.5 px-1.5">
+        {VOLUMES.map((v) => (
+          <a
+            key={v.n}
+            href={v.url}
+            target="_blank"
+            rel="noopener"
+            style={{ ["--s" as string]: `var(--vol-${v.n})` }}
+            className="spine flex h-[300px] min-w-[74px] items-center justify-between py-4 no-underline"
+            aria-label={`Volume ${v.numeral} — ${v.title}`}
+          >
+            <span
+              className="font-display text-3xl tracking-widest"
+              style={{ color: "var(--s)" }}
+            >
+              {v.numeral}
+            </span>
+            <span className="display-title px-1 text-[21px] tracking-wider">{v.title}</span>
+            <span className="h-2.5 w-full flex-none" style={{ background: "var(--s)" }} />
+          </a>
+        ))}
+      </div>
+      <div className="mt-0 h-3.5 rounded-sm bg-foreground" />
+      <p className="eyebrow mt-2">Pull a spine to read it · Each volume is one self-contained file</p>
+    </div>
+  );
+}
+
+function Home() {
+  return (
+    <>
+      {/* Masthead */}
+      <section className="mx-auto max-w-5xl px-6 pt-16 pb-4">
+        <p className="eyebrow">{LIBRARY.edition} · Free Edition</p>
+        <h1 className="display-title mt-4 text-[clamp(3rem,10vw,6.5rem)]">
+          The Strategic
+          <br />
+          Master Library
+        </h1>
+        {/* The spectrum appears exactly once. */}
+        <div className="spectrum-rule mt-5 h-2 rounded-full" />
+        <p className="eyebrow mt-3 text-ink-dim">{LIBRARY.tagline}</p>
+
+        <p className="mt-8 max-w-2xl text-[19px] leading-relaxed text-ink-dim">
+          Six volumes distilled from a private compendium of twenty-nine audited project
+          owner's manuals — reorganized by <em>message</em>, not by project — plus the
+          two-stage toolkit that produced those manuals, so the method ships as an
+          instrument, not just an argument.
+        </p>
+
+        <div className="mt-8">
+          <DownloadButtons />
+        </div>
+        <p className="mt-4 font-mono text-[12px] text-ink-faint">
+          No email. No account. No tracking. Read the{" "}
+          <Link to="/license" className="underline">
+            license
+          </Link>{" "}
+          before you redistribute.
+        </p>
+      </section>
+
+      {/* Shelf */}
+      <section className="mx-auto max-w-5xl px-6 pt-14">
+        <Shelf />
+      </section>
+
+      {/* Message list */}
+      <section className="mx-auto max-w-5xl px-6 pt-16">
+        <h2 className="display-title border-b-2 border-foreground pb-2 text-3xl">
+          The six messages
+        </h2>
+        <ul className="mt-2 list-none p-0">
+          {VOLUMES.map((v) => (
+            <li
+              key={v.n}
+              className="grid grid-cols-[52px_1fr] items-baseline gap-4 border-b border-border py-4"
+            >
+              <span
+                className="font-display text-2xl"
+                style={{ color: `var(--vol-${v.n})` }}
+              >
+                {v.numeral}
+              </span>
+              <div>
+                <a
+                  href={v.url}
+                  target="_blank"
+                  rel="noopener"
+                  className="font-semibold no-underline hover:underline"
+                >
+                  {v.title}
+                </a>
+                <p className="m-0 text-ink-dim">{v.message}</p>
+                <p className="m-0 mt-1 font-mono text-[11px] leading-relaxed text-ink-faint">
+                  {v.drawnFrom}
+                </p>
+              </div>
+            </li>
+          ))}
+        </ul>
+        <p className="mt-6">
+          <Link to="/volumes" className="font-mono text-xs tracking-widest uppercase">
+            Full volume index →
+          </Link>
+        </p>
+      </section>
+
+      {/* What this is */}
+      <section className="mx-auto grid max-w-5xl gap-10 px-6 pt-20 md:grid-cols-2">
+        <div>
+          <h2 className="display-title border-b-2 border-foreground pb-2 text-3xl">
+            What this is
+          </h2>
+          <p className="mt-4">
+            The source is a private compendium: twenty-nine full owner's manuals for
+            twenty-nine shipped and shipping projects, written in one voice by one founder,
+            each audited against the live code it describes. That compendium is organized by
+            project, because its job is retrieval.
+          </p>
+          <p>
+            This edition is organized by <em>message</em>, because its job is transfer. The
+            same corpus, cut along a different axis: not "here is everything about project
+            X," but "here is one thing this whole body of work proves, with the receipts."
+          </p>
+          <p>
+            Projects appear inside the volumes as <strong>exhibits</strong> — evidence, not
+            chapters. A portfolio is not a list of things; it is a set of lessons that happen
+            to have running code attached.
+          </p>
+        </div>
+        <div>
+          <h2 className="display-title border-b-2 border-foreground pb-2 text-3xl">
+            Who it is for
+          </h2>
+          <p className="mt-4">
+            Solo builders, small teams, and anyone documenting a body of work they intend to
+            outlive. Nothing in these volumes requires access to the source projects. Every
+            practice section is written to be applied to <em>your</em> work, not to admire
+            someone else's.
+          </p>
+          <h2 className="display-title mt-10 border-b-2 border-foreground pb-2 text-3xl">
+            What was left out
+          </h2>
+          <p className="mt-4">
+            This is a public edition distilled from a confidential source. Broker
+            relationships, named contacts, valuation figures, patent application numbers,
+            inheritance mechanics, security-testing targets, and internal infrastructure
+            details were deliberately excluded. What ships here is the method — which is the
+            part that transfers.
+          </p>
+        </div>
+      </section>
+
+      {/* Truth legend */}
+      <section className="mx-auto max-w-5xl px-6 pt-20">
+        <h2 className="display-title border-b-2 border-foreground pb-2 text-3xl">
+          The truth legend
+        </h2>
+        <p className="mt-4 max-w-2xl">
+          Claims carried over from the source manuals keep their original truth tags. They
+          mean the same thing everywhere they appear.
+        </p>
+        <div className="mt-6 grid gap-3 sm:grid-cols-2">
+          {TRUTH_LEGEND.map((t) => (
+            <div key={t.tag} className="flex items-start gap-3 border-b border-border pb-3">
+              <span
+                className={`mt-0.5 shrink-0 rounded-sm border-[1.5px] px-2 py-px font-mono text-[10px] font-semibold tracking-wider ${
+                  t.tag === "CONFIRMED"
+                    ? "text-vol-5"
+                    : t.tag === "OBSERVED"
+                      ? "text-vol-2"
+                      : t.tag === "INFERRED"
+                        ? "text-[#8a6d00]"
+                        : t.tag === "PLANNED"
+                          ? "text-vol-3"
+                          : t.tag === "SPECULATIVE"
+                            ? "text-vol-1"
+                            : "border-dashed text-ink-faint"
+                }`}
+              >
+                {t.tag}
+              </span>
+              <span className="text-sm text-ink-dim">{t.def}</span>
+            </div>
+          ))}
+        </div>
+        <p className="mt-5 max-w-2xl">
+          The rule that governs them all: <strong>demote claims, do not promote them.</strong>{" "}
+          When in doubt, a claim moves down the ladder, never up.
+        </p>
+      </section>
+
+      {/* What's in the box */}
+      <section className="mx-auto max-w-5xl px-6 pt-20">
+        <h2 className="display-title border-b-2 border-foreground pb-2 text-3xl">
+          What's in the download
+        </h2>
+        <div className="mt-6 grid gap-4 md:grid-cols-3">
+          {[
+            {
+              k: "dist/",
+              t: "The built shelf",
+              d: "Six self-contained HTML volumes plus the shelf index. Print → PDF gives a clean per-volume PDF. No build step required to read.",
+            },
+            {
+              k: "toolkit/",
+              t: "The two-stage instrument",
+              d: "Stage One generates an eighteen-section, truth-labeled Owner's Manual for your project. Stage Two is the forensic pass that demotes claims and publishes the correction log.",
+            },
+            {
+              k: "build.py",
+              t: "The deterministic compiler",
+              d: "Python standard library only. No dependencies, no network, no clock. Same inputs, byte-identical outputs, forever.",
+            },
+            {
+              k: "certify.py",
+              t: "Numbered ownership certificates",
+              d: "Mints a sealed Certificate of Ownership: sha256(library_seal | owner | copy | date), recorded in a register. Provenance, not copy protection.",
+            },
+            {
+              k: "content/",
+              t: "House-style markdown source",
+              d: "Every volume as source. Copy a file, keep the directive block, add it to manifest.json, rebuild — the shelf grows a spine.",
+            },
+            {
+              k: "SEALS.txt",
+              t: "The seal chain",
+              d: "Every built file sealed by SHA-256, capped by a single library seal. Verify the copy you hold matches the edition that was published.",
+            },
+          ].map((c) => (
+            <div key={c.k} className="paper-card p-5">
+              <p className="eyebrow m-0">{c.k}</p>
+              <h3 className="display-title mt-2 mb-2 text-xl">{c.t}</h3>
+              <p className="m-0 text-sm text-ink-dim">{c.d}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Seal + final CTA */}
+      <section className="mx-auto max-w-5xl px-6 pt-20">
+        <div className="paper-card bg-paper-2 p-8">
+          <p className="eyebrow m-0">Library seal · SHA-256</p>
+          <p className="mt-2 mb-6 font-mono text-[11px] break-all text-ink-dim sm:text-[13px]">
+            {LIBRARY.librarySeal}
+          </p>
+          <h2 className="display-title text-[clamp(2rem,6vw,3.5rem)]">
+            Take the whole library. Free.
+          </h2>
+          <p className="mt-3 mb-6 max-w-xl text-ink-dim">
+            One zip. Six volumes, the toolkit, the source markdown, the compiler, and the
+            seals. Nothing phones home.
+          </p>
+          <DownloadButtons compact />
+        </div>
+      </section>
+    </>
   );
 }
