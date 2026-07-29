@@ -117,3 +117,34 @@ export const TRUTH_LEGEND = [
   { tag: "SPECULATIVE", def: "Strategic projection or vision. Not a promise." },
   { tag: "NEEDS CONFIRMATION", def: "A gap; verify before quoting externally." },
 ];
+
+export const AUTHOR_URL = "https://KESJr.com";
+export const COLLECTIVE = "KESJr Collective";
+
+/** Answered on the landing page and mirrored into FAQPage JSON-LD. */
+export const FAQ: { q: string; a: string }[] = [
+  {
+    q: "Is the Strategic Master Library really free?",
+    a: "Yes. All six volumes, the two-stage toolkit, the markdown source, and the deterministic compiler download as one zip at no cost. No email, no account, no upsell.",
+  },
+  {
+    q: "What can I do with it?",
+    a: "Read it, print it, archive it, and use it commercially under the Free Edition Grant v1.0. You may redistribute the package whole and unmodified. You may not resell the prose or repackage it as your own.",
+  },
+  {
+    q: "What format are the volumes in?",
+    a: "Each volume is a single self-contained HTML file with print CSS built in — open it in any browser, or print to PDF for the boxed set. The toolkit ships as plain markdown patches.",
+  },
+  {
+    q: "What is the seal for?",
+    a: "Every volume and the library as a whole carry a SHA-256 seal. The build is deterministic: the same inputs produce byte-identical outputs, so anyone can re-run the compiler and confirm nothing drifted.",
+  },
+  {
+    q: "What is a Certificate of Ownership?",
+    a: "A free, numbered, SHA-256 sealed record that your copy exists in the public register. It is provenance, not copy protection — nothing is locked without one.",
+  },
+  {
+    q: "Does the site track me?",
+    a: "No third-party trackers, ads, or cookies. Only anonymous first-party counts stored on our own backend, with no personal data and no cross-site identity.",
+  },
+];

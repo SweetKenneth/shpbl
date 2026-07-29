@@ -1,0 +1,10 @@
+/* TEAM */
+Author: Kenneth E. Sweet Jr.
+Site: https://KESJr.com
+Location: Abilene, Texas
+
+/* THIS SITE */
+A KESJr Collective Project
+Standards: HTML5, semantic markup, JSON-LD, progressive web app
+Components: TanStack Start, React, Tailwind
+Build: deterministic — same inputs, byte-identical outputs, forever
