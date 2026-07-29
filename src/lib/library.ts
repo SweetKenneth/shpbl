@@ -11,22 +11,24 @@ import certSpecimen from "@/assets/certificate-specimen.asset.json";
 export const SITE_URL = "https://shpbl.com";
 export const OG_IMAGE = `${SITE_URL}/og-cover.jpg`;
 
+export const SITE_URL = "https://shpbl.com";
+export const OG_IMAGE = `${SITE_URL}/og-cover.jpg`;
+
 export const LIBRARY = {
   title: "The Strategic Master Library",
   subtitle: "Volume Edition",
-  edition: "Volume Edition · Free Edition · First Printing · 2026",
+  edition: "Volume Edition · First Printing · 2026",
   tagline: "Six volumes. One discipline.",
   author: "Kenneth E. Sweet Jr.",
   publisher: "SHPBL.com · Abilene, Texas",
   domain: "SHPBL.com",
-  license: "Free Edition Grant v1.0",
-  // Caps the seal ledger in dist/SEALS.txt for the edition shipped here.
   librarySeal: "c645b86426ea6e3ef365d2bbd8db382161356013bc6883bed4fbe28845fdfb1d",
 } as const;
 
 export const ZIP_URL = libraryZip.url;
 export const ZIP_BYTES = libraryZip.size;
 export const SHELF_URL = shelf.url;
+
 export const CERT_SPECIMEN_URL = certSpecimen.url;
 
 export type Volume = {
