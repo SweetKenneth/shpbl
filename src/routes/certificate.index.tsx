@@ -25,6 +25,19 @@ export const Route = createFileRoute("/certificate/")({
       { name: "twitter:image", content: OG_IMAGE },
     ],
     links: [{ rel: "canonical", href: `${SITE_URL}/certificate` }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
+            { "@type": "ListItem", position: 2, name: "Certificate", item: `${SITE_URL}/certificate` },
+          ],
+        }),
+      },
+    ],
   }),
   component: CertificatePage,
 });
