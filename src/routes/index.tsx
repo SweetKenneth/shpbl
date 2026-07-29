@@ -10,6 +10,9 @@ import {
   OG_IMAGE,
 } from "@/lib/library";
 import { Reveal } from "@/components/Reveal";
+import { InstallSection } from "@/components/InstallSection";
+import { track } from "@/lib/analytics";
+
 
 const TITLE = "The Strategic Master Library — Free Download | SHPBL";
 const DESC =
