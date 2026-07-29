@@ -6,20 +6,28 @@ import vol5 from "@/assets/volume-05-built-to-be-inherited.asset.json";
 import vol6 from "@/assets/volume-06-the-drift-watch.asset.json";
 import libraryZip from "@/assets/library-zip.asset.json";
 import shelf from "@/assets/shelf.asset.json";
+import certSpecimen from "@/assets/certificate-specimen.asset.json";
+
+export const SITE_URL = "https://shpbl.com";
+export const OG_IMAGE = `${SITE_URL}/og-cover.jpg`;
 
 export const LIBRARY = {
   title: "The Strategic Master Library",
   subtitle: "Volume Edition",
-  edition: "Volume Edition · First Printing · 2026",
+  edition: "Volume Edition · Free Edition · First Printing · 2026",
   tagline: "Six volumes. One discipline.",
   author: "Kenneth E. Sweet Jr.",
-  publisher: "KESJR.com · Abilene, Texas",
-  librarySeal: "cf269adc977f339cf31e779b149cbe11a785137d49d6d6c9aafa48e4bf2fa700",
+  publisher: "SHPBL.com · Abilene, Texas",
+  domain: "SHPBL.com",
+  license: "Free Edition Grant v1.0",
+  // Caps the seal ledger in dist/SEALS.txt for the edition shipped here.
+  librarySeal: "c645b86426ea6e3ef365d2bbd8db382161356013bc6883bed4fbe28845fdfb1d",
 } as const;
 
 export const ZIP_URL = libraryZip.url;
 export const ZIP_BYTES = libraryZip.size;
 export const SHELF_URL = shelf.url;
+export const CERT_SPECIMEN_URL = certSpecimen.url;
 
 export type Volume = {
   numeral: string;
@@ -52,7 +60,7 @@ export const VOLUMES: Volume[] = [
     epigraph:
       "Every project is described by what sits below it and what could be built on top.",
     drawnFrom: "CMPSBL · XCTBL³ Space · Space Analytics · AIGVRN · BLDBL · RCKBL · SPLCBL",
-    seal: "2887d1a3c81210ea567e8d3f562e1c5cea023d43f6cd67d226a2bd28380b8ab2",
+    seal: "31b139c0f4846b4dc92e772c2ffeba5b42c8bdbfda00228488f38157eb5b71ae",
     url: vol2.url,
   },
   {
