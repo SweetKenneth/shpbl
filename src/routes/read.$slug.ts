@@ -30,12 +30,13 @@ function readerChrome(slug: string): string {
   background:var(--accent);transition:width .1s linear}
 @media (max-width:520px){.shpbl-bar .shpbl-where{display:none}}
 @media print{.shpbl-bar,.shpbl-progress{display:none!important}}
+.spine .spine-title,.spine .title{font-size:clamp(11px,1.5vw,19px);overflow-wrap:anywhere}
 </style>
 <div class="shpbl-bar">
   <nav>${link("/", "← SHPBL")}<span class="shpbl-where">${label}</span></nav>
   <nav>
     ${prev ? link(prev.readUrl, "← Prev") : ""}
-    ${link("/volumes", "Shelf")}
+    ${current ? link("/volumes", "Shelf") : link("/", "Download")}
     ${next ? link(next.readUrl, "Next →") : ""}
   </nav>
 </div>
