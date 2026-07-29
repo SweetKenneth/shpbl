@@ -1,10 +1,13 @@
 import { useState, useEffect } from "react";
 import { createFileRoute, useSearch } from "@tanstack/react-router";
 import { useMutation } from "@tanstack/react-query";
-
+import { z } from "zod";
 
 import { getAnalyticsReport } from "@/lib/analytics.functions";
 import type { AnalyticsReport } from "@/lib/analytics.server";
+
+const searchSchema = z.object({ key: z.string().optional() });
+
 
 export const Route = createFileRoute("/pulse")({
   validateSearch: searchSchema,
