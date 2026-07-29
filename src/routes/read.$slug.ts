@@ -24,7 +24,7 @@ export const Route = createFileRoute("/read/$slug")({
         const raw = await upstream.text();
         // The sealed HTML links to sibling files (index.html, volume-NN-….html).
         // Under /read/:slug those relative paths 404, so map them onto app routes.
-        const html = raw.replace(
+        let html = raw.replace(
           /href="(?:\.\/)?([A-Za-z0-9._-]+)\.html"/g,
           (match, name: string) => {
             if (name === "index") return 'href="/volumes"';
@@ -32,6 +32,18 @@ export const Route = createFileRoute("/read/$slug")({
             return match;
           },
         );
+
+        // Volume VI closes the library, so it carries the closing track —
+        // after PRACTICE, before the colophon/nav.
+        const { CLOSING_TRACK_SLUG, closingTrackHtml } = await import("@/lib/closing-track.server");
+        if (params.slug === CLOSING_TRACK_SLUG) {
+          const { default: audio } = await import("@/assets/built-to-last.mp3.asset.json");
+          html = html.replace(
+            '<footer class="colophon">',
+            `${closingTrackHtml(audio.url)}\n<footer class="colophon">`,
+          );
+        }
+
         return new Response(html, {
 
           status: 200,
