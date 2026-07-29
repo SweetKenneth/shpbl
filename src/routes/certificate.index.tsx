@@ -51,7 +51,10 @@ function CertificatePage() {
     <>
       <section className="no-print mx-auto max-w-5xl px-6 pt-16">
         <p className="eyebrow ink-rise">Provenance · Free · No account</p>
-        <h1 className="display-title ink-rise mt-4" style={{ animationDelay: "80ms" }}>
+        <h1
+          className="display-title ink-rise mt-4 text-[clamp(2.5rem,8vw,5rem)]"
+          style={{ animationDelay: "80ms" }}
+        >
           Certificate of Ownership
         </h1>
         <div className="spectrum-rule ink-rise mt-5 h-2 rounded-full shadow-[0_0_24px_-6px_var(--vol-2)]" style={{ animationDelay: "160ms" }} />
