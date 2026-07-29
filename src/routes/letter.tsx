@@ -65,7 +65,20 @@ export const Route = createFileRoute("/letter")({
           about: LIBRARY.title,
           url: `${SITE_URL}/letter`,
           image: OG_IMAGE,
-          author: { "@type": "Person", name: LIBRARY.author, url: AUTHOR_URL },
+          author: {
+            "@type": "Person",
+            "@id": `${SITE_URL}/#author`,
+            name: LIBRARY.author,
+            url: AUTHOR_URL,
+            identifier: {
+              "@type": "PropertyValue",
+              propertyID: "ORCID",
+              value: ORCID_ID,
+              url: ORCID_URL,
+            },
+            sameAs: [AUTHOR_URL, ORCID_URL],
+          },
+
           publisher: { "@type": "Organization", name: COLLECTIVE, url: AUTHOR_URL },
           isAccessibleForFree: true,
           inLanguage: "en",
