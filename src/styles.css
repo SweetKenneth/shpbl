@@ -403,6 +403,31 @@
   }
 }
 
+/* The certificate sheet sits on the page like pressed paper. */
+@utility cert-emboss {
+  box-shadow:
+    0 30px 60px -40px var(--foreground),
+    0 2px 0 0 color-mix(in oklab, var(--foreground) 10%, transparent);
+  transition:
+    box-shadow 0.4s ease,
+    transform 0.4s cubic-bezier(0.2, 0.9, 0.2, 1);
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow:
+      0 40px 70px -38px var(--foreground),
+      0 0 40px -18px var(--vol-2);
+  }
+}
+
+@media print {
+  .cert-emboss {
+    box-shadow: none;
+    transform: none;
+  }
+}
+
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
