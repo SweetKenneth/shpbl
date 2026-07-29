@@ -37,10 +37,16 @@ export type Volume = {
   epigraph: string;
   drawnFrom: string;
   seal: string;
+  /** Raw CDN asset URL (served as a download). */
   url: string;
+  /** Stable slug used by the in-browser reader route. */
+  slug: string;
+  /** In-app reader URL — renders the printable HTML inline. */
+  readUrl: string;
 };
 
-export const VOLUMES: Volume[] = [
+const VOLUME_SOURCE = [
+
   {
     numeral: "I",
     n: 1,
