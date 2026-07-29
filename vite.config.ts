@@ -56,6 +56,23 @@ export default defineConfig({
               },
             },
             {
+              // The closing track. Safari (iOS especially) requests media with a
+              // Range header and expects 206 Partial Content, which Workbox will
+              // not cache — rangeRequests lets it serve slices out of the single
+              // full 200 response the page stores after playback begins.
+              // CacheFirst so a cached copy plays with no network at all.
+              urlPattern: ({ url, sameOrigin }) =>
+                sameOrigin && /\.(?:mp3|m4a|ogg)$/.test(url.pathname),
+              handler: "CacheFirst",
+              options: {
+                cacheName: "shpbl-audio",
+                rangeRequests: true,
+                expiration: { maxEntries: 4, maxAgeSeconds: 60 * 60 * 24 * 365 },
+                cacheableResponse: { statuses: [200] },
+              },
+            },
+
+            {
               urlPattern: ({ url }) => url.origin === "https://fonts.gstatic.com",
               handler: "CacheFirst",
               options: {
