@@ -87,7 +87,7 @@ export const Route = createFileRoute("/")({
             abstract: v.message,
             author: { "@type": "Person", name: LIBRARY.author, url: AUTHOR_URL },
             isAccessibleForFree: true,
-            url: v.url,
+            url: `${SITE_URL}${v.readUrl}`,
           })),
         }),
       },
