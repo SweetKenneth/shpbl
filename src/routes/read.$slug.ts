@@ -30,7 +30,10 @@ const escapeAttr = (s: string) =>
  */
 function readerHead(slug: string): string {
   const v = VOLUME_BY_SLUG[slug];
-  const canonical = `${SITE_URL}/read/${slug}`;
+  // The printable shelf duplicates /volumes, so it points its canonical there
+  // rather than competing with it for the same query.
+  const canonical = v ? `${SITE_URL}/read/${slug}` : `${SITE_URL}/volumes`;
+
 
   const title = v
     ? `Volume ${v.numeral} — ${v.title} | SHPBL`
