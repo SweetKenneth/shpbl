@@ -14,6 +14,45 @@ export type Database = {
   }
   public: {
     Tables: {
+      analytics_events: {
+        Row: {
+          country: string | null
+          created_at: string
+          device: string | null
+          event: string
+          id: string
+          path: string
+          props: Json
+          referrer_host: string | null
+          screen_w: number | null
+          session_id: string
+        }
+        Insert: {
+          country?: string | null
+          created_at?: string
+          device?: string | null
+          event: string
+          id?: string
+          path?: string
+          props?: Json
+          referrer_host?: string | null
+          screen_w?: number | null
+          session_id: string
+        }
+        Update: {
+          country?: string | null
+          created_at?: string
+          device?: string | null
+          event?: string
+          id?: string
+          path?: string
+          props?: Json
+          referrer_host?: string | null
+          screen_w?: number | null
+          session_id?: string
+        }
+        Relationships: []
+      }
       certificates: {
         Row: {
           cert_seal: string

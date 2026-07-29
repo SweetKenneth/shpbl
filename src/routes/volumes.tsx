@@ -46,7 +46,7 @@ export const Route = createFileRoute("/volumes")({
 
 function Volumes() {
   return (
-    <div className="mx-auto max-w-4xl px-6 pt-14">
+    <div className="mx-auto max-w-4xl px-5 pt-12 sm:px-6 sm:pt-14">
       <p className="eyebrow ink-rise">Volume Index</p>
       <h1 className="display-title ink-rise mt-3 text-[clamp(2.5rem,8vw,4.5rem)]">The Six Volumes</h1>
       <p className="mt-4 max-w-2xl text-ink-dim">
@@ -104,7 +104,7 @@ function Volumes() {
         <a
           href={ZIP_URL}
           download
-          className="ink-button inline-flex items-center rounded-sm border-2 border-foreground bg-foreground px-6 py-3 font-mono text-xs tracking-[0.18em] uppercase text-background no-underline"
+          className="ink-button inline-flex items-center rounded-sm border-2 border-foreground bg-foreground px-5 py-3.5 font-mono text-[11px] sm:px-6 sm:py-3 sm:text-xs tracking-[0.18em] uppercase text-background no-underline"
         >
           Download the library — free
         </a>

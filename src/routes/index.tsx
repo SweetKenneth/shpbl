@@ -10,6 +10,9 @@ import {
   OG_IMAGE,
 } from "@/lib/library";
 import { Reveal } from "@/components/Reveal";
+import { InstallSection } from "@/components/InstallSection";
+import { track } from "@/lib/analytics";
+
 
 const TITLE = "The Strategic Master Library — Free Download | SHPBL";
 const DESC =
@@ -63,11 +66,12 @@ export const Route = createFileRoute("/")({
 
 function DownloadButtons({ compact = false }: { compact?: boolean }) {
   return (
-    <div className="flex flex-wrap items-center gap-3">
+    <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
       <a
         href={ZIP_URL}
         download
-        className="ink-button group inline-flex items-center gap-3 rounded-sm border-2 border-foreground bg-foreground px-6 py-3 font-mono text-xs tracking-[0.18em] uppercase text-background no-underline"
+        onClick={() => track("download_zip", { surface: compact ? "footer-cta" : "masthead" })}
+        className="ink-button group inline-flex items-center justify-center gap-2 rounded-sm border-2 border-foreground bg-foreground px-5 py-3.5 text-center font-mono text-[11px] tracking-[0.16em] uppercase text-background no-underline sm:justify-start sm:gap-3 sm:px-6 sm:text-xs sm:tracking-[0.18em]"
       >
         Download the library
         <span className="opacity-60 transition-opacity duration-300 group-hover:opacity-100">
@@ -79,7 +83,8 @@ function DownloadButtons({ compact = false }: { compact?: boolean }) {
           href={SHELF_URL}
           target="_blank"
           rel="noopener"
-          className="ghost-button inline-flex items-center rounded-sm border-2 border-foreground px-6 py-3 font-mono text-xs tracking-[0.18em] uppercase no-underline"
+          onClick={() => track("read_shelf")}
+          className="ghost-button inline-flex items-center justify-center rounded-sm border-2 border-foreground px-5 py-3.5 font-mono text-[11px] tracking-[0.16em] uppercase no-underline sm:px-6 sm:text-xs sm:tracking-[0.18em]"
         >
           Read the shelf online
         </a>
@@ -91,45 +96,52 @@ function DownloadButtons({ compact = false }: { compact?: boolean }) {
 function Shelf() {
   return (
     <div>
-      <div className="flex flex-wrap items-end gap-2.5 px-1.5">
+      <div className="grid grid-cols-6 items-end gap-1.5 px-1 sm:flex sm:flex-wrap sm:gap-2.5 sm:px-1.5">
         {VOLUMES.map((v, i) => (
           <a
             key={v.n}
             href={v.url}
             target="_blank"
             rel="noopener"
+            onClick={() => track("open_volume", { volume: v.numeral, surface: "shelf" })}
             style={{
               ["--s" as string]: `var(--vol-${v.n})`,
               animationDelay: `${120 + i * 90}ms`,
             }}
-            className="spine ink-rise flex h-[300px] min-w-[74px] items-center justify-between py-4 no-underline"
+            className="spine ink-rise flex h-[230px] min-w-0 items-center justify-between py-3 no-underline sm:h-[300px] sm:min-w-[74px] sm:py-4"
             aria-label={`Volume ${v.numeral} — ${v.title}`}
           >
             <span
-              className="font-display text-3xl tracking-widest"
+              className="font-display text-xl tracking-widest sm:text-3xl"
               style={{ color: "var(--s)" }}
             >
               {v.numeral}
             </span>
-            <span className="display-title px-1 text-[21px] tracking-wider">{v.title}</span>
-            <span className="h-2.5 w-full flex-none" style={{ background: "var(--s)" }} />
+            <span className="display-title min-h-0 px-0.5 text-[13px] tracking-wide sm:px-1 sm:text-[21px] sm:tracking-wider">
+              {v.title}
+            </span>
+
+            <span className="h-2 w-full flex-none sm:h-2.5" style={{ background: "var(--s)" }} />
           </a>
         ))}
       </div>
-      <div className="mt-0 h-3.5 rounded-sm bg-foreground shadow-[0_10px_26px_-18px_var(--foreground)]" />
-      <p className="eyebrow mt-2">Pull a spine to read it · Each volume is one self-contained file</p>
+      <div className="mt-0 h-3 rounded-sm bg-foreground shadow-[0_10px_26px_-18px_var(--foreground)] sm:h-3.5" />
+      <p className="eyebrow mt-2 text-[10px] sm:text-[11px]">
+        Pull a spine to read it · Each volume is one self-contained file
+      </p>
     </div>
   );
 }
+
 
 function Home() {
   return (
     <>
       {/* Masthead */}
-      <section className="mx-auto max-w-5xl px-6 pt-16 pb-4">
+      <section className="mx-auto max-w-5xl px-5 pt-12 pb-4 sm:px-6 sm:pt-16">
         <p className="eyebrow ink-rise">{LIBRARY.edition} · Free Edition</p>
         <h1
-          className="display-title ink-rise mt-4 text-[clamp(3rem,10vw,6.5rem)]"
+          className="display-title ink-rise mt-3 text-[clamp(2.75rem,13vw,6.5rem)] leading-[0.92] sm:mt-4"
           style={{ animationDelay: "80ms" }}
         >
           The Strategic
@@ -138,15 +150,18 @@ function Home() {
         </h1>
         {/* The spectrum appears exactly once. */}
         <div
-          className="spectrum-rule ink-rise mt-5 h-2 origin-left rounded-full shadow-[0_0_24px_-6px_var(--vol-2)]"
+          className="spectrum-rule ink-rise mt-4 h-1.5 origin-left rounded-full shadow-[0_0_24px_-6px_var(--vol-2)] sm:mt-5 sm:h-2"
           style={{ animationDelay: "180ms" }}
         />
-        <p className="eyebrow ink-rise mt-3 text-ink-dim" style={{ animationDelay: "240ms" }}>
+        <p
+          className="eyebrow ink-rise mt-3 text-[10px] text-ink-dim sm:text-[11px]"
+          style={{ animationDelay: "240ms" }}
+        >
           {LIBRARY.tagline}
         </p>
 
         <p
-          className="ink-rise mt-8 max-w-2xl text-[19px] leading-relaxed text-ink-dim"
+          className="ink-rise mt-7 max-w-2xl text-[17px] leading-relaxed text-ink-dim sm:mt-8 sm:text-[19px]"
           style={{ animationDelay: "300ms" }}
         >
           Six volumes distilled from a private compendium of twenty-nine audited project
@@ -155,14 +170,15 @@ function Home() {
           instrument, not just an argument.
         </p>
 
-        <div className="ink-rise mt-8" style={{ animationDelay: "380ms" }}>
+        <div className="ink-rise mt-7 sm:mt-8" style={{ animationDelay: "380ms" }}>
           <DownloadButtons />
         </div>
         <p
-          className="ink-rise mt-4 font-mono text-[12px] text-ink-faint"
+          className="ink-rise mt-4 font-mono text-[11px] leading-relaxed text-ink-faint sm:text-[12px]"
           style={{ animationDelay: "440ms" }}
         >
-          No email. No account. No tracking. Read the{" "}
+          No email. No account. No third-party trackers, ads, or cookies — only anonymous
+          first-party counts. Read the{" "}
           <Link to="/license" className="rule-link">
             license
           </Link>{" "}
@@ -171,41 +187,48 @@ function Home() {
       </section>
 
       {/* Shelf */}
-      <section className="mx-auto max-w-5xl px-6 pt-14">
+      <section className="mx-auto max-w-5xl px-5 pt-12 sm:px-6 sm:pt-14">
         <Shelf />
       </section>
 
+      {/* Install / offline */}
+      <Reveal as="section" className="mx-auto max-w-5xl px-5 pt-14 sm:px-6 sm:pt-16">
+        <InstallSection />
+      </Reveal>
+
       {/* Message list */}
-      <Reveal as="section" className="mx-auto max-w-5xl px-6 pt-16">
-        <h2 className="display-title border-b-2 border-foreground pb-2 text-3xl">
+      <Reveal as="section" className="mx-auto max-w-5xl px-5 pt-14 sm:px-6 sm:pt-16">
+        <h2 className="display-title border-b-2 border-foreground pb-2 text-[clamp(1.75rem,7vw,2rem)]">
           The six messages
         </h2>
         <ul className="mt-2 list-none p-0">
           {VOLUMES.map((v) => (
             <li
               key={v.n}
-              className="list-row group grid grid-cols-[52px_1fr] items-baseline gap-4 border-b border-border py-4"
+              className="list-row group grid grid-cols-[38px_minmax(0,1fr)] items-baseline gap-3 border-b border-border py-4 sm:grid-cols-[52px_1fr] sm:gap-4"
             >
               <span
-                className="font-display text-2xl transition-transform duration-300 group-hover:scale-110"
+                className="font-display text-xl transition-transform duration-300 group-hover:scale-110 sm:text-2xl"
                 style={{ color: `var(--vol-${v.n})` }}
               >
                 {v.numeral}
               </span>
-              <div>
+              <div className="min-w-0">
                 <a
                   href={v.url}
                   target="_blank"
                   rel="noopener"
+                  onClick={() => track("open_volume", { volume: v.numeral, surface: "messages" })}
                   className="rule-link font-semibold"
                 >
                   {v.title}
                 </a>
-                <p className="m-0 text-ink-dim">{v.message}</p>
-                <p className="m-0 mt-1 font-mono text-[11px] leading-relaxed text-ink-faint">
+                <p className="m-0 text-[15px] text-ink-dim sm:text-base">{v.message}</p>
+                <p className="m-0 mt-1 font-mono text-[10px] leading-relaxed text-ink-faint sm:text-[11px]">
                   {v.drawnFrom}
                 </p>
               </div>
+
             </li>
           ))}
         </ul>
@@ -222,9 +245,9 @@ function Home() {
 
 
       {/* What this is */}
-      <Reveal as="section" className="mx-auto grid max-w-5xl gap-10 px-6 pt-20 md:grid-cols-2">
+      <Reveal as="section" className="mx-auto grid max-w-5xl gap-10 px-5 pt-16 sm:px-6 sm:pt-20 md:grid-cols-2">
         <div>
-          <h2 className="display-title border-b-2 border-foreground pb-2 text-3xl">
+          <h2 className="display-title border-b-2 border-foreground pb-2 text-[clamp(1.75rem,7vw,2rem)]">
             What this is
           </h2>
           <p className="mt-4">
@@ -245,7 +268,7 @@ function Home() {
           </p>
         </div>
         <div>
-          <h2 className="display-title border-b-2 border-foreground pb-2 text-3xl">
+          <h2 className="display-title border-b-2 border-foreground pb-2 text-[clamp(1.75rem,7vw,2rem)]">
             Who it is for
           </h2>
           <p className="mt-4">
@@ -254,7 +277,7 @@ function Home() {
             practice section is written to be applied to <em>your</em> work, not to admire
             someone else's.
           </p>
-          <h2 className="display-title mt-10 border-b-2 border-foreground pb-2 text-3xl">
+          <h2 className="display-title mt-10 border-b-2 border-foreground pb-2 text-[clamp(1.75rem,7vw,2rem)]">
             What was left out
           </h2>
           <p className="mt-4">
@@ -268,8 +291,8 @@ function Home() {
       </Reveal>
 
       {/* Truth legend */}
-      <Reveal as="section" className="mx-auto max-w-5xl px-6 pt-20">
-        <h2 className="display-title border-b-2 border-foreground pb-2 text-3xl">
+      <Reveal as="section" className="mx-auto max-w-5xl px-5 pt-16 sm:px-6 sm:pt-20">
+        <h2 className="display-title border-b-2 border-foreground pb-2 text-[clamp(1.75rem,7vw,2rem)]">
           The truth legend
         </h2>
         <p className="mt-4 max-w-2xl">
@@ -307,8 +330,8 @@ function Home() {
       </Reveal>
 
       {/* What's in the box */}
-      <Reveal as="section" className="mx-auto max-w-5xl px-6 pt-20">
-        <h2 className="display-title border-b-2 border-foreground pb-2 text-3xl">
+      <Reveal as="section" className="mx-auto max-w-5xl px-5 pt-16 sm:px-6 sm:pt-20">
+        <h2 className="display-title border-b-2 border-foreground pb-2 text-[clamp(1.75rem,7vw,2rem)]">
           What's in the download
         </h2>
         <div className="mt-6 grid gap-4 md:grid-cols-3">
@@ -354,7 +377,7 @@ function Home() {
       </Reveal>
 
       {/* Seal + final CTA */}
-      <Reveal as="section" className="mx-auto max-w-5xl px-6 pt-20">
+      <Reveal as="section" className="mx-auto max-w-5xl px-5 pt-16 sm:px-6 sm:pt-20">
         <div className="paper-card bg-paper-2 p-8">
           <p className="eyebrow m-0">Library seal · SHA-256</p>
           <p className="seal-glow mt-2 mb-6 font-mono text-[11px] break-all text-ink-dim sm:text-[13px]">

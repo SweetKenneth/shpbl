@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as VolumesRouteImport } from './routes/volumes'
 import { Route as ToolkitRouteImport } from './routes/toolkit'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as PulseRouteImport } from './routes/pulse'
 import { Route as LicenseRouteImport } from './routes/license'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as CertificateIndexRouteImport } from './routes/certificate.index'
@@ -30,6 +31,11 @@ const ToolkitRoute = ToolkitRouteImport.update({
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PulseRoute = PulseRouteImport.update({
+  id: '/pulse',
+  path: '/pulse',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LicenseRoute = LicenseRouteImport.update({
@@ -56,6 +62,7 @@ const CertificateSealRoute = CertificateSealRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/license': typeof LicenseRoute
+  '/pulse': typeof PulseRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/toolkit': typeof ToolkitRoute
   '/volumes': typeof VolumesRoute
@@ -65,6 +72,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/license': typeof LicenseRoute
+  '/pulse': typeof PulseRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/toolkit': typeof ToolkitRoute
   '/volumes': typeof VolumesRoute
@@ -75,6 +83,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/license': typeof LicenseRoute
+  '/pulse': typeof PulseRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/toolkit': typeof ToolkitRoute
   '/volumes': typeof VolumesRoute
@@ -86,6 +95,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/license'
+    | '/pulse'
     | '/sitemap.xml'
     | '/toolkit'
     | '/volumes'
@@ -95,6 +105,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/license'
+    | '/pulse'
     | '/sitemap.xml'
     | '/toolkit'
     | '/volumes'
@@ -104,6 +115,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/license'
+    | '/pulse'
     | '/sitemap.xml'
     | '/toolkit'
     | '/volumes'
@@ -114,6 +126,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   LicenseRoute: typeof LicenseRoute
+  PulseRoute: typeof PulseRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   ToolkitRoute: typeof ToolkitRoute
   VolumesRoute: typeof VolumesRoute
@@ -142,6 +155,13 @@ declare module '@tanstack/react-router' {
       path: '/sitemap.xml'
       fullPath: '/sitemap.xml'
       preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/pulse': {
+      id: '/pulse'
+      path: '/pulse'
+      fullPath: '/pulse'
+      preLoaderRoute: typeof PulseRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/license': {
@@ -178,6 +198,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   LicenseRoute: LicenseRoute,
+  PulseRoute: PulseRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   ToolkitRoute: ToolkitRoute,
   VolumesRoute: VolumesRoute,
@@ -187,13 +208,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
