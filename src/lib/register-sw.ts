@@ -42,6 +42,24 @@ async function unregisterAppWorkers() {
   );
 }
 
+/** Pages guaranteed to work offline. */
+export const OFFLINE_ROUTES = ["/", "/volumes", "/toolkit", "/license"];
+
+async function warmPageCache() {
+  if (!("caches" in window)) return;
+  try {
+    const cache = await caches.open("shpbl-pages");
+    await Promise.allSettled(
+      OFFLINE_ROUTES.map(async (path) => {
+        const response = await fetch(path, { credentials: "same-origin" });
+        if (response.ok) await cache.put(path, response.clone());
+      }),
+    );
+  } catch {
+    // non-fatal
+  }
+}
+
 export async function registerServiceWorker() {
   if (!("serviceWorker" in navigator)) return;
 
@@ -52,7 +70,10 @@ export async function registerServiceWorker() {
 
   try {
     await navigator.serviceWorker.register(SW_URL, { scope: "/" });
+    await navigator.serviceWorker.ready;
+    await warmPageCache();
   } catch {
     // Offline support is a progressive enhancement; failure is non-fatal.
   }
 }
+
