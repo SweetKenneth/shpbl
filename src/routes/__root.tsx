@@ -91,9 +91,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { title: "The Strategic Master Library — Free Download | SHPBL" },
       { property: "og:title", content: "The Strategic Master Library — Free Download" },
       { name: "twitter:title", content: "The Strategic Master Library — Free Download" },
-      { name: "description", content: "Six volumes distilled from twenty-nine audited owner's manuals, plus the toolkit that produced them. Free, sealed, print-ready." },
-      { property: "og:description", content: "Six volumes distilled from twenty-nine audited owner's manuals, plus the toolkit that produced them. Free, sealed, print-ready." },
-      { name: "twitter:description", content: "Six volumes distilled from twenty-nine audited owner's manuals, plus the toolkit that produced them. Free, sealed, print-ready." },
+      { name: "description", content: ROOT_DESC },
+      { property: "og:description", content: ROOT_DESC },
+      { name: "twitter:description", content: ROOT_DESC },
+
       { name: "theme-color", content: "#fafaf7" },
       { name: "application-name", content: "SHPBL" },
       { name: "apple-mobile-web-app-title", content: "SHPBL" },
