@@ -19,6 +19,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as CertificateIndexRouteImport } from './routes/certificate.index'
 import { Route as ReadSlugRouteImport } from './routes/read.$slug'
 import { Route as CertificateSealRouteImport } from './routes/certificate.$seal'
+import { Route as ApiPublicPulseRouteImport } from './routes/api/public/pulse'
 
 const VolumesRoute = VolumesRouteImport.update({
   id: '/volumes',
@@ -70,6 +71,11 @@ const CertificateSealRoute = CertificateSealRouteImport.update({
   path: '/certificate/$seal',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicPulseRoute = ApiPublicPulseRouteImport.update({
+  id: '/api/public/pulse',
+  path: '/api/public/pulse',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -82,6 +88,7 @@ export interface FileRoutesByFullPath {
   '/certificate/$seal': typeof CertificateSealRoute
   '/read/$slug': typeof ReadSlugRoute
   '/certificate/': typeof CertificateIndexRoute
+  '/api/public/pulse': typeof ApiPublicPulseRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -94,6 +101,7 @@ export interface FileRoutesByTo {
   '/certificate/$seal': typeof CertificateSealRoute
   '/read/$slug': typeof ReadSlugRoute
   '/certificate': typeof CertificateIndexRoute
+  '/api/public/pulse': typeof ApiPublicPulseRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -107,6 +115,7 @@ export interface FileRoutesById {
   '/certificate/$seal': typeof CertificateSealRoute
   '/read/$slug': typeof ReadSlugRoute
   '/certificate/': typeof CertificateIndexRoute
+  '/api/public/pulse': typeof ApiPublicPulseRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -121,6 +130,7 @@ export interface FileRouteTypes {
     | '/certificate/$seal'
     | '/read/$slug'
     | '/certificate/'
+    | '/api/public/pulse'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -133,6 +143,7 @@ export interface FileRouteTypes {
     | '/certificate/$seal'
     | '/read/$slug'
     | '/certificate'
+    | '/api/public/pulse'
   id:
     | '__root__'
     | '/'
@@ -145,6 +156,7 @@ export interface FileRouteTypes {
     | '/certificate/$seal'
     | '/read/$slug'
     | '/certificate/'
+    | '/api/public/pulse'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -158,6 +170,7 @@ export interface RootRouteChildren {
   CertificateSealRoute: typeof CertificateSealRoute
   ReadSlugRoute: typeof ReadSlugRoute
   CertificateIndexRoute: typeof CertificateIndexRoute
+  ApiPublicPulseRoute: typeof ApiPublicPulseRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -232,6 +245,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CertificateSealRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/pulse': {
+      id: '/api/public/pulse'
+      path: '/api/public/pulse'
+      fullPath: '/api/public/pulse'
+      preLoaderRoute: typeof ApiPublicPulseRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -246,17 +266,8 @@ const rootRouteChildren: RootRouteChildren = {
   CertificateSealRoute: CertificateSealRoute,
   ReadSlugRoute: ReadSlugRoute,
   CertificateIndexRoute: CertificateIndexRoute,
+  ApiPublicPulseRoute: ApiPublicPulseRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
