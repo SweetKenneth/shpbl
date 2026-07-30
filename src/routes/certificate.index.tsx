@@ -6,7 +6,7 @@ import { useServerFn } from "@tanstack/react-start";
 import { track } from "@/lib/analytics";
 import { CertificateCard, type CertificateData } from "@/components/CertificateCard";
 import { Reveal } from "@/components/Reveal";
-import { listRegister, mintCertificate } from "@/lib/certificates.functions";
+import { dryRunCertificate, listRegister, mintCertificate } from "@/lib/certificates.functions";
 import { CERT_SPECIMEN_URL, LIBRARY, OG_IMAGE, SITE_URL } from "@/lib/library";
 
 const TITLE = "Mint a Certificate of Ownership — Free | SHPBL";

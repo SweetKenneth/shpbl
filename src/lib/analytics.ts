@@ -12,6 +12,7 @@ export type AnalyticsEvent =
   | "open_toolkit_asset"
   | "cert_mint_started"
   | "cert_minted"
+  | "cert_dry_run"
   | "cert_verified"
   | "install_prompt_shown"
   | "install_accepted"
