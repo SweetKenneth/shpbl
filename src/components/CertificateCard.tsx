@@ -93,6 +93,7 @@ export function CertificateCard({
           EDITION · {LIBRARY.edition}
         </div>
       </div>
+      </div>
     </div>
   );
 }
