@@ -122,7 +122,7 @@ export async function previewForOwner(
 
   const issueDate = opts.issueDate ?? new Date().toISOString().slice(0, 10);
 
-  let copyNo = opts.copyNo;
+  let copyNo: number = opts.copyNo ?? 0;
   if (!copyNo) {
     const last = await sb
       .from("certificates")
