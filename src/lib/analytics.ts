@@ -2,7 +2,7 @@
  * First-party analytics. No third-party scripts, no cookies, no ad tech.
  * A random session id lives in sessionStorage and dies with the tab.
  */
-import { trackEvent } from "./analytics.functions";
+
 
 export type AnalyticsEvent =
   | "page_view"
