@@ -16,7 +16,7 @@ import { InstallPrompt } from "@/components/InstallPrompt";
 import { Analytics } from "@/components/Analytics";
 import { PointerInk } from "@/components/PointerInk";
 
-import { AUTHOR_URL, COLLECTIVE, SITE_URL } from "@/lib/library";
+import { AUTHOR_URL, COLLECTIVE, ORCID_ID, ORCID_URL, SITE_URL } from "@/lib/library";
 
 
 function NotFoundComponent() {
@@ -74,6 +74,11 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   );
 }
 
+/** Sitewide fallback description. Kept under 155 chars so no SERP truncation. */
+const ROOT_DESC =
+  "Six volumes distilled from 29 audited owner's manuals, plus the toolkit that made them. Free, sealed, print-ready. No email, no account.";
+
+
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
   head: () => ({
     meta: [
@@ -91,9 +96,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { title: "The Strategic Master Library — Free Download | SHPBL" },
       { property: "og:title", content: "The Strategic Master Library — Free Download" },
       { name: "twitter:title", content: "The Strategic Master Library — Free Download" },
-      { name: "description", content: "Six volumes distilled from twenty-nine audited owner's manuals, plus the toolkit that produced them. Free, sealed, print-ready." },
-      { property: "og:description", content: "Six volumes distilled from twenty-nine audited owner's manuals, plus the toolkit that produced them. Free, sealed, print-ready." },
-      { name: "twitter:description", content: "Six volumes distilled from twenty-nine audited owner's manuals, plus the toolkit that produced them. Free, sealed, print-ready." },
+      { name: "description", content: ROOT_DESC },
+      { property: "og:description", content: ROOT_DESC },
+      { name: "twitter:description", content: ROOT_DESC },
+
       { name: "theme-color", content: "#fafaf7" },
       { name: "application-name", content: "SHPBL" },
       { name: "apple-mobile-web-app-title", content: "SHPBL" },
@@ -147,9 +153,16 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
               name: "Kenneth E. Sweet Jr.",
               url: AUTHOR_URL,
               jobTitle: "Founder",
+              identifier: {
+                "@type": "PropertyValue",
+                propertyID: "ORCID",
+                value: ORCID_ID,
+                url: ORCID_URL,
+              },
               affiliation: { "@type": "Organization", name: COLLECTIVE, url: AUTHOR_URL },
-              sameAs: [AUTHOR_URL],
+              sameAs: [AUTHOR_URL, ORCID_URL],
             },
+
             {
               "@type": "WebSite",
               "@id": `${SITE_URL}/#website`,
@@ -243,7 +256,7 @@ function SiteHeader() {
           </span>
         </Link>
 
-        <nav className="flex shrink-0 items-center gap-3.5 font-mono text-[10px] tracking-[0.14em] uppercase sm:gap-5 sm:text-[11px] sm:tracking-widest">
+        <nav className="flex shrink-0 items-center gap-3.5 font-mono text-[11px] tracking-[0.12em] uppercase sm:gap-5 sm:tracking-widest">
           {NAV.map((item) => (
             <Link
               key={item.to}

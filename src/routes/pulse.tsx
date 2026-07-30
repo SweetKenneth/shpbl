@@ -15,11 +15,14 @@ export const Route = createFileRoute("/pulse")({
     meta: [
       { title: "Pulse — Private Analytics | SHPBL" },
       { name: "description", content: "Private, key-gated readership dashboard for SHPBL.com." },
-      { name: "robots", content: "noindex, nofollow" },
+      // robots.txt deliberately allows this URL so the directive below is read.
+      { name: "robots", content: "noindex, nofollow, noarchive, nosnippet, noimageindex" },
+      { name: "googlebot", content: "noindex, nofollow, noarchive, nosnippet" },
       { property: "og:title", content: "Pulse — Private Analytics" },
       { property: "og:description", content: "Key-gated readership dashboard for SHPBL.com." },
     ],
   }),
+
   component: Pulse,
 });
 
@@ -29,7 +32,7 @@ function Stat({ label, value, sub }: { label: string; value: string; sub?: strin
     <div className="paper-card p-4 sm:p-5">
       <p className="eyebrow m-0">{label}</p>
       <p className="display-title m-0 mt-1 text-[clamp(2rem,7vw,3rem)] leading-none">{value}</p>
-      {sub && <p className="m-0 mt-1 font-mono text-[10px] tracking-widest text-ink-faint uppercase">{sub}</p>}
+      {sub && <p className="m-0 mt-1 font-mono text-[11px] tracking-widest text-ink-faint uppercase">{sub}</p>}
     </div>
   );
 }

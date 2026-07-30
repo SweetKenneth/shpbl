@@ -1,9 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { OG_IMAGE, SITE_URL, ZIP_URL } from "@/lib/library";
 
-const TITLE = "The Two-Stage Toolkit — Owner's Manual & Truth Audit | SHPBL";
+const TITLE = "The Two-Stage Toolkit — Manual & Truth Audit | SHPBL";
 const DESC =
-  "Stage One generates an eighteen-section, truth-labeled Owner's Manual for your project. Stage Two is the forensic pass that demotes claims and publishes the correction log.";
+  "Stage One writes an eighteen-section, truth-labeled Owner's Manual. Stage Two audits it, demotes claims, and publishes the correction log.";
 
 export const Route = createFileRoute("/toolkit")({
   head: () => ({

@@ -11,7 +11,7 @@ import { CERT_SPECIMEN_URL, LIBRARY, OG_IMAGE, SITE_URL } from "@/lib/library";
 
 const TITLE = "Mint a Certificate of Ownership — Free | SHPBL";
 const DESC =
-  "Register your copy of the Strategic Master Library. A numbered, SHA-256 sealed Certificate of Ownership, issued free in seconds. Provenance, not copy protection.";
+  "Register your copy of the Strategic Master Library. A numbered, SHA-256 sealed Certificate of Ownership, free in seconds. Provenance, not DRM.";
 
 export const Route = createFileRoute("/certificate/")({
   head: () => ({

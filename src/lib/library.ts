@@ -137,6 +137,9 @@ export const TRUTH_LEGEND = [
 
 export const AUTHOR_URL = "https://KESJr.com";
 export const COLLECTIVE = "KESJr Collective";
+export const ORCID_ID = "0009-0001-4237-1243";
+export const ORCID_URL = `https://orcid.org/${ORCID_ID}`;
+
 
 /** Answered on the landing page and mirrored into FAQPage JSON-LD. */
 export const FAQ: { q: string; a: string }[] = [

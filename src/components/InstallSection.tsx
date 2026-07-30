@@ -81,7 +81,7 @@ export function InstallSection() {
           </p>
 
           <div
-            className={`mt-5 inline-flex max-w-full items-center gap-2.5 text-left rounded-sm border-2 px-3 py-1.5 font-mono text-[10px] tracking-[0.16em] uppercase sm:text-[11px] ${
+            className={`mt-5 inline-flex max-w-full items-center gap-2.5 text-left rounded-sm border-2 px-3 py-1.5 font-mono text-[11px] tracking-[0.16em] uppercase ${
               installed ? "border-vol-5 text-vol-5" : "border-border-strong text-ink-faint"
             }`}
           >
@@ -134,7 +134,7 @@ export function InstallSection() {
               <span>{step}</span>
             </li>
           ))}
-          <li className="m-0 font-mono text-[10px] leading-relaxed tracking-[0.14em] text-ink-faint uppercase sm:text-[11px]">
+          <li className="m-0 font-mono text-[11px] leading-relaxed tracking-[0.14em] text-ink-faint uppercase">
             {OFFLINE_ROUTES.length} pages cached
             {cachedPages !== null ? ` · ${cachedPages} stored on this device` : ""}
           </li>

@@ -1,11 +1,21 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 
-import { AUTHOR_URL, COLLECTIVE, LIBRARY, OG_IMAGE, SITE_URL, ZIP_URL } from "@/lib/library";
+import {
+  AUTHOR_URL,
+  COLLECTIVE,
+  LIBRARY,
+  OG_IMAGE,
+  ORCID_ID,
+  ORCID_URL,
+  SITE_URL,
+  ZIP_URL,
+} from "@/lib/library";
+
 import { track } from "@/lib/analytics";
 
 const TITLE = "Letter from the Author | SHPBL";
 const DESC =
-  "Why Kenneth E. Sweet Jr. wrote The Strategic Master Library, who it is for, and what he hopes you take from it — plus the projects the volumes were drawn from.";
+  "Why Kenneth E. Sweet Jr. wrote The Strategic Master Library, who it is for, and the projects the six volumes were drawn from.";
 
 /** Alphabetical, case-insensitive. */
 const PROJECTS = [
@@ -55,7 +65,20 @@ export const Route = createFileRoute("/letter")({
           about: LIBRARY.title,
           url: `${SITE_URL}/letter`,
           image: OG_IMAGE,
-          author: { "@type": "Person", name: LIBRARY.author, url: AUTHOR_URL },
+          author: {
+            "@type": "Person",
+            "@id": `${SITE_URL}/#author`,
+            name: LIBRARY.author,
+            url: AUTHOR_URL,
+            identifier: {
+              "@type": "PropertyValue",
+              propertyID: "ORCID",
+              value: ORCID_ID,
+              url: ORCID_URL,
+            },
+            sameAs: [AUTHOR_URL, ORCID_URL],
+          },
+
           publisher: { "@type": "Organization", name: COLLECTIVE, url: AUTHOR_URL },
           isAccessibleForFree: true,
           inLanguage: "en",
@@ -130,7 +153,20 @@ function Letter() {
         <p className="mt-1 font-mono text-[11px] tracking-[0.18em] text-ink-faint uppercase">
           {LIBRARY.publisher} · {COLLECTIVE}
         </p>
+        <p className="mt-2 font-mono text-[11px] tracking-[0.14em] text-ink-faint">
+          <span className="uppercase">ORCID</span>{" "}
+          <a
+            href={ORCID_URL}
+            target="_blank"
+            rel="noopener noreferrer me"
+            onClick={() => track("outbound_click", { href: "orcid" })}
+            className="rule-link"
+          >
+            {ORCID_ID}
+          </a>
+        </p>
       </div>
+
 
       <section className="mt-16">
         <p className="eyebrow">Elsewhere</p>
