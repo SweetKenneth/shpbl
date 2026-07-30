@@ -1,14 +1,18 @@
-# Welcome to your Lovable project
+# Strategic Master Library v1 KESJr
+
+Can you design a site for downloading this strategic master library for people for free that includes licensing copy’s and can be downloaded from a beautiful landing page that shares the vibe of what we are offering. You’ll understand once you read the zip
 
 This project was built with [Lovable](https://lovable.dev).
 
+**Live app**: https://strategic-master-library.lovable.app
+
 ## Build with Lovable
 
-Open your project in the [Lovable editor](https://lovable.dev) and keep building.
+Continue developing this project in the [Lovable editor](https://lovable.dev/projects/9050e776-2e7b-4f60-949b-e244ff1c4564).
 
 - **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: connect the project to GitHub and every change made in Lovable is committed straight to your repository.
-- **Full ownership**: this code is yours. Push to your repository and your changes sync back into Lovable, ready for your next prompt.
+- **Stay in sync**: every change made in Lovable is committed straight to this repository.
+- **Full ownership**: this code is yours. Push to `main` on GitHub and your changes sync back into Lovable, ready for your next prompt.
 
 ## Development
 
@@ -20,10 +24,3 @@ cd <repository-name>
 npm i
 npm run dev
 ```
-
-## Built with
-
-- TanStack Start
-- TypeScript
-- React
-- Tailwind CSS
