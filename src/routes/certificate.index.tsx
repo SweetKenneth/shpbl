@@ -45,7 +45,14 @@ export const Route = createFileRoute("/certificate/")({
 function CertificatePage() {
   const [owner, setOwner] = useState("");
   const [cert, setCert] = useState<CertificateData | null>(null);
+  const [staged, setStaged] = useState<
+    (CertificateData & { alreadyRegistered?: boolean }) | null
+  >(null);
+  const [stagingOpen, setStagingOpen] = useState(false);
+  const [stagedCopyNo, setStagedCopyNo] = useState("");
+  const [stagedDate, setStagedDate] = useState("");
   const mintFn = useServerFn(mintCertificate);
+  const dryRunFn = useServerFn(dryRunCertificate);
   const registerFn = useServerFn(listRegister);
 
   const register = useQuery({
@@ -57,10 +64,28 @@ function CertificatePage() {
     mutationFn: (name: string) => mintFn({ data: { owner: name } }),
     onSuccess: (data) => {
       setCert(data as CertificateData);
+      setStaged(null);
       track("cert_minted", { copyNo: (data as CertificateData).copy_no });
       register.refetch();
     },
   });
+
+  const dryRun = useMutation({
+    mutationFn: () =>
+      dryRunFn({
+        data: {
+          owner,
+          copyNo: stagedCopyNo.trim() ? Number(stagedCopyNo) : undefined,
+          issueDate: stagedDate.trim() ? stagedDate.trim() : undefined,
+        },
+      }),
+    onSuccess: (data) => {
+      setStaged(data as CertificateData & { alreadyRegistered?: boolean });
+      setCert(null);
+      track("cert_dry_run", { copyNo: (data as CertificateData).copy_no });
+    },
+  });
+
 
   return (
     <>
