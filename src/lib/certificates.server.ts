@@ -91,6 +91,60 @@ export async function mintForOwner(owner: string): Promise<Certificate> {
   throw new Error("Could not assign a copy number. Try again.");
 }
 
+/** A certificate that was derived but never written to the ledger. */
+export type StagedCertificate = Certificate & {
+  staging: true;
+  /** True when this owner already holds a real, registered certificate. */
+  alreadyRegistered: boolean;
+};
+
+/**
+ * Dry run: derive exactly what `mintForOwner` would produce — same seal
+ * derivation, same copy number — without inserting anything. Nothing here
+ * touches the public register.
+ */
+export async function previewForOwner(
+  owner: string,
+  opts: { copyNo?: number; issueDate?: string } = {},
+): Promise<StagedCertificate> {
+  const sb = await db();
+
+  const existing = await sb
+    .from("certificates")
+    .select(COLS)
+    .eq("owner", owner)
+    .eq("library_seal", LIBRARY.librarySeal)
+    .maybeSingle();
+
+  if (existing.data && !opts.copyNo && !opts.issueDate) {
+    return { ...(existing.data as Certificate), staging: true, alreadyRegistered: true };
+  }
+
+  const issueDate = opts.issueDate ?? new Date().toISOString().slice(0, 10);
+
+  let copyNo: number = opts.copyNo ?? 0;
+  if (!copyNo) {
+    const last = await sb
+      .from("certificates")
+      .select("copy_no")
+      .order("copy_no", { ascending: false })
+      .limit(1)
+      .maybeSingle();
+    copyNo = (last.data?.copy_no ?? 0) + 1;
+  }
+
+  return {
+    copy_no: copyNo,
+    owner,
+    issue_date: issueDate,
+    cert_seal: await certSeal(owner, copyNo, issueDate),
+    library_seal: LIBRARY.librarySeal,
+    note: null,
+    staging: true,
+    alreadyRegistered: Boolean(existing.data),
+  };
+}
+
 export async function findBySeal(seal: string): Promise<Certificate | null> {
   const sb = await db();
   const { data } = await sb.from("certificates").select(COLS).eq("cert_seal", seal).maybeSingle();

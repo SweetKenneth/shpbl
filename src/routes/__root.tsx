@@ -85,6 +85,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { name: "author", content: "Kenneth E. Sweet Jr." },
+      { name: "google-site-verification", content: "dzt4POVSQVf2WCM_6z4zL6mmhwb2LqAooIidCV6Eylg" },
       { property: "og:type", content: "website" },
       { property: "og:site_name", content: "The Strategic Master Library" },
       { property: "og:locale", content: "en_US" },

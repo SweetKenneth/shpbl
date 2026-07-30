@@ -6,7 +6,7 @@ import { useServerFn } from "@tanstack/react-start";
 import { track } from "@/lib/analytics";
 import { CertificateCard, type CertificateData } from "@/components/CertificateCard";
 import { Reveal } from "@/components/Reveal";
-import { listRegister, mintCertificate } from "@/lib/certificates.functions";
+import { dryRunCertificate, listRegister, mintCertificate } from "@/lib/certificates.functions";
 import { CERT_SPECIMEN_URL, LIBRARY, OG_IMAGE, SITE_URL } from "@/lib/library";
 
 const TITLE = "Mint a Certificate of Ownership — Free | SHPBL";
@@ -45,7 +45,14 @@ export const Route = createFileRoute("/certificate/")({
 function CertificatePage() {
   const [owner, setOwner] = useState("");
   const [cert, setCert] = useState<CertificateData | null>(null);
+  const [staged, setStaged] = useState<
+    (CertificateData & { alreadyRegistered?: boolean }) | null
+  >(null);
+  const [stagingOpen, setStagingOpen] = useState(false);
+  const [stagedCopyNo, setStagedCopyNo] = useState("");
+  const [stagedDate, setStagedDate] = useState("");
   const mintFn = useServerFn(mintCertificate);
+  const dryRunFn = useServerFn(dryRunCertificate);
   const registerFn = useServerFn(listRegister);
 
   const register = useQuery({
@@ -57,10 +64,28 @@ function CertificatePage() {
     mutationFn: (name: string) => mintFn({ data: { owner: name } }),
     onSuccess: (data) => {
       setCert(data as CertificateData);
+      setStaged(null);
       track("cert_minted", { copyNo: (data as CertificateData).copy_no });
       register.refetch();
     },
   });
+
+  const dryRun = useMutation({
+    mutationFn: () =>
+      dryRunFn({
+        data: {
+          owner,
+          copyNo: stagedCopyNo.trim() ? Number(stagedCopyNo) : undefined,
+          issueDate: stagedDate.trim() ? stagedDate.trim() : undefined,
+        },
+      }),
+    onSuccess: (data) => {
+      setStaged(data as CertificateData & { alreadyRegistered?: boolean });
+      setCert(null);
+      track("cert_dry_run", { copyNo: (data as CertificateData).copy_no });
+    },
+  });
+
 
   return (
     <>
@@ -124,7 +149,78 @@ function CertificatePage() {
             {(mint.error as Error).message}
           </p>
         )}
+
+        <details
+          open={stagingOpen}
+          onToggle={(e) => setStagingOpen((e.currentTarget as HTMLDetailsElement).open)}
+          className="mt-6 max-w-xl border-t border-border pt-4"
+        >
+          <summary className="cursor-pointer font-mono text-[12px] tracking-[0.14em] text-ink-faint uppercase">
+            Dry run · staging mint
+          </summary>
+          <p className="mt-3 font-mono text-[12px] leading-relaxed text-ink-faint">
+            Derives the exact certificate a real mint would produce — same seal derivation,
+            same copy number — and writes nothing to the ledger. Leave the fields blank to
+            preview the next copy in sequence.
+          </p>
+          <div className="mt-4 flex flex-wrap gap-3">
+            <input
+              value={stagedCopyNo}
+              onChange={(e) => setStagedCopyNo(e.target.value.replace(/\D/g, "").slice(0, 3))}
+              inputMode="numeric"
+              aria-label="Copy number to stage"
+              placeholder="Copy no. (e.g. 002)"
+              className="w-[170px] rounded-sm border-2 border-border bg-background px-3 py-2.5 font-mono text-[12px] outline-none focus:border-foreground"
+            />
+            <input
+              value={stagedDate}
+              onChange={(e) => setStagedDate(e.target.value)}
+              aria-label="Issue date to stage"
+              placeholder="YYYY-MM-DD"
+              className="w-[170px] rounded-sm border-2 border-border bg-background px-3 py-2.5 font-mono text-[12px] outline-none focus:border-foreground"
+            />
+            <button
+              type="button"
+              disabled={dryRun.isPending || owner.trim().length < 2}
+              onClick={() => dryRun.mutate()}
+              className="ghost-button inline-flex items-center rounded-sm border-2 border-foreground px-5 py-3 font-mono text-[11px] tracking-[0.18em] uppercase disabled:opacity-40"
+            >
+              {dryRun.isPending ? "Deriving…" : "Dry run"}
+            </button>
+          </div>
+          {owner.trim().length < 2 && (
+            <p className="mt-2 font-mono text-[11px] text-ink-faint">
+              Enter a name above first.
+            </p>
+          )}
+          {dryRun.isError && (
+            <p className="mt-3 font-mono text-[12px] text-vol-4">
+              {(dryRun.error as Error).message}
+            </p>
+          )}
+        </details>
       </section>
+
+      {staged && (
+        <section className="ink-rise mx-auto max-w-5xl px-5 pt-10 sm:px-6 sm:pt-12">
+          <div className="no-print mx-auto mb-5 max-w-[680px] border-l-4 border-vol-4 bg-paper-2 px-4 py-3 font-mono text-[12px] leading-relaxed text-ink-dim">
+            <b className="tracking-[0.14em] uppercase">Staging specimen</b> · nothing was
+            written to the register. This is the exact artifact a real mint of copy{" "}
+            {String(staged.copy_no).padStart(3, "0")} would produce.
+            {staged.alreadyRegistered && " This name already holds a registered copy."}
+          </div>
+          <CertificateCard cert={staged} staging />
+          <div className="no-print mt-6 flex flex-wrap gap-3">
+            <button
+              onClick={() => setStaged(null)}
+              className="ghost-button inline-flex items-center rounded-sm border-2 border-foreground px-5 py-3.5 font-mono text-[11px] sm:px-6 sm:py-3 sm:text-xs tracking-[0.18em] uppercase"
+            >
+              Discard specimen
+            </button>
+          </div>
+        </section>
+      )}
+
 
       {cert && (
         <section className="ink-rise mx-auto max-w-5xl px-5 pt-10 sm:px-6 sm:pt-12">

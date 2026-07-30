@@ -15,11 +15,28 @@ export type CertificateData = {
  * seal derivation, same layout — so a printed web certificate and a locally
  * minted one are the same artifact.
  */
-export function CertificateCard({ cert }: { cert: CertificateData }) {
+export function CertificateCard({
+  cert,
+  staging = false,
+}: {
+  cert: CertificateData;
+  staging?: boolean;
+}) {
   const copy = String(cert.copy_no).padStart(3, "0");
 
   return (
-    <div className="cert-sheet cert-emboss mx-auto w-full max-w-[680px] border-[3px] border-foreground bg-white px-6 py-10 text-center outline outline-[1.5px] outline-offset-[6px] outline-foreground sm:px-12 sm:py-14">
+    <div className="relative">
+      {staging && (
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center"
+        >
+          <span className="font-display rotate-[-18deg] text-[clamp(2.5rem,12vw,5.5rem)] tracking-[0.2em] text-vol-4/15 uppercase select-none">
+            Specimen
+          </span>
+        </div>
+      )}
+      <div className="cert-sheet cert-emboss mx-auto w-full max-w-[680px] border-[3px] border-foreground bg-white px-6 py-10 text-center outline outline-[1.5px] outline-offset-[6px] outline-foreground sm:px-12 sm:py-14">
       <p className="eyebrow m-0">{LIBRARY.publisher}</p>
       <h1 className="display-title mt-4 mb-1 text-[clamp(2rem,7vw,3.25rem)] leading-none">
         {LIBRARY.title}
@@ -75,6 +92,7 @@ export function CertificateCard({ cert }: { cert: CertificateData }) {
         <div className="flex-1 border-t-[1.5px] border-foreground pt-1.5 text-left">
           EDITION · {LIBRARY.edition}
         </div>
+      </div>
       </div>
     </div>
   );
