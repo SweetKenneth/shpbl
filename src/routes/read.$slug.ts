@@ -149,6 +149,22 @@ function readerChrome(slug: string): string {
 <div class="shpbl-progress" id="shpbl-progress"></div>
 <script>
 (function(){
+  // Reader page_view — same anonymous per-tab session id the app uses.
+  try{
+    if(localStorage.getItem('shpbl:analytics-off')!=='1'&&!navigator.webdriver){
+      var sid=sessionStorage.getItem('shpbl:sid');
+      if(!sid){sid=(crypto.randomUUID?crypto.randomUUID():String(Math.random())).replace(/-/g,'').slice(0,24);sessionStorage.setItem('shpbl:sid',sid);}
+      var w=window.innerWidth;
+      var body=JSON.stringify({event:'page_view',path:location.pathname,
+        referrer:document.referrer||undefined,sessionId:sid,
+        device:w<768?'mobile':(w<1100?'tablet':'desktop'),screenW:w,
+        standalone:window.matchMedia('(display-mode: standalone)').matches||navigator.standalone===true,
+        props:{surface:'reader'}});
+      if(!(navigator.sendBeacon&&navigator.sendBeacon('/api/public/pulse',new Blob([body],{type:'application/json'})))){
+        fetch('/api/public/pulse',{method:'POST',headers:{'content-type':'application/json'},body:body,keepalive:true}).catch(function(){});
+      }
+    }
+  }catch(e){}
   var bar=document.getElementById('shpbl-progress');
   if(!bar||!window.matchMedia)return;
   if(window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;

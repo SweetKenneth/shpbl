@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { LIBRARY, OG_IMAGE, SITE_URL, ZIP_URL } from "@/lib/library";
+import { track } from "@/lib/analytics";
 
 const TITLE = "License — Free Edition Grant v1.0 | SHPBL";
 const DESC =
@@ -208,6 +209,7 @@ function License() {
         <a
           href={ZIP_URL}
           download
+          onClick={() => track("download_zip", { surface: "license" })}
           className="ink-button inline-flex items-center rounded-sm border-2 border-foreground bg-foreground px-5 py-3.5 font-mono text-[11px] sm:px-6 sm:py-3 sm:text-xs tracking-[0.18em] text-background uppercase no-underline"
         >
           Download the library — free

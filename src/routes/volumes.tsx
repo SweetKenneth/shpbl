@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { OG_IMAGE, SITE_URL, VOLUMES, ZIP_URL } from "@/lib/library";
 import { Reveal } from "@/components/Reveal";
+import { track } from "@/lib/analytics";
 
 const TITLE = "The Six Volumes — Strategic Master Library | SHPBL";
 const DESC =
@@ -97,6 +98,7 @@ function Volumes() {
             <div className="mt-4 flex flex-wrap items-center gap-3">
               <a
                 href={v.readUrl}
+                onClick={() => track("open_volume", { volume: v.numeral, surface: "volumes" })}
                 className="ghost-button inline-flex items-center rounded-sm border-2 border-foreground px-5 py-2 font-mono text-[11px] tracking-widest uppercase no-underline"
               >
                 Read Volume {v.numeral}
@@ -104,6 +106,7 @@ function Volumes() {
               <a
                 href={v.url}
                 download
+                onClick={() => track("download_volume", { volume: v.numeral })}
                 className="rule-link font-mono text-[11px] tracking-widest uppercase no-underline text-ink-faint"
               >
                 Download HTML
@@ -123,6 +126,7 @@ function Volumes() {
         <a
           href={ZIP_URL}
           download
+          onClick={() => track("download_zip", { surface: "volumes" })}
           className="ink-button inline-flex items-center rounded-sm border-2 border-foreground bg-foreground px-5 py-3.5 font-mono text-[11px] sm:px-6 sm:py-3 sm:text-xs tracking-[0.18em] uppercase text-background no-underline"
         >
           Download the library — free
