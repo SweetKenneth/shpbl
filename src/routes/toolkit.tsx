@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { OG_IMAGE, SITE_URL, ZIP_URL } from "@/lib/library";
+import { track } from "@/lib/analytics";
 
 const TITLE = "The Two-Stage Toolkit — Manual & Truth Audit | SHPBL";
 const DESC =
@@ -121,6 +122,7 @@ function Toolkit() {
         <a
           href={ZIP_URL}
           download
+          onClick={() => track("download_zip", { surface: "toolkit" })}
           className="ink-button inline-flex items-center rounded-sm border-2 border-foreground bg-foreground px-5 py-3.5 font-mono text-[11px] sm:px-6 sm:py-3 sm:text-xs tracking-[0.18em] uppercase text-background no-underline"
         >
           Download the library — free

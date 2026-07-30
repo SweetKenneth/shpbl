@@ -7,6 +7,7 @@
 export type AnalyticsEvent =
   | "page_view"
   | "download_zip"
+  | "download_volume"
   | "read_shelf"
   | "open_volume"
   | "open_toolkit_asset"
