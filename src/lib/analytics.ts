@@ -76,6 +76,13 @@ export function setAnalyticsOptOut(off: boolean) {
 
 let firstOfSession = true;
 
+const ENDPOINT = "/api/public/pulse";
+
+/**
+ * Fire-and-forget. Uses sendBeacon so the event survives the page unload that
+ * follows a cross-origin download link or an outbound click — a plain fetch()
+ * gets cancelled in that window and the event is lost.
+ */
 export function track(
   event: AnalyticsEvent,
   props: Record<string, string | number | boolean> = {},
@@ -96,7 +103,21 @@ export function track(
   };
   firstOfSession = false;
 
-  void trackEvent({ data: payload }).catch(() => {
+  const body = JSON.stringify(payload);
+
+  try {
+    const blob = new Blob([body], { type: "application/json" });
+    if (navigator.sendBeacon?.(ENDPOINT, blob)) return;
+  } catch {
+    /* fall through */
+  }
+
+  void fetch(ENDPOINT, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body,
+    keepalive: true,
+  }).catch(() => {
     /* analytics must never break the page */
   });
 }
