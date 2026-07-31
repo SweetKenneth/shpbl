@@ -136,7 +136,7 @@ function Shelf() {
               ["--s" as string]: `var(--vol-${v.n})`,
               animationDelay: `${120 + i * 90}ms`,
             }}
-            className="spine ink-rise flex h-[230px] min-w-0 items-center justify-between py-3 no-underline sm:h-[300px] sm:min-w-[74px] sm:py-4"
+            className="spine ink-rise flex h-[230px] min-w-0 items-center justify-between py-3 no-underline sm:h-[340px] sm:py-4"
             aria-label={`Volume ${v.numeral} — ${v.title}`}
           >
             <span
