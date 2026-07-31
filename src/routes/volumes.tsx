@@ -60,7 +60,9 @@ function Volumes() {
   return (
     <div className="mx-auto max-w-4xl px-5 pt-12 sm:px-6 sm:pt-14">
       <p className="eyebrow ink-rise">Volume Index</p>
-      <h1 className="display-title ink-rise mt-3 text-[clamp(2.5rem,8vw,4.5rem)]">The Six Volumes</h1>
+      <h1 className="display-title ruled-heading ink-rise mt-3 pb-2 text-[clamp(2.5rem,8vw,4.5rem)]">
+        The Six Volumes
+      </h1>
       <p className="mt-4 max-w-2xl text-ink-dim">
         Each volume makes a single argument. Projects appear inside as exhibits — evidence,
         not chapters. Every volume is one self-contained HTML file; print it to PDF and you
