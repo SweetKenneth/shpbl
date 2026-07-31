@@ -82,7 +82,9 @@ function Toolkit() {
   return (
     <div className="mx-auto max-w-3xl px-5 pt-12 sm:px-6 sm:pt-14">
       <p className="eyebrow ink-rise">The Method, Shipped</p>
-      <h1 className="display-title mt-3 text-[clamp(2.5rem,8vw,4.5rem)]">The Toolkit</h1>
+      <h1 className="display-title ruled-heading ink-rise mt-3 pb-2 text-[clamp(2.5rem,8vw,4.5rem)]" style={{ ["--s" as string]: "var(--vol-3)" }}>
+        The Toolkit
+      </h1>
       <p className="mt-4 text-ink-dim">
         The volumes describe the method. The toolkit ships it — the same two-stage instrument
         that produced all twenty-nine source manuals, generalized for your projects.

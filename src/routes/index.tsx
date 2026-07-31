@@ -126,34 +126,38 @@ function DownloadButtons({ compact = false }: { compact?: boolean }) {
 function Shelf() {
   return (
     <div>
-      <div className="grid grid-cols-6 items-end gap-1.5 px-1 sm:flex sm:flex-wrap sm:gap-2.5 sm:px-1.5">
-        {VOLUMES.map((v, i) => (
-          <a
-            key={v.n}
-            href={v.readUrl}
-            onClick={() => track("open_volume", { volume: v.numeral, surface: "shelf" })}
-            style={{
-              ["--s" as string]: `var(--vol-${v.n})`,
-              animationDelay: `${120 + i * 90}ms`,
-            }}
-            className="spine ink-rise flex h-[230px] min-w-0 items-center justify-between py-3 no-underline sm:h-[300px] sm:min-w-[74px] sm:py-4"
-            aria-label={`Volume ${v.numeral} — ${v.title}`}
-          >
-            <span
-              className="font-display text-xl tracking-widest sm:text-3xl"
-              style={{ color: "var(--s)" }}
-            >
-              {v.numeral}
-            </span>
-            <span className="display-title min-h-0 px-0.5 text-[13px] tracking-wide sm:px-1 sm:text-[21px] sm:tracking-wider">
-              {v.title}
-            </span>
+      <div className="shelf-lamp sm:mx-auto sm:w-fit">
+        <div className="grid grid-cols-6 items-end gap-1.5 px-1 sm:flex sm:gap-3 sm:px-1.5">
+          {VOLUMES.map((v, i) => (
+            <a
+              key={v.n}
+              href={v.readUrl}
+              onClick={() => track("open_volume", { volume: v.numeral, surface: "shelf" })}
+              style={{
+                ["--s" as string]: `var(--vol-${v.n})`,
+                animationDelay: `${120 + i * 90}ms`,
+              }}
+              className="spine spine-cast ink-rise flex h-[230px] min-w-0 items-center justify-between py-3 no-underline sm:h-[340px] sm:w-[86px] sm:py-4"
 
-            <span className="h-2 w-full flex-none sm:h-2.5" style={{ background: "var(--s)" }} />
-          </a>
-        ))}
+              aria-label={`Volume ${v.numeral} — ${v.title}`}
+            >
+              <span
+                className="font-display text-xl tracking-widest sm:text-3xl"
+                style={{ color: "var(--s)" }}
+              >
+                {v.numeral}
+              </span>
+              <span className="display-title min-h-0 px-0.5 text-[13px] tracking-wide sm:px-1 sm:text-[21px] sm:tracking-wider">
+                {v.title}
+              </span>
+
+              <span className="h-2 w-full flex-none sm:h-2.5" style={{ background: "var(--s)" }} />
+            </a>
+          ))}
+        </div>
+        <div className="mt-0 h-3 rounded-sm bg-foreground shadow-[0_10px_26px_-18px_var(--foreground)] sm:h-3.5" />
       </div>
-      <div className="mt-0 h-3 rounded-sm bg-foreground shadow-[0_10px_26px_-18px_var(--foreground)] sm:h-3.5" />
+
       <p className="eyebrow mt-2 text-[11px]">
         Pull a spine to read it · Each volume is one self-contained file
       </p>

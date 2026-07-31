@@ -574,8 +574,10 @@
   background-position: 100% 0;
   -webkit-background-clip: text;
   background-clip: text;
-  color: transparent;
+  /* No `color: transparent` here — the gradient reads currentColor, so
+     zeroing it would paint the hash with itself and erase the seal. */
   -webkit-text-fill-color: transparent;
+
   transition: background-position 1.1s cubic-bezier(0.2, 0.9, 0.2, 1);
 
   &:hover {
@@ -658,5 +660,79 @@
   ::view-transition-old(root),
   ::view-transition-new(root) {
     animation: none;
+  }
+}
+
+
+/* ── Shelf light ───────────────────────────────────────────────────
+   A single warm source above the shelf so the spines read as objects
+   standing on a plank rather than as coloured rectangles in a grid. */
+
+@utility shelf-lamp {
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: 130%;
+    height: 130%;
+    translate: -50% 0;
+    pointer-events: none;
+    z-index: -1;
+    border-radius: 50%;
+    filter: blur(46px);
+    opacity: 0.5;
+    background: radial-gradient(
+      closest-side,
+      color-mix(in oklab, var(--vol-6) 18%, transparent),
+      transparent
+    );
+  }
+}
+
+/* Spines cast onto the plank; the shadow tightens as a spine is pulled. */
+@utility spine-cast {
+  filter: drop-shadow(0 10px 10px color-mix(in oklab, var(--foreground) 16%, transparent));
+  transition: filter 0.42s cubic-bezier(0.2, 0.9, 0.2, 1);
+
+  &:hover {
+    filter: drop-shadow(0 22px 16px color-mix(in oklab, var(--foreground) 22%, transparent));
+  }
+}
+
+/* Ruled section headings gain a spectrum tick that draws in on reveal. */
+@utility ruled-heading {
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -1px;
+    height: 2px;
+    width: 0;
+    background: var(--s, var(--vol-2));
+    transition: width 0.8s cubic-bezier(0.2, 0.9, 0.2, 1);
+  }
+
+  &[data-in="true"]::before,
+  .reveal[data-in="true"] &::before {
+    width: 2.5rem;
+  }
+
+  /* Page titles animate in on their own (no reveal observer above them). */
+  &.ink-rise::before {
+    animation: rule-draw 0.9s 0.45s cubic-bezier(0.2, 0.9, 0.2, 1) both;
+  }
+}
+
+@keyframes rule-draw {
+  from {
+    width: 0;
+  }
+  to {
+    width: 2.5rem;
   }
 }
