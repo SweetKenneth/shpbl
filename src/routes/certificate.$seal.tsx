@@ -1,6 +1,6 @@
 import { Link, createFileRoute, notFound } from "@tanstack/react-router";
 
-import { CertificateCard } from "@/components/CertificateCard";
+import { CertificateSheet } from "@/components/CertificateSheet";
 import { lookupCertificate } from "@/lib/certificates.functions";
 import { OG_IMAGE, SITE_URL } from "@/lib/library";
 
