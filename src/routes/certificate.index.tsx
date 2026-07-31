@@ -209,15 +209,14 @@ function CertificatePage() {
             {String(staged.copy_no).padStart(3, "0")} would produce.
             {staged.alreadyRegistered && " This name already holds a registered copy."}
           </div>
-          <CertificateCard cert={staged} staging />
-          <div className="no-print mt-6 flex flex-wrap gap-3">
+          <CertificateSheet cert={staged} staging>
             <button
               onClick={() => setStaged(null)}
-              className="ghost-button inline-flex items-center rounded-sm border-2 border-foreground px-5 py-3.5 font-mono text-[11px] sm:px-6 sm:py-3 sm:text-xs tracking-[0.18em] uppercase"
+              className="ghost-button inline-flex items-center rounded-sm border-2 border-foreground px-5 py-3.5 font-mono text-[11px] tracking-[0.18em] uppercase sm:px-6 sm:py-3 sm:text-xs"
             >
               Discard specimen
             </button>
-          </div>
+          </CertificateSheet>
         </section>
       )}
 
