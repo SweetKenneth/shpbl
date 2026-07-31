@@ -55,12 +55,19 @@ export async function buildReport(days: number) {
   }
 
   const downloads = rows.filter((r) => r.event === "download_zip").length;
+  const volumeDownloads = rows.filter((r) => r.event === "download_volume").length;
+  const reads = rows.filter((r) => r.event === "open_volume" || r.event === "read_shelf").length;
   const installs = rows.filter((r) => r.event === "install_accepted").length;
   const promptShown = rows.filter((r) => r.event === "install_prompt_shown").length;
   const standaloneSessions = new Set(
     rows.filter((r) => r.props && (r.props as { standalone?: boolean }).standalone).map((r) => r.session_id),
   );
   const certs = rows.filter((r) => r.event === "cert_minted").length;
+  // Sessions that produced at least one download of any kind — the honest
+  // conversion denominator, not raw click count over raw sessions.
+  const downloadingSessions = new Set(
+    rows.filter((r) => r.event === "download_zip" || r.event === "download_volume").map((r) => r.session_id),
+  );
 
   return {
     days,
@@ -68,11 +75,13 @@ export async function buildReport(days: number) {
       views: views.length,
       sessions: sessions.size,
       downloads,
+      volumeDownloads,
+      reads,
       certs,
       installs,
       promptShown,
       standaloneSessions: standaloneSessions.size,
-      downloadRate: sessions.size ? downloads / sessions.size : 0,
+      downloadRate: sessions.size ? downloadingSessions.size / sessions.size : 0,
       installRate: promptShown ? installs / promptShown : 0,
     },
     series: [...byDay.entries()].map(([date, v]) => ({
