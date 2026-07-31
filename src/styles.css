@@ -721,4 +721,18 @@
   .reveal[data-in="true"] &::before {
     width: 2.5rem;
   }
+
+  /* Page titles animate in on their own (no reveal observer above them). */
+  &.ink-rise::before {
+    animation: rule-draw 0.9s 0.45s cubic-bezier(0.2, 0.9, 0.2, 1) both;
+  }
+}
+
+@keyframes rule-draw {
+  from {
+    width: 0;
+  }
+  to {
+    width: 2.5rem;
+  }
 }
