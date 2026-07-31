@@ -674,13 +674,20 @@
   &::before {
     content: "";
     position: absolute;
-    inset: -22% -26% 6% -26%;
+    left: 50%;
+    bottom: 0;
+    width: 130%;
+    height: 130%;
+    translate: -50% 0;
     pointer-events: none;
     z-index: -1;
+    border-radius: 50%;
+    filter: blur(46px);
+    opacity: 0.5;
     background: radial-gradient(
-      70% 62% at 50% 6%,
-      color-mix(in oklab, var(--vol-6) 14%, transparent),
-      transparent 72%
+      closest-side,
+      color-mix(in oklab, var(--vol-6) 18%, transparent),
+      transparent
     );
   }
 }
