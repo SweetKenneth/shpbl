@@ -126,7 +126,7 @@ function DownloadButtons({ compact = false }: { compact?: boolean }) {
 function Shelf() {
   return (
     <div>
-      <div className="sm:mx-auto sm:w-fit">
+      <div className="shelf-lamp sm:mx-auto sm:w-fit">
         <div className="grid grid-cols-6 items-end gap-1.5 px-1 sm:flex sm:gap-3 sm:px-1.5">
           {VOLUMES.map((v, i) => (
             <a
@@ -137,7 +137,8 @@ function Shelf() {
                 ["--s" as string]: `var(--vol-${v.n})`,
                 animationDelay: `${120 + i * 90}ms`,
               }}
-              className="spine ink-rise flex h-[230px] min-w-0 items-center justify-between py-3 no-underline sm:h-[340px] sm:w-[86px] sm:py-4"
+              className="spine spine-cast ink-rise flex h-[230px] min-w-0 items-center justify-between py-3 no-underline sm:h-[340px] sm:w-[86px] sm:py-4"
+
               aria-label={`Volume ${v.numeral} — ${v.title}`}
             >
               <span
