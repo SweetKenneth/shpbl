@@ -662,3 +662,56 @@
     animation: none;
   }
 }
+
+
+/* ── Shelf light ───────────────────────────────────────────────────
+   A single warm source above the shelf so the spines read as objects
+   standing on a plank rather than as coloured rectangles in a grid. */
+
+@utility shelf-lamp {
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: -8% -6% 12% -6%;
+    pointer-events: none;
+    z-index: -1;
+    background: radial-gradient(
+      120% 78% at 50% 0%,
+      color-mix(in oklab, var(--vol-6) 12%, transparent),
+      transparent 62%
+    );
+  }
+}
+
+/* Spines cast onto the plank; the shadow tightens as a spine is pulled. */
+@utility spine-cast {
+  filter: drop-shadow(0 10px 10px color-mix(in oklab, var(--foreground) 16%, transparent));
+  transition: filter 0.42s cubic-bezier(0.2, 0.9, 0.2, 1);
+
+  &:hover {
+    filter: drop-shadow(0 22px 16px color-mix(in oklab, var(--foreground) 22%, transparent));
+  }
+}
+
+/* Ruled section headings gain a spectrum tick that draws in on reveal. */
+@utility ruled-heading {
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -1px;
+    height: 2px;
+    width: 0;
+    background: var(--s, var(--vol-2));
+    transition: width 0.8s cubic-bezier(0.2, 0.9, 0.2, 1);
+  }
+
+  &[data-in="true"]::before,
+  .reveal[data-in="true"] &::before {
+    width: 2.5rem;
+  }
+}
