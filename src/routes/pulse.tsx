@@ -141,10 +141,12 @@ function Pulse() {
             <Stat label="Page views" value={String(report.totals.views)} sub={`${report.days} days`} />
             <Stat label="Sessions" value={String(report.totals.sessions)} sub="unique tabs" />
             <Stat
-              label="Downloads"
+              label="Zip downloads"
               value={String(report.totals.downloads)}
               sub={`${pct(report.totals.downloadRate)} of sessions`}
             />
+            <Stat label="Volume downloads" value={String(report.totals.volumeDownloads)} sub="single files" />
+            <Stat label="Volumes read" value={String(report.totals.reads)} sub="opened in browser" />
             <Stat label="Certificates" value={String(report.totals.certs)} sub="minted" />
             <Stat label="Installs" value={String(report.totals.installs)} sub={`${pct(report.totals.installRate)} of prompts`} />
             <Stat label="Install prompts" value={String(report.totals.promptShown)} sub="shown" />
