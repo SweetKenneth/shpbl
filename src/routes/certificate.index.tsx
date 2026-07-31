@@ -4,7 +4,8 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 
 import { track } from "@/lib/analytics";
-import { CertificateCard, type CertificateData } from "@/components/CertificateCard";
+import { type CertificateData } from "@/components/CertificateCard";
+import { CertificateSheet } from "@/components/CertificateSheet";
 import { Reveal } from "@/components/Reveal";
 import { dryRunCertificate, listRegister, mintCertificate } from "@/lib/certificates.functions";
 import { CERT_SPECIMEN_URL, LIBRARY, OG_IMAGE, SITE_URL } from "@/lib/library";
@@ -209,37 +210,29 @@ function CertificatePage() {
             {String(staged.copy_no).padStart(3, "0")} would produce.
             {staged.alreadyRegistered && " This name already holds a registered copy."}
           </div>
-          <CertificateCard cert={staged} staging />
-          <div className="no-print mt-6 flex flex-wrap gap-3">
+          <CertificateSheet cert={staged} staging>
             <button
               onClick={() => setStaged(null)}
-              className="ghost-button inline-flex items-center rounded-sm border-2 border-foreground px-5 py-3.5 font-mono text-[11px] sm:px-6 sm:py-3 sm:text-xs tracking-[0.18em] uppercase"
+              className="ghost-button inline-flex items-center rounded-sm border-2 border-foreground px-5 py-3.5 font-mono text-[11px] tracking-[0.18em] uppercase sm:px-6 sm:py-3 sm:text-xs"
             >
               Discard specimen
             </button>
-          </div>
+          </CertificateSheet>
         </section>
       )}
 
 
       {cert && (
         <section className="ink-rise mx-auto max-w-5xl px-5 pt-10 sm:px-6 sm:pt-12">
-          <CertificateCard cert={cert} />
-          <div className="no-print mt-6 flex flex-wrap gap-3">
-            <button
-              onClick={() => window.print()}
-              className="ink-button inline-flex items-center rounded-sm border-2 border-foreground bg-foreground px-5 py-3.5 font-mono text-[11px] sm:px-6 sm:py-3 sm:text-xs tracking-[0.18em] text-background uppercase"
-            >
-              Print / save as PDF
-            </button>
+          <CertificateSheet cert={cert}>
             <Link
               to="/certificate/$seal"
               params={{ seal: cert.cert_seal }}
-              className="ghost-button inline-flex items-center rounded-sm border-2 border-foreground px-5 py-3.5 font-mono text-[11px] sm:px-6 sm:py-3 sm:text-xs tracking-[0.18em] uppercase no-underline"
+              className="ghost-button inline-flex items-center rounded-sm border-2 border-foreground px-5 py-3.5 font-mono text-[11px] tracking-[0.18em] uppercase no-underline sm:px-6 sm:py-3 sm:text-xs"
             >
               Permanent link
             </Link>
-          </div>
+          </CertificateSheet>
         </section>
       )}
 

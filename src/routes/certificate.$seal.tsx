@@ -1,6 +1,6 @@
 import { Link, createFileRoute, notFound } from "@tanstack/react-router";
 
-import { CertificateCard } from "@/components/CertificateCard";
+import { CertificateSheet } from "@/components/CertificateSheet";
 import { lookupCertificate } from "@/lib/certificates.functions";
 import { OG_IMAGE, SITE_URL } from "@/lib/library";
 
@@ -42,21 +42,14 @@ function CertificatePermalink() {
     <section className="mx-auto max-w-5xl px-5 pt-12 sm:px-6 sm:pt-14">
       <p className="eyebrow ink-rise no-print">Registered copy · Verified against the ledger</p>
       <div className="ink-rise mt-6" style={{ animationDelay: "90ms" }}>
-        <CertificateCard cert={cert} />
-      </div>
-      <div className="no-print mt-6 flex flex-wrap gap-3">
-        <button
-          onClick={() => window.print()}
-          className="ink-button inline-flex items-center rounded-sm border-2 border-foreground bg-foreground px-5 py-3.5 font-mono text-[11px] sm:px-6 sm:py-3 sm:text-xs tracking-[0.18em] text-background uppercase"
-        >
-          Print / save as PDF
-        </button>
-        <Link
-          to="/certificate"
-          className="ghost-button inline-flex items-center rounded-sm border-2 border-foreground px-5 py-3.5 font-mono text-[11px] sm:px-6 sm:py-3 sm:text-xs tracking-[0.18em] uppercase no-underline"
-        >
-          The register
-        </Link>
+        <CertificateSheet cert={cert}>
+          <Link
+            to="/certificate"
+            className="ghost-button inline-flex items-center rounded-sm border-2 border-foreground px-5 py-3.5 font-mono text-[11px] tracking-[0.18em] uppercase no-underline sm:px-6 sm:py-3 sm:text-xs"
+          >
+            The register
+          </Link>
+        </CertificateSheet>
       </div>
     </section>
   );

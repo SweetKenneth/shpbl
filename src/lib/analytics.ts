@@ -15,6 +15,7 @@ export type AnalyticsEvent =
   | "cert_minted"
   | "cert_dry_run"
   | "cert_verified"
+  | "cert_saved_image"
   | "install_prompt_shown"
   | "install_accepted"
   | "install_dismissed"
