@@ -100,7 +100,10 @@ function Letter() {
 
       <div className="mt-9 space-y-5 text-[16px] leading-relaxed text-ink-dim sm:text-[18px]">
         <p className="text-foreground">
-          <span className="display-title float-left mr-3 text-[3.4rem] leading-[0.8]">I</span>
+          <span className="display-title float-left mr-3 text-[2.9rem] leading-[52px] sm:text-[3.3rem] sm:leading-[58px]">
+            I
+          </span>
+
           built this because I kept losing the same lessons twice. Every project taught me
           something expensive, and every project buried it in a commit message nobody would
           ever read again — including me. So I started writing the lessons down in the only
