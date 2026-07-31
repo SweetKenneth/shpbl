@@ -574,8 +574,10 @@
   background-position: 100% 0;
   -webkit-background-clip: text;
   background-clip: text;
-  color: transparent;
+  /* No `color: transparent` here — the gradient reads currentColor, so
+     zeroing it would paint the hash with itself and erase the seal. */
   -webkit-text-fill-color: transparent;
+
   transition: background-position 1.1s cubic-bezier(0.2, 0.9, 0.2, 1);
 
   &:hover {
