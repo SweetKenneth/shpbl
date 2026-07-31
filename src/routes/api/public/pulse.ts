@@ -57,6 +57,23 @@ export const Route = createFileRoute("/api/public/pulse")({
         }
 
         const { getRequestHeader } = await import("@tanstack/react-start/server");
+
+        // Owner/office IPs never land in the register. Comma-separated env list;
+        // the IP itself is never stored, only compared in memory.
+        const blocked = (process.env.ANALYTICS_BLOCKED_IPS ?? "")
+          .split(",")
+          .map((s) => s.trim())
+          .filter(Boolean);
+        if (blocked.length) {
+          const ip =
+            getRequestHeader("cf-connecting-ip") ??
+            getRequestHeader("x-real-ip") ??
+            (getRequestHeader("x-forwarded-for") ?? "").split(",")[0]?.trim() ??
+            "";
+          if (ip && blocked.includes(ip)) {
+            return new Response(null, { status: 204 });
+          }
+        }
         const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
 
         let referrerHost: string | null = null;
