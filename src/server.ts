@@ -44,8 +44,32 @@ function isH3SwallowedErrorBody(body: string): boolean {
   }
 }
 
+/** shpbl.com is the canonical home. The Lovable-managed hostnames 301 there so
+ * links, seals, and search results all resolve to one origin. Editor previews and
+ * the stable /api/public/* endpoints external callers use are left alone. */
+const CANONICAL_ORIGIN = "https://shpbl.com";
+
+function canonicalRedirect(request: Request): Response | undefined {
+  const url = new URL(request.url);
+  const host = url.hostname.toLowerCase();
+
+  const isLovableHost = host === "lovable.app" || host.endsWith(".lovable.app");
+  if (!isLovableHost) return undefined;
+
+  const isPreviewHost =
+    host.startsWith("id-preview--") || host.startsWith("preview--") || host.includes("-dev.");
+  if (isPreviewHost) return undefined;
+
+  if (url.pathname.startsWith("/api/")) return undefined;
+
+  return Response.redirect(`${CANONICAL_ORIGIN}${url.pathname}${url.search}`, 301);
+}
+
 export default {
   async fetch(request: Request, env: unknown, ctx: unknown) {
+    const redirect = canonicalRedirect(request);
+    if (redirect) return redirect;
+
     try {
       const handler = await getServerEntry();
       const response = await handler.fetch(request, env, ctx);
