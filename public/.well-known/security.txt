@@ -1,4 +1,0 @@
-Contact: https://KESJr.com
-Preferred-Languages: en
-Canonical: https://shpbl.com/.well-known/security.txt
-Policy: https://shpbl.com/license

@@ -1,0 +1,23 @@
+{
+  "note": "Source of truth for the CyberAgents Exchange table in README.md. Add a row, then run `bun scripts/render-tenable-section.mjs` — never hand-edit the table between the README markers.",
+  "exchange": {
+    "name": "Tenable CyberAgents Exchange",
+    "repo": "https://github.com/tenable/cyberagents-exchange",
+    "tier": "contributed"
+  },
+  "owner": "SweetKenneth",
+  "listings": [
+    { "title": "Retrieval Context Provenance Auditor", "repo": "shpbl-retrieval-auditor", "pr": 164, "state": "accepted", "listing": "mcp-servers/shpbl-retrieval-auditor.md", "spec": "shpbl-spec-retrieval-auditor" },
+    { "title": "Agent Action Evidence Ledger", "repo": "shpbl-action-ledger", "pr": 165, "state": "accepted", "listing": "mcp-servers/shpbl-action-ledger.md", "spec": "shpbl-spec-action-ledger" },
+    { "title": "Cross-Agent Handoff Attestor", "repo": "shpbl-handoff-attestor", "pr": 166, "state": "submitted", "listing": null, "spec": "shpbl-spec-handoff-attestor" },
+    { "title": "Agent Behaviour Drift Sentinel", "repo": "shpbl-drift-sentinel", "pr": 167, "state": "submitted", "listing": null, "spec": "shpbl-spec-drift-sentinel" },
+    { "title": "Canary Evidence Chain", "repo": "shpbl-canary-chain", "pr": 168, "state": "submitted", "listing": null, "spec": "shpbl-spec-canary-chain" },
+    { "title": "Counterfactual Immune Forge", "repo": "shpbl-immune-forge", "pr": 169, "state": "submitted", "listing": null, "spec": null },
+    { "title": "Nightmare Probe Engine", "repo": "shpbl-nightmare-probe-engine", "pr": 171, "state": "submitted", "listing": null, "spec": null },
+    { "title": "Fleet Immune System", "repo": "shpbl-fleet-immune-system", "pr": 172, "state": "submitted", "listing": null, "spec": null },
+    { "title": "Security Genome Reactor", "repo": "shpbl-security-genome-reactor", "pr": 173, "state": "submitted", "listing": null, "spec": null },
+    { "title": "Remediation Flight Recorder", "repo": "shpbl-remediation-flight-recorder", "pr": 174, "state": "submitted", "listing": null, "spec": null },
+    { "title": "Counterfactual Exposure Planner", "repo": "shpbl-counterfactual-exposure-planner", "pr": 175, "state": "submitted", "listing": null, "spec": null },
+    { "title": "Scan Coverage Autopilot", "repo": "shpbl-scan-coverage-autopilot", "pr": 176, "state": "submitted", "listing": null, "spec": null }
+  ]
+}

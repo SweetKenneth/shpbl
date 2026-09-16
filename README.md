@@ -1,85 +1,130 @@
 # SHPBL
 
-SHPBL.com is the publishing house for **The Strategic Master Library — Volume Edition**: six volumes on building software that survives its own success, released free, sealed, and verifiable.
+SHPBL is a system for turning existing software into inspectable, reusable capability, and for
+composing new software out of what it finds. This repository explains the system and points at
+the evidence. It does not contain the system.
 
-This repository is the site: the reader, the download desk, the certificate registrar, and the public register.
+The running product is at **https://shpbl.com**.
 
-## Why it exists
+## The system, and the capabilities it composes
 
-Most strategy writing is unfalsifiable. It makes claims, ages badly, and leaves no way to check whether the copy you are holding is the copy that was published. The Strategic Master Library takes the opposite position — demote claims, publish the diff, ship the artifact — and the publishing method has to obey the same rule as the text. So every volume is a deterministic build with a printed hash, every download is byte-identical to what the author sealed, and every claim the site makes about provenance can be checked by a reader with a terminal and five minutes. The library is free because a discipline that only works behind a paywall isn't a discipline.
+Two different things share the name, and keeping them apart matters:
 
-## Reading online
+- **SHPBL** — the machine. A governed pipeline plus the Strategic Master Library it draws on.
+  Private, and the private part is the point: the harvested corpus and the composition engine
+  are the asset.
+- **A capability** — one thing the machine produced. Each is a small, standalone, separately
+  licensed repository that anyone can read, run and test without access to SHPBL.
 
-Read the whole library in the browser, no download, no account:
+This repository explains the first. The repositories it links to *are* the second.
 
-- Library shelf — <https://shpbl.com/read/shelf>
-- Volume index — <https://shpbl.com/volumes>
-- Volume I — <https://shpbl.com/read/volume-01> … Volume VI — <https://shpbl.com/read/volume-06>
+## How a run works
 
-The reader serves the sealed HTML inline. What renders on screen is the same file that ships in the download — same typography, same figures, same colophon, same seal. It prints clean and it works offline once the site is installed as a PWA.
+**Harvest → Library → Compose → Gauntlet → Ship.**
 
-## Downloading a sealed edition
+1. **Harvest** — read a repository and extract capability: units of behaviour with their
+   resolved dependencies, classified by whether they are pure, hold a seam to outside state, or
+   need a port supplied.
+2. **Library** — admit what passes into a catalogue, recorded with where it came from.
+3. **Compose** — assemble a requested capability from catalogued units, adding the integration
+   needed to make them work together while preserving provenance to the underlying
+   capabilities.
+4. **Gauntlet** — exercise the result against its stated contract. Failure is reported as
+   failure; a harness that could not exercise an artefact at all is reported as inconclusive,
+   which is a limit of the harness, not a defect in the artefact.
+5. **Ship** — release only what passed, sealed by checksums.
 
-<https://shpbl.com> → **Download the sealed edition** (single ZIP, all six volumes plus the shelf and toolkit).
+## Provenance and traceability
 
-**Sealed** means three specific things:
+Every composed artefact records the units it was built from, and every unit records the source
+it was harvested from. A composition can be read back to its inputs. That is what makes an
+SHPBL output auditable rather than merely plausible.
 
-1. **Deterministic** — the build produces byte-identical output from the same source. No timestamps, no build IDs, no random ordering.
-2. **Hashed** — every volume carries a SHA-256 of its source markdown, printed in its own colophon. The six volume seals fold into one library seal for the edition as a whole:
-   `029909fbe9bd13468ec11dc7ae22f77d39b35d12249c79213b1476c71cde104d`
-3. **Fixed** — a sealed edition is never silently patched. A correction produces a new build, a new seal, and a note explaining the change. If the hash you compute doesn't match the hash on the page, the file is not the edition.
+Two claims that get conflated, kept separate here:
 
-## Verification
+- **Deterministic** — the composition pipeline does not depend on a model generating the
+  implementation. Given the same governed inputs, catalogue state and configuration, its
+  decisions are traceable to those inputs.
+- **Byte-reproducible** — a separate, narrower property about re-running a build and getting
+  identical bytes. Claimed only where it has been demonstrated.
 
-**Source seals** — each volume prints the SHA-256 of the markdown it was rendered from. Recompute it against the source and compare; nothing about the check depends on trusting this site.
+## The Governor boundary
 
-**Certificates** — a reader can mint a numbered certificate of provenance at <https://shpbl.com/certificate>. The certificate seal is derived, not random:
+A human approves. Authority is asked as a separate question per proposal, and silence is never
+approval. Nothing is admitted to the catalogue, published, or released because a pipeline
+decided it was ready.
 
-```
-sha256( librarySeal | owner | copyNumber | issueDate )
-```
+## Public interfaces
 
-Same four inputs always produce the same seal, so any certificate can be re-derived and checked independently. A **dry-run / staging mint** derives the exact artifact — copy number, date, seal — without writing to the ledger, and renders with a SPECIMEN watermark.
+- **MCP server** — SHPBL as tools, for use inside your own assistant. The tools never call a
+  model; your assistant does the reasoning.
+- **`@shpbl/sdk`** — the typed client, on npm: <https://www.npmjs.com/package/@shpbl/sdk>
+- **Free evaluation** — <https://shpbl.com/try> runs a real audit on a public repository.
 
-**Public register** — every issued copy is listed at <https://shpbl.com/certificate> with its number, owner, date, and seal, and each has a permanent verification page at `/certificate/{seal}`. Copy 001 is the Publisher Verification Copy, issued during launch verification before public circulation; it is renamed rather than deleted, because a register that quietly drops rows is not a register.
+## Independently reviewed contributions
 
-**Deterministic builds** — the rendering pipeline (`build.py` plus the `figures.py` SVG engine) takes markdown and emits the printable HTML, the shelf, and the ZIP with no nondeterministic input. Rebuild from the same source, get the same bytes, get the same seals.
+Capabilities created through SHPBL have been submitted to Tenable's CyberAgents Exchange and
+reviewed there. Accepted submissions are published as contributed listings.
 
-## Repository
+Precisely what that means, and does not:
 
-This repo holds the **site**, not the manuscript.
+- It means Tenable reviewers inspected a submitted implementation and accepted it into a
+  community catalogue.
+- It does **not** mean Tenable endorses, certifies, or validates SHPBL; that Tenable reviewed
+  the SHPBL architecture; that Tenable partners with SHPBL; or that Tenable uses SHPBL.
 
-```
-src/routes/            pages: landing, volumes, toolkit, license, letter, certificate, register, pulse
-src/routes/read.$slug  proxies sealed HTML inline and injects reader chrome
-src/lib/library.ts     edition metadata, volume seals, CDN asset URLs
-src/lib/certificates.* deterministic certificate derivation + Supabase-backed ledger
-src/lib/analytics.*    first-party anonymous counts (no third-party trackers)
-public/                robots.txt, llms.txt, security.txt, brand assets, PWA manifest
-supabase/              migrations for the certificate register and analytics
-```
+Three separate layers, worth naming: **SHPBL** composes the capability, an **individual
+repository** is the inspectable implementation, and the **CyberAgents Exchange** is independent
+external review and publication.
 
-**Build process.** The library itself is authored in markdown and rendered by a Python pipeline — `build.py` (layout, colophon, seal stamping, ZIP assembly) and `figures.py` (the deterministic SVG diagram engine, two figures per volume). The pipeline emits `dist/`, the sealed HTML files are uploaded to the CDN, and `src/lib/library.ts` is updated with the new seals and asset URLs. That manuscript source and pipeline live with the author's build tree and ship inside the sealed edition; this repository consumes their output.
+<!-- TENABLE-TABLE:START -->
 
-The site runs on TanStack Start (React 19, Vite 7, Tailwind v4) with a Supabase backend for the register and analytics.
+_Generated from `TENABLE-LISTINGS.json` — 2 accepted, 12 submitted in total._
 
-```sh
-npm i
-npm run dev
-```
+| Capability | Implementation repository | Behaviour specification | Submission | Review state | Published listing |
+| --- | --- | --- | --- | --- | --- |
+| Retrieval Context Provenance Auditor | [`shpbl-retrieval-auditor`](https://github.com/SweetKenneth/shpbl-retrieval-auditor) | [spec](https://github.com/SweetKenneth/shpbl-spec-retrieval-auditor) | [#164](https://github.com/tenable/cyberagents-exchange/pull/164) | accepted | [listing](https://github.com/tenable/cyberagents-exchange/blob/main/mcp-servers/shpbl-retrieval-auditor.md) |
+| Agent Action Evidence Ledger | [`shpbl-action-ledger`](https://github.com/SweetKenneth/shpbl-action-ledger) | [spec](https://github.com/SweetKenneth/shpbl-spec-action-ledger) | [#165](https://github.com/tenable/cyberagents-exchange/pull/165) | accepted | [listing](https://github.com/tenable/cyberagents-exchange/blob/main/mcp-servers/shpbl-action-ledger.md) |
+| Cross-Agent Handoff Attestor | [`shpbl-handoff-attestor`](https://github.com/SweetKenneth/shpbl-handoff-attestor) | [spec](https://github.com/SweetKenneth/shpbl-spec-handoff-attestor) | [#166](https://github.com/tenable/cyberagents-exchange/pull/166) | submitted, under review | — |
+| Agent Behaviour Drift Sentinel | [`shpbl-drift-sentinel`](https://github.com/SweetKenneth/shpbl-drift-sentinel) | [spec](https://github.com/SweetKenneth/shpbl-spec-drift-sentinel) | [#167](https://github.com/tenable/cyberagents-exchange/pull/167) | submitted, under review | — |
+| Canary Evidence Chain | [`shpbl-canary-chain`](https://github.com/SweetKenneth/shpbl-canary-chain) | [spec](https://github.com/SweetKenneth/shpbl-spec-canary-chain) | [#168](https://github.com/tenable/cyberagents-exchange/pull/168) | submitted, under review | — |
+| Counterfactual Immune Forge | [`shpbl-immune-forge`](https://github.com/SweetKenneth/shpbl-immune-forge) | in-repo | [#169](https://github.com/tenable/cyberagents-exchange/pull/169) | submitted, under review | — |
+| Nightmare Probe Engine | [`shpbl-nightmare-probe-engine`](https://github.com/SweetKenneth/shpbl-nightmare-probe-engine) | in-repo | [#171](https://github.com/tenable/cyberagents-exchange/pull/171) | submitted, under review | — |
+| Fleet Immune System | [`shpbl-fleet-immune-system`](https://github.com/SweetKenneth/shpbl-fleet-immune-system) | in-repo | [#172](https://github.com/tenable/cyberagents-exchange/pull/172) | submitted, under review | — |
+| Security Genome Reactor | [`shpbl-security-genome-reactor`](https://github.com/SweetKenneth/shpbl-security-genome-reactor) | in-repo | [#173](https://github.com/tenable/cyberagents-exchange/pull/173) | submitted, under review | — |
+| Remediation Flight Recorder | [`shpbl-remediation-flight-recorder`](https://github.com/SweetKenneth/shpbl-remediation-flight-recorder) | in-repo | [#174](https://github.com/tenable/cyberagents-exchange/pull/174) | submitted, under review | — |
+| Counterfactual Exposure Planner | [`shpbl-counterfactual-exposure-planner`](https://github.com/SweetKenneth/shpbl-counterfactual-exposure-planner) | in-repo | [#175](https://github.com/tenable/cyberagents-exchange/pull/175) | submitted, under review | — |
+| Scan Coverage Autopilot | [`shpbl-scan-coverage-autopilot`](https://github.com/SweetKenneth/shpbl-scan-coverage-autopilot) | in-repo | [#176](https://github.com/tenable/cyberagents-exchange/pull/176) | submitted, under review | — |
 
-## Editions
+<!-- TENABLE-TABLE:END -->
 
-An edition is a fixed point, not a moving document. The current edition is **Volume Edition · First Printing · 2026**.
+The table above is generated from [`TENABLE-LISTINGS.json`](TENABLE-LISTINGS.json) by
+[`scripts/render-tenable-section.mjs`](scripts/render-tenable-section.mjs). A newly accepted
+contribution is a one-row JSON edit plus `node scripts/render-tenable-section.mjs`.
 
-A new edition is created by: editing the markdown source, rebuilding deterministically, re-deriving every volume seal and the library seal, uploading the new sealed assets, updating `src/lib/library.ts`, and publishing a note describing what changed and why. Existing certificates remain bound to the library seal they were issued against — they stay valid for their edition and are not silently re-pointed at a newer one. Corrections are published as diffs. Nothing is patched in place.
+## SHPBL and SHPBL.com
 
-## License
+SHPBL is the system. SHPBL.com is where you use it: the free evaluation, the subscription that
+runs the full gauntlet, and the Strategic Master Library itself. This repository is neither — it
+is the explanation and the index.
 
-**Free Edition Grant v1.0** — full text at <https://shpbl.com/license> and included in every sealed download.
+## Repository map
 
-Free to read, download, print, and share in unmodified sealed form, with attribution. The seals and certificates are provenance instruments: don't alter a sealed file and keep presenting it as the sealed edition.
+See [`REPOSITORIES.md`](REPOSITORIES.md) for the full map.
 
----
+| | |
+| --- | --- |
+| `shpbl` | this repository — the public front door |
+| `shpbl-master` | the private canonical machine. Not published. |
+| `shpbl-<capability>` | public inspectable outputs, individually licensed |
+| `shpbl-spec-<capability>` | permanent clean-room specifications, cited by each implementation's `PROVENANCE.md` |
+| `*-provenance`, `cmpsbl*`, `*-ascended` | research and historical provenance, preserved and unmaintained |
 
-A KESJr Collective Project · [KESJr.com](https://kesjr.com) · Kenneth E. Sweet Jr. · ORCID [0009-0001-4237-1243](https://orcid.org/0009-0001-4237-1243)
+## Licence
+
+The documentation in this repository is licensed
+[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Each linked implementation
+repository carries its own licence; most are MIT. Nothing here licenses the SHPBL system
+itself.
+
+© Kenneth E. Sweet Jr.

@@ -1,1 +1,0 @@
-DELETE FROM public.analytics_events WHERE created_at > '2026-07-30 12:53:00+00' AND (props->>'surface' IN ('qa','masthead','reader') OR event = 'page_view') AND screen_w = 1280;
